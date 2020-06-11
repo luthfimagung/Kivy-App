@@ -1,0 +1,217 @@
+<Button>:
+    # font_size: 40
+    background_normal: ''
+    background_color: 1, 1, 1, 1
+    size_hint: 0.44,0.44
+    on_press: self.background_color = (0.44, 0.44, 0.44, 0.17)
+    on_release: self.background_color = (1, 1, 1, 1)
+
+# <FloatLayout>:
+#     Button:
+#         pos_hint: {"x":0, "top":0.8}
+#
+#     Button:
+#         id: btn
+
+<Widgets>:
+    canvas:
+        Color:
+            rgba: 1, 1, 0, 1
+
+        # Main Display
+        Rectangle:
+            pos: 155, 300
+            size: 685, 400
+
+        # Secondary Display
+        # Rectangle:
+        #     pos: 934, 350
+        #     size: 580, 350
+
+        Color:
+            rgba: 0.55, 0.55, 0.55, 1
+
+        ## Light
+        # Tools Button Container (Left)
+        Rectangle:
+            pos: 0, 0
+            size: 127, 764
+
+        # Tools Button Container (Bottom)
+        Rectangle:
+            pos: 127, 40
+            size: 739, 130
+
+        # Toolbar Container (Top)
+        Rectangle:
+            pos: 0, 764
+            size: 1550, 40
+
+        # Tab 1 (Main Display)
+        Rectangle:
+            pos: 127, 724
+            size: 247, 40
+
+        # Tab 2 (Secondary Display)
+        Rectangle:
+            pos: 906, 724
+            size: 247, 40
+
+        # Tab 3 (Attachment)
+        Rectangle:
+            pos: 906, 285
+            size: 247, 40
+
+        ## Dark
+        Color:
+            rgba: 0.32, 0.32, 0.32, 1
+
+        # Tab 1 (Main Display)
+        Rectangle:
+            pos: 374, 724
+            size: 532, 40
+
+        # Tab 2 (Secondary Display)
+        Rectangle:
+            pos: 1153, 724
+            size: 382, 40
+
+        # Tab 3 (Attachment)
+        Rectangle:
+            pos: 1153, 285
+            size: 382, 39
+
+        # Middle (Display Divider)
+        Rectangle:
+            pos: 866, 0
+            size: 40, 724
+
+        # Bottom
+        Rectangle:
+            pos: 127, 0
+            size: 1423, 40
+
+        ## Border
+        Color:
+            rgba: 0.44, 0.44, 0.44, 1
+
+        # Left Container
+        Line:
+            width: 1
+            rectangle: 0, 0, 127, 764
+
+        # Top
+        Line:
+            width: 1
+            rectangle: self.x, 765, self.width, self.height
+
+        Color:
+            rgba: 0.23, 0.23, 0.23, 1
+
+        # Tab 1 (Main Display)
+        Line:
+            width: 1
+            rectangle: 128, 724, 247, 40
+
+        # Tab 2 (Secondary Display)
+        Line:
+            width: 1
+            rectangle: 907, 724, 247, 40
+
+        # Tab 3 (Attachment)
+        Line:
+            width: 1
+            rectangle: 907, 285, 247, 40
+
+    FloatLayout:
+        # Left Column
+        Button:
+            id: btn1
+            pos_hint: {"x":0.13, "top":7.5}
+            on_press: root.show_popup()
+
+        Button:
+            id: btn2
+            pos_hint: {"x":0.13, "top":6.97}
+
+        Button:
+            id: btn3
+            pos_hint: {"x":0.13, "top":6.44}
+            text:"Start"
+            on_press: root.dostart()
+
+        Button:
+            id: btn4
+            pos_hint: {"x":0.13, "top":5.91}
+
+        Button:
+            id: btn5
+            pos_hint: {"x":0.13, "top":5.38}
+
+        Button:
+            id: btn6
+            pos_hint: {"x":0.13, "top":4.85}
+
+        Button:
+            id: btn7
+            pos_hint: {"x":0.13, "top":4.32}
+
+        Button:
+            id: btn8
+            pos_hint: {"x":0.13, "top":3.79}
+
+        # Right Column
+        Button:
+            id: btn9
+            pos_hint: {"x":0.67, "top":7.5}
+
+        Button:
+            id: btn10
+            pos_hint: {"x": 0.67, "top": 6.97}
+
+        Button:
+            id: btn11
+            pos_hint: {"x": 0.67, "top": 6.44}
+            text: "quit"
+            on_press: root.doexit()
+
+        Button:
+            id: btn12
+            pos_hint: {"x": 0.67, "top": 5.91}
+
+        Button:
+            id: btn13
+            pos_hint: {"x": 0.67, "top": 5.38}
+
+        Button:
+            id: btn14
+            pos_hint: {"x": 0.67, "top": 4.85}
+
+        Button:
+            id: btn15
+            pos_hint: {"x": 0.67, "top": 4.32}
+
+        Button:
+            id: btn16
+            pos_hint: {"x": 0.67, "top": 3.79}
+
+        KivyCamera:
+            id: qrcam
+            pos: 958, 324
+            size: 532, 402
+            size_hint:(None,None)
+
+    # BoxLayout:
+    #     pos: 934, 350
+    #     size: 580, 350
+
+# <P>:
+#     Label:
+#         text: "You pressed the button"
+#         size_hint: 0.6, 0.2
+#         pos_hint: {"x":0.2, "top":1}
+#
+#     Button:
+#         text: "You pressed the button"
+#         size_hint: 0.8, 0.2
+#         pos_hint: {"x":0.1, "y":0.1}
