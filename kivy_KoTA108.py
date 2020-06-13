@@ -14,6 +14,7 @@ from kivy.graphics.texture import Texture
 from kivy.clock import Clock
 from kivy.base import EventLoop
 import cv2
+import numpy as np
 
 # Config.set('graphics', 'width', '1366')
 # Config.set('graphics', 'height', '768')
@@ -34,9 +35,22 @@ class KivyCamera(Image):
         Clock.unschedule_interval(self.update)
         self.capture = None
 
+    def greenScreen(self,frame):
+        bckground = cv2.imread("background.jpg")
+        img = cv2.resize(bckground,(640,480))
+        hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+        u_green = np.array([104, 153, 70])
+        l_green = np.array([30, 30, 0])
+        mask = cv2.inRange(frame,l_green,u_green)
+        res = cv2.bitwise_and(frame,frame,mask=mask)
+        f=frame-res
+        f=np.where(f==0,img,f)
+        return f
     def update(self, dt):
         return_value, frame = self.capture.read()
         frame = cv2.flip(frame, 1)
+        P = KivyCamera()
+        frame = P.greenScreen(frame)
         if return_value:
             texture = self.texture
             w, h = frame.shape[1], frame.shape[0]
