@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya">
+    <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kivy_KoTA108.py" beforeDir="false" afterPath="$PROJECT_DIR$/kivy_KoTA108.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my.kv" beforeDir="false" afterPath="$PROJECT_DIR$/my.kv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +66,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592036943956</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya">
+      <created>1592286715136</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1592286715136</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -76,14 +81,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="361" y="71" key="#Notifications" timestamp="1592286743116">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="71" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1592286743116" />
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592035022837">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1592035022837" />
-    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1592036960893">
+    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1592286727656">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1592036960893" />
+    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1592286727656" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1592035423290">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
