@@ -36,16 +36,18 @@ class KivyCamera(Image):
         self.capture = None
 
     def greenScreen(self,frame):
-        bckground = cv2.imread("background.jpg")
-        img = cv2.resize(bckground,(640,480))
+        img = cv2.imread("background.jpg")
+        img = cv2.resize(img,(1280,720))
         hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
-        u_green = np.array([104, 153, 70])
-        l_green = np.array([30, 30, 0])
+        frame = cv2.resize(frame,(1280,720))
+        u_green = np.array([140, 255, 30])
+        l_green = np.array([70, 200, 0])
         mask = cv2.inRange(frame,l_green,u_green)
         res = cv2.bitwise_and(frame,frame,mask=mask)
-        f=frame-res
+        f=res-frame
         f=np.where(f==0,img,f)
         return f
+
     def update(self, dt):
         return_value, frame = self.capture.read()
         frame = cv2.flip(frame, 1)
@@ -54,10 +56,18 @@ class KivyCamera(Image):
         if return_value:
             texture = self.texture
             w, h = frame.shape[1], frame.shape[0]
+
+            scale_percent = 60
+            width = int(w *scale_percent /100)
+            height = int(h * scale_percent /100)
+            dim = (width, height)
+            #resize
+            resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+
             if not texture or texture.width != w or texture.height != h:
-                self.texture = texture = Texture.create(size=(w, h))
+                self.texture = texture = Texture.create(size=(width, height))
                 texture.flip_vertical()
-            texture.blit_buffer(frame.tobytes(), colorfmt='bgr')
+            texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
             self.canvas.ask_update()
 
 capture = None
