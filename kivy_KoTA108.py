@@ -15,6 +15,7 @@ from kivy.clock import Clock
 from kivy.base import EventLoop
 import cv2
 import numpy as np
+import bpy
 
 # Config.set('graphics', 'width', '1366')
 # Config.set('graphics', 'height', '768')
