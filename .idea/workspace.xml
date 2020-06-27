@@ -4,6 +4,7 @@
     <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kivy_KoTA108.py" beforeDir="false" afterPath="$PROJECT_DIR$/kivy_KoTA108.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my.kv" beforeDir="false" afterPath="$PROJECT_DIR$/my.kv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +28,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Tugas Akhir/video_Recorder" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../screen-recorder-master/cmdGen.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
@@ -87,7 +89,21 @@
       <option name="project" value="LOCAL" />
       <updated>1592286777206</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya">
+      <created>1592314887361</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1592314887361</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya">
+      <created>1592316960040</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1592316960040</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -95,54 +111,54 @@
     <option name="LAST_COMMIT_MESSAGE" value="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="361" y="71" key="#Notifications" timestamp="1592292631114">
+    <state x="361" y="71" key="#Notifications" timestamp="1592354151530">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="71" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1592292631114" />
+    <state x="361" y="71" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1592354151530" />
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592035022837">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1592035022837" />
-    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1592286776837">
+    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1593268689268">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1592286776837" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1592035423290">
+    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1593268689268" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1593268262425">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1592035423290" />
-    <state width="1515" height="212" key="GridCell.Tab.0.bottom" timestamp="1592228238403">
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1593268262425" />
+    <state width="757" height="212" key="GridCell.Tab.0.bottom" timestamp="1593268603018">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1592228238403" />
-    <state width="1515" height="212" key="GridCell.Tab.0.center" timestamp="1592228238403">
+    <state width="757" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593268603018" />
+    <state width="757" height="212" key="GridCell.Tab.0.center" timestamp="1593268603018">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="212" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1592228238403" />
-    <state width="1515" height="212" key="GridCell.Tab.0.left" timestamp="1592228238403">
+    <state width="757" height="212" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1593268603018" />
+    <state width="757" height="212" key="GridCell.Tab.0.left" timestamp="1593268603018">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="212" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1592228238403" />
-    <state width="1515" height="212" key="GridCell.Tab.0.right" timestamp="1592228238403">
+    <state width="757" height="212" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1593268603018" />
+    <state width="757" height="212" key="GridCell.Tab.0.right" timestamp="1593268603018">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="212" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1592228238403" />
-    <state x="277" y="55" key="SettingsEditor" timestamp="1592290645716">
+    <state width="757" height="212" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1593268603018" />
+    <state x="277" y="55" key="SettingsEditor" timestamp="1592622847297">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1592290645716" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1592286813409">
+    <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1592622847297" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1592316963172">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1592286813409" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1592292569910">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1592316963172" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1593267974285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1592292569910" />
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592037544015">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1593267974285" />
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1593268718063">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1592037544015" />
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1593268718063" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

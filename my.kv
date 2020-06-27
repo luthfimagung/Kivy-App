@@ -133,12 +133,14 @@
         Button:
             id: btn2
             pos_hint: {"x":0.13, "top":6.97}
+            text: "Start"
+            on_press: root.startRecord()
 
         Button:
             id: btn3
             pos_hint: {"x":0.13, "top":6.44}
-            text:"Start"
-            on_press: root.dostart()
+            text:"Stop"
+            on_press: root.stopRecord()
 
         Button:
             id: btn4

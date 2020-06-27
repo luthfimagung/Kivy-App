@@ -15,7 +15,7 @@ from kivy.clock import Clock
 from kivy.base import EventLoop
 import cv2
 import numpy as np
-import bpy
+# import bpy
 
 # Config.set('graphics', 'width', '1366')
 # Config.set('graphics', 'height', '768')
@@ -23,7 +23,30 @@ import bpy
 Window.maximize()
 # print(Window.size)
 
+#Variabel Global
+statusRecord = None
+
+
+class Record():
+
+    def record(self,frame, statusRecord):
+        self.statusRecord = statusRecord
+        print(statusRecord)
+        if statusRecord == 1:
+            if out.isOpened() :
+                out.write(frame)
+
+        else : out.release()
+
+
+
+class SoundRecord():
+    pass
+
+
 class KivyCamera(Image):
+    global statusRecord
+
     def __init__(self, **kwargs):
         super(KivyCamera, self).__init__(**kwargs)
         self.capture = None
@@ -45,16 +68,22 @@ class KivyCamera(Image):
         l_green = np.array([70, 200, 0])
         mask = cv2.inRange(frame,l_green,u_green)
         res = cv2.bitwise_and(frame,frame,mask=mask)
-        f=res-frame
+        f=frame-res
         f=np.where(f==0,img,f)
         return f
 
     def update(self, dt):
         return_value, frame = self.capture.read()
         frame = cv2.flip(frame, 1)
-        P = KivyCamera()
-        frame = P.greenScreen(frame)
+        Cam = KivyCamera()
+        Rec = Record()
+        frame = Cam.greenScreen(frame)
         if return_value:
+
+            #record script
+            out.write(frame)
+
+
             texture = self.texture
             w, h = frame.shape[1], frame.shape[0]
 
@@ -71,14 +100,18 @@ class KivyCamera(Image):
             texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
             self.canvas.ask_update()
 
+
+
 capture = None
+
 
 class Widgets(Widget):
     def init_qrtest(self):
-        pass
-
-    def dostart(self, *largs):
-        global capture
+        global capture, out
+        #inisialisasi Recording
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        out = cv2.VideoWriter('Testing1001.avi', fourcc, 20.0, (1280, 720))
+        #insialisasi webcam
         capture = cv2.VideoCapture(0)
         self.ids.qrcam.start(capture)
 
