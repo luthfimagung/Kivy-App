@@ -134,10 +134,6 @@ class Widgets(Widget):
 
         self.ids.qrcam.start(self.capture, self.out,  self.statusRecord)
 
-    def stopRecord(self):
-        self.statusRecord = False
-        self.ids.qrcam.stop(self.statusRecord)
-
     def startRecording(self):
         self.statusRecord = True
         self.audio.record("temp/temp.wav")
@@ -146,14 +142,14 @@ class Widgets(Widget):
     def stopRecording(self):
         if self.capture != None:
             try:
-                self.capture.release()
-                self.out.release()
                 self.audio.stop_recording()
-
                 while self.statusRecord != False:
                     self.statusRecord = self.audio.getStatus()
                     time.sleep(0.5)
                     print(self.statusRecord)
+                    if self.statusRecord == False:
+                        self.capture.release()
+                        self.out.release()
 
                 self.fileAudio = ffmpeg.input('temp/temp.wav')
                 self.fileVideo = ffmpeg.input('temp/temp.mp4')
@@ -164,10 +160,7 @@ class Widgets(Widget):
             except ffmpeg.Error as e:
                 print(e)
 
-
-
     def doexit(self):
-
         EventLoop.close()
 
     def show_popup(self):
