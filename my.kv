@@ -134,17 +134,19 @@
             id: btn2
             pos_hint: {"x":0.13, "top":6.97}
             text: "Start"
-            on_press: root.startRecord()
+            on_press: root.startRecording()
 
         Button:
             id: btn3
             pos_hint: {"x":0.13, "top":6.44}
             text:"Stop"
-            on_press: root.stopRecord()
+            on_press: root.stopRecording()
 
         Button:
             id: btn4
             pos_hint: {"x":0.13, "top":5.91}
+            text: "STOP"
+            on_press : root.do_exit()
 
         Button:
             id: btn5
@@ -197,11 +199,11 @@
             id: btn16
             pos_hint: {"x": 0.67, "top": 3.79}
 
-        KivyCamera:
-            id: qrcam
-            pos: 958, 340
-            size: 532, 370
-            size_hint:(None,None)
+    KivyCamera:
+        id: qrcam
+        pos: 958, 340
+        size: 532, 370
+        size_hint:(None,None)
 
     # BoxLayout:
     #     pos: 934, 350

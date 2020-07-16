@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/audioRecording.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/background.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/kivy_KoTA108.py" beforeDir="false" afterPath="$PROJECT_DIR$/kivy_KoTA108.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my.kv" beforeDir="false" afterPath="$PROJECT_DIR$/my.kv" afterDir="false" />
     </list>
@@ -10,6 +12,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="PUSH_TAGS">
@@ -31,10 +40,52 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../screen-recorder-master/cmdGen.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../testingKivy/testing paint.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.kivy_KoTA108">
+    <configuration name="Screen" type="PythonConfigurationType" factoryName="Python">
+      <module name="Main Design" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\ASUS\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../screen-recorder-master" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../screen-recorder-master/screenRecorder.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="audioo" type="PythonConfigurationType" factoryName="Python">
+      <module name="Main Design" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\ASUS\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Tugas Akhir" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Tugas Akhir/audio recording.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="kivy_KoTA108" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Main Design" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -56,6 +107,11 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.Screen" />
+      <item itemvalue="Python.kivy_KoTA108" />
+      <item itemvalue="Python.audioo" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -103,62 +159,100 @@
       <option name="project" value="LOCAL" />
       <updated>1592316960040</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Menambahkan fungsi recording. akan tetapi belum menggunakan trigger button. Menunggu Button untuk start dan stop selesai">
+      <created>1593268754898</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1593268754898</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya" />
+    <MESSAGE value="Menambahkan fungsi recording. akan tetapi belum menggunakan trigger button. Menunggu Button untuk start dan stop selesai" />
+    <option name="LAST_COMMIT_MESSAGE" value="Menambahkan fungsi recording. akan tetapi belum menggunakan trigger button. Menunggu Button untuk start dan stop selesai" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="71" key="#Notifications" timestamp="1592354151530">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="71" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1592354151530" />
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592035022837">
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594403926972">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1592035022837" />
-    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1593268689268">
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1594403926972" />
+    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1593268754376">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1593268689268" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1593268262425">
+    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1593268754376" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1594875348994">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1593268262425" />
-    <state width="757" height="212" key="GridCell.Tab.0.bottom" timestamp="1593268603018">
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1594875348994" />
+    <state width="1515" height="212" key="GridCell.Tab.0.bottom" timestamp="1594877964186">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="757" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593268603018" />
-    <state width="757" height="212" key="GridCell.Tab.0.center" timestamp="1593268603018">
+    <state width="1515" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594877964186" />
+    <state width="1515" height="212" key="GridCell.Tab.0.center" timestamp="1594877964186">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="757" height="212" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1593268603018" />
-    <state width="757" height="212" key="GridCell.Tab.0.left" timestamp="1593268603018">
+    <state width="1515" height="212" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594877964186" />
+    <state width="1515" height="212" key="GridCell.Tab.0.left" timestamp="1594877964185">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="757" height="212" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1593268603018" />
-    <state width="757" height="212" key="GridCell.Tab.0.right" timestamp="1593268603018">
+    <state width="1515" height="212" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594877964185" />
+    <state width="1515" height="212" key="GridCell.Tab.0.right" timestamp="1594877964186">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="757" height="212" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1593268603018" />
-    <state x="277" y="55" key="SettingsEditor" timestamp="1592622847297">
+    <state width="1515" height="212" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594877964186" />
+    <state width="757" height="261" key="GridCell.Tab.1.bottom" timestamp="1593509834458">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1592622847297" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1592316963172">
+    <state width="757" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593509834458" />
+    <state width="757" height="261" key="GridCell.Tab.1.center" timestamp="1593509834458">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1592316963172" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1593267974285">
+    <state width="757" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1593509834458" />
+    <state width="757" height="261" key="GridCell.Tab.1.left" timestamp="1593509834458">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1593267974285" />
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1593268718063">
+    <state width="757" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1593509834458" />
+    <state width="757" height="261" key="GridCell.Tab.1.right" timestamp="1593509834458">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1593268718063" />
+    <state width="757" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1593509834458" />
+    <state x="539" y="134" key="RollbackChangesDialog" timestamp="1594875154253">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="539" y="134" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1594875154253" />
+    <state x="277" y="55" key="SettingsEditor" timestamp="1594408822369">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1594408822369" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1593268759276">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1593268759276" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1594869409909">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1594869409909" />
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594878038490">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1594878038490" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
