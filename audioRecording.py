@@ -1,7 +1,7 @@
 import pyaudio
 import wave
 import threading
-from kivy_KoTA108 import Widgets
+# from kivy_KoTA108 import Widgets
 import time
 
 CHUNK = 1024
