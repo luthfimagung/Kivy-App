@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Main Design.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Main Design.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kivy_KoTA108.py" beforeDir="false" afterPath="$PROJECT_DIR$/kivy_KoTA108.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my.kv" beforeDir="false" afterPath="$PROJECT_DIR$/my.kv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/temp.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/temp/temp.mp4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/temp.wav" beforeDir="false" afterPath="$PROJECT_DIR$/temp/temp.wav" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +171,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594878113043</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Drawing Garis Buat di canvas">
+      <created>1595479027586</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1595479027586</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -192,7 +195,8 @@
     <MESSAGE value="Menambahkan chroma key, serta menambahkan background pada project untuk melihat efek chroma keynya" />
     <MESSAGE value="Menambahkan fungsi recording. akan tetapi belum menggunakan trigger button. Menunggu Button untuk start dan stop selesai" />
     <MESSAGE value="Tombol 2 Untuk memulai Record, Tombol 3 Untuk menghentikan Record. nanti bakal ngestop dlu buat merge video. abis itu bisa mulai lagi secara otomatis sampe neken tombol ke 4 yaitu menghentikan app" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tombol 2 Untuk memulai Record, Tombol 3 Untuk menghentikan Record. nanti bakal ngestop dlu buat merge video. abis itu bisa mulai lagi secara otomatis sampe neken tombol ke 4 yaitu menghentikan app" />
+    <MESSAGE value="Drawing Garis Buat di canvas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Drawing Garis Buat di canvas" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="71" key="#Notifications" timestamp="1592354151530">
@@ -203,30 +207,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1594403926972" />
-    <state x="0" y="7" key="CommitChangelistDialog2" timestamp="1594880923480">
+    <state x="0" y="7" key="CommitChangelistDialog2" timestamp="1595479027057">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594880923480" />
+    <state x="0" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1595479027057" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1595476829731">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595476829731" />
-    <state width="1515" height="212" key="GridCell.Tab.0.bottom" timestamp="1595478911662">
+    <state width="1515" height="212" key="GridCell.Tab.0.bottom" timestamp="1595479407641">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595478911662" />
-    <state width="1515" height="212" key="GridCell.Tab.0.center" timestamp="1595478911661">
+    <state width="1515" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595479407641" />
+    <state width="1515" height="212" key="GridCell.Tab.0.center" timestamp="1595479407641">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="212" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595478911661" />
-    <state width="1515" height="212" key="GridCell.Tab.0.left" timestamp="1595478911661">
+    <state width="1515" height="212" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595479407641" />
+    <state width="1515" height="212" key="GridCell.Tab.0.left" timestamp="1595479407641">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="212" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595478911661" />
-    <state width="1515" height="212" key="GridCell.Tab.0.right" timestamp="1595478911661">
+    <state width="1515" height="212" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595479407641" />
+    <state width="1515" height="212" key="GridCell.Tab.0.right" timestamp="1595479407641">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="212" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595478911661" />
+    <state width="1515" height="212" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595479407641" />
     <state width="757" height="261" key="GridCell.Tab.1.bottom" timestamp="1593509834458">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

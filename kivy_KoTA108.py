@@ -243,8 +243,9 @@ out = None
 audio = None
 
 class Widgets(Widget):
+    def __init__(self, **kwargs):
+        super(Widgets, self).__init__(**kwargs)
 
-    def init_qrtest(self):
         try:
             os.mkdir("temp")
         except FileExistsError:
@@ -337,7 +338,7 @@ class MyApp(App):
 
 
         homeWin = Widgets()
-        homeWin.init_qrtest()
+
         return homeWin
 
 
