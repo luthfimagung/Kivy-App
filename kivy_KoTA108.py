@@ -5,6 +5,7 @@ from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty
 from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.config import Config
@@ -23,6 +24,7 @@ from kivy.graphics import *
 #OpenCV
 import cv2
 import ffmpeg
+
 
 #Python
 import numpy as np
@@ -241,11 +243,18 @@ out = None
 audio = None
 
 class Widgets(Widget):
+
     def init_qrtest(self):
+        try:
+            os.mkdir("temp")
+        except FileExistsError:
+            pass
+
         try:
             os.mkdir("VideoRecorder")
         except FileExistsError:
             pass
+
         os.chdir("VideoRecorder")
 
         defaultFile = "Video.mp4"
@@ -275,6 +284,15 @@ class Widgets(Widget):
 
         self.ids.qrcam.start(self.capture, self.out,  self.statusRecord)
 
+    def on_touch_down(self, touch):
+        self.canvas.add(Color(rgb=(121 / 255.0, 120 / 255.0, 100 / 255.0)))
+        touch.ud['line'] = Line(points=(touch.x, touch.y), width = 2)
+        self.canvas.add(touch.ud['line'])
+
+    def on_touch_move(self, touch):
+        if (touch.x >=155.0 and touch.x <840.0 ) and (touch.y>=200.0 and touch.y<700.0):
+            touch.ud['line'].points +=[touch.x, touch.y]
+
     def startRecording(self):
         self.statusRecord = True
         self.audio.record("temp/temp.wav")
@@ -301,7 +319,7 @@ class Widgets(Widget):
             except ffmpeg.Error as e:
                 print(e)
 
-    def doexit(self):
+    def do_exit(self):
         EventLoop.close()
 
     def show_popup(self):
@@ -309,15 +327,18 @@ class Widgets(Widget):
         popupWindow = Popup(title="Popup Window", content=show, size_hint=(None, None), size=(400, 400))
         popupWindow.open()
 
+
 class P(FloatLayout):
     pass
 
 class MyApp(App):
 
     def build(self):
-       homeWin = Widgets()
-       homeWin.init_qrtest()
-       return homeWin
+
+
+        homeWin = Widgets()
+        homeWin.init_qrtest()
+        return homeWin
 
 
 if __name__ == "__main__":
