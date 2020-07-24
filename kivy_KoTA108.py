@@ -328,20 +328,14 @@ class Widgets(Widget):
         popupWindow = Popup(title="Popup Window", content=show, size_hint=(None, None), size=(400, 400))
         popupWindow.open()
 
-
-
 class P(FloatLayout):
     pass
 
 class MyApp(App):
 
     def build(self):
-
-
         homeWin = Widgets()
-
         return homeWin
-
 
 if __name__ == "__main__":
     MyApp().run()
