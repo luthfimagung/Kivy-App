@@ -24,7 +24,7 @@ from kivy.graphics import *
 #OpenCV
 import cv2
 import ffmpeg
-
+from PIL import ImageGrab
 
 #Python
 import numpy as np
@@ -180,7 +180,7 @@ class Background():
 
 class KivyCamera(Image):
 
-    def start(self, capture,out, statusRecord):
+    def start(self, capture, out, statusRecord):
         self.capture = capture
         self.fps = 30
         self.out = out
@@ -196,14 +196,17 @@ class KivyCamera(Image):
     def record(self,frame):
         self.out.write(frame)
 
-
     def greenScreen(self,frame):
-        img = cv2.imread("background/background.jpg")
-        img = cv2.resize(img,(1280,720))
+        # img = cv2.imread("background/background.jpg")
+        # img = Image.new("RGB",(1920,1080),0)
+        img = ImageGrab.grab(bbox=((200,155,940,800)))
+        img = np.array(img)
+        # img = ImageGrab.grab(bbox = (155,200,840,700))
+        img = cv2.resize(img,(720,480))
         hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-        frame = cv2.resize(frame,(1280,720))
-        u_green = np.array([140, 255, 30])
-        l_green = np.array([70, 200, 0])
+        frame = cv2.resize(frame,(720,480))
+        u_green = np.array([70, 255, 70])
+        l_green = np.array([0, 100, 0])
         mask = cv2.inRange(frame,l_green,u_green)
         res = cv2.bitwise_and(frame,frame,mask=mask)
         f=frame - res
@@ -280,7 +283,7 @@ class Widgets(Widget):
         self.audio = audioRec.audioRecord()
         fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
         self.out = cv2.VideoWriter('temp/temp.mp4', fourcc, 15, (1280, 720))
-        self.capture = cv2.VideoCapture(0)
+        self.capture = cv2.VideoCapture('background/test1.mp4')
         self.statusRecord = False
 
         self.ids.qrcam.start(self.capture, self.out,  self.statusRecord)
