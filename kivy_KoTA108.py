@@ -32,7 +32,7 @@ import numpy as np
 import time
 from threading import Thread
 import os
-import subprocess
+
 import audioRecording as audioRec
 
 #OpenGL
@@ -188,27 +188,27 @@ class FrontEnd(FloatLayout):
 class FloatLayout(FloatLayout):
     pass
 class KivyCamera(Image):
-    def start(self):
-        global out, capture
-        capture = cv2.VideoCapture(0)
-        fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-        out = cv2.VideoWriter('temp/temp.mp4', fourcc, 15.0, (720, 480))
+    def start(self, capture):
+
+        self.capture = capture
         self.statusRecord = False
         self.fps = 30
         Clock.schedule_interval(self.update, 1.0/self.fps)
 
     def startRecord(self):
-        print("Start Recording")
+        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+        self.out = cv2.VideoWriter('temp/temp.mp4', fourcc, 15.0, (720, 480))
         self.statusRecord =True
 
     def stopRecord(self):
+        Clock.unschedule(self.update)
         print("Stop Recording")
         self.statusRecord = False
-        out.release()
-        capture.release()
-        Clock.unschedule(self.update)
+        self.out.release()
+        self.capture.release()
 
     def greenScreen(self,frame):
+        # img = cv2.imread("background/background.jpg")
         img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
         img = np.array(img)
         frame = cv2.resize(frame, (720, 480))
@@ -223,12 +223,12 @@ class KivyCamera(Image):
         return f
 
     def update(self, dt):
-        return_value, frame = capture.read()
+        return_value, frame = self.capture.read()
         frame = cv2.flip(frame, 1, None)
         frame = self.greenScreen(frame)
         if return_value:
             if self.statusRecord == True:
-                out.write(frame)
+                self.out.write(frame)
             texture = self.texture
             w, h = frame.shape[1], frame.shape[0]
             scale_percent = 100
@@ -317,32 +317,97 @@ class Layers(Widgets):
         self.canvas.clear()
         self.start(self.layerUtama)
 
+
 class MainScreen(Screen):
     def start(self):
+        #MELAKUKAN PENGECEKAN UNTUK FILE
+        try:
+            os.mkdir("temp")
+        except FileExistsError:
+            print("exist temp")
+
+        try:
+            os.mkdir("VideoRecorder")
+        except FileExistsError:
+            print("EXIST VIDEO RECORDER")
+        #MEMBUAT NAMA FILE UNTUK MENYIMPAN VIDEO DAN AUDIO
+        os.chdir("VideoRecorder")
+        defaultFile = "Video.mp4"
+        avail = False
+        fileNum = 0
+        while avail == False:
+            hasMatch = False
+            for item in os.listdir():
+                if item == defaultFile:
+                    hasMatch = True
+                    break
+            if not hasMatch:
+                avail = True
+            else:
+                fileNum+=1
+                defaultFile = "Video"+str(fileNum)+".mp4"
+
+        os.chdir("..")
+        print(os.path.abspath('temp.mp4'))
+        #FILE NAME
+        self.defaultFile = defaultFile
+
+        #INISIASI FILE AUDIO
+        self.audio = audioRec.audioRecord()
+
+        #INISIASI WEBCAM
+        self.capture = cv2.VideoCapture(0)
+
+        #INISIASI LAYER
         self.layerUtama = 1
+
+        #INISIASI STATUS
         self.statusRecord = False
+
+        #DISPLAY LAYER
         self.ids.layers.start(None)
-        self.ids.qrcam.start()
 
-    def record(self):
-        self.statusRecord = True
-        self.ids.qrcam.startRecord(self.statusRecord)
+        #DISPLAY CAMERA
+        self.ids.qrcam.start(self.capture)
 
+    #MENGHAPUS SEMUA ISI LAYER
     def clearCanvas(self):
         self.ids.layers.clearCanvas()
 
+    #MEMILIH LAYER UTAMA
     def spinner_clicked(self, values):
         self.ids.layers.changeLayer(values)
 
+    #MEMULAI DAN MEMBERHENTIKAN
     def Record(self, value):
         if value == 1:
             self.ids.record.text= "Stop"
+            self.statusRecord = True
             self.ids.record.values = 2
+            self.audio.record("temp/temp.wav")
             self.ids.qrcam.startRecord()
         else:
             self.ids.record.text = "Start"
             self.ids.record.values = 1
-            self.ids.qrcam.stopRecord()
+            self.audio.stop_recording()
+            while self.statusRecord != False:
+                self.statusRecord = self.audio.getStatus()
+                time.sleep(0.5)
+                if self.statusRecord == False:
+                    self.ids.qrcam.stopRecord()
+                    self.capture.release()
+            try:
+                #COMBINE FILE WAV AND MP4
+                # path1 = os.path.abspath('temp/temp.wav')
+                # path2 = os.path.abspath('temp/temp.mp4')
+                self.fileAudio = ffmpeg.input('temp/temp.wav')
+                self.fileVideo = ffmpeg.input('temp/temp.mp4')
+                self.finish = ffmpeg.output(self.fileAudio, self.fileVideo, "VideoRecorder/"+self.defaultFile)
+                self.finish.run()
+                print("DONE WITH FILE "+self.defaultFile)
+            except ffmpeg.Error as e:
+                print(str(e) + " || ERROR")
+
             self.start()
 
 
