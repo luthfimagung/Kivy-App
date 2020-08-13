@@ -21,6 +21,8 @@
     size_hint: 0.44,0.44
     background_color: 0.1, 0.5, 0.6, 1
 
+<MyButton2@Button>:
+    background_color: 0,1,1,0
 
 <MainScreen>:
     widgets :widgets
@@ -48,7 +50,7 @@
                 pos: 127, 724
                 size: 247, 40
 
-             # Tab 2 (Secondary Display)
+             # Tab 2 (Secondary Display) Tombol Start
             Rectangle:
                 pos: 906, 724
                 size: 247, 40
@@ -196,23 +198,31 @@
                 text: "Clear"
                 on_press: root.clearCanvas()
 
-            Spinner:
-                # Assigning id
-                id: spinner_id
+            MyButton:
+                id: record
+                size_hint: None, None
+                size: 150, 39
+                text: "Start"
+                pos_hint:{"x":9.5, "top": 7.63}
+                values: 1
+                on_press:
+                    root.Record(self.values)
 
-                # Callback
+            Spinner:
+                    # Assigning id
+                id: spinner_id
+                    # Callback
                 on_text: root.spinner_clicked(spinner_id.text)
                 background_normal: ''
                 background_color: 0.1, 0.5, 0.6, 1
-                # initially text on spinner
+                    # initially text on spinner
                 text: "Layer 1"
                 on_release:
                     self.background_color= 0.1, 0.5, 0.6, 1
-                # total values on spinner
+                    # total values on spinner
                 values: ["Layer 1", "Layer 2", "Layer 3"]
-
-                # declaring size of the spinner
-                # and the position of it
+                    # declaring size of the spinner
+                    # and the position of it
                 size_hint: None, None
                 size: 200, 40
                 pos_hint:{'center_x':10.25, 'top': 3.26}
@@ -228,15 +238,70 @@
 
 
 <CheckScreen>:
+    FrontEnd2:
+        canvas:
+            Color:
+                rgba: 0.44, 0.44, 0.44, 1
+            Line:
+                width: 3
+                rectangle: 408, 280, 312, 50
+            Line:
+                width: 3
+                rectangle: 812, 280, 312, 50
+    Widgets2:
+        Button:
+            id: detectCamera
+            background_normal: 'assets/camerabordered2.png'
+            size_hint: .18, .28
+            pos_hint: {"x": 0.5, "y": 0.4}
+            pos: 405, 350
+            size: 317, 277
+            on_press:
+                root.detectCamera()
+        Button:
+            id: detectPentab
+            background_normal: 'assets/pentabbordered2.png'
+            size_hint: .18, .28
+            pos_hint: {"x": 0.5, "y": 0.4}
+            pos: 810, 350
+            size: 317, 277
+            on_press:
+                root.detectPentab()
+        Button:
+            id: nextScreen
+            disabled: True
+            size_hint: .18, .28
+            pos_hint: {"x": 0.5, "y": 0.4}
+            pos: 650, 150
+            size: 200,75
+            font_size: 25
+            text: "Next Screen"
+            on_press:
+                root.check()
+        Image:
+            id: imgCheckCamera
+            source: 'assets/cross.png'
+            size_hint: .18, .28
+            pos: 492, 348
+            size: 142, 60
+        Image:
+            id: imgCheckPentab
+            source: 'assets/cross.png'
+            size_hint: .18, .28
+            pos: 897, 348
+            size: 142, 60
+        Label:
+            text: 'Detect Camera'
+            italic: True
+            font_size: 28
+            pos: 514, 257
+        Label:
+            text: 'Detect Pentab'
+            italic: True
+            font_size: 28
+            pos: 919, 257
 
-    Button:
-        color: 1,1,1,1
-        size_hint : None, None
-        post_hint : {'center_x':.5, 'top': 0.2}
-        size :100, 50
-        on_press: root.check()
-        text: "CHECK"
-        font_size: 20
+
 
     # BoxLayout:
     #     pos: 934, 350

@@ -188,21 +188,47 @@ class FrontEnd(FloatLayout):
 class FloatLayout(FloatLayout):
     pass
 class KivyCamera(Image):
-
-    def start(self, capture, out):
-        self.capture = capture
-        self.out = out
+    def start(self):
+        global out, capture
+        capture = cv2.VideoCapture(0)
+        fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+        out = cv2.VideoWriter('temp/temp.mp4', fourcc, 15.0, (720, 480))
+        self.statusRecord = False
         self.fps = 30
         Clock.schedule_interval(self.update, 1.0/self.fps)
 
-    def startRecord(self, statusRecord):
-        print(statusRecord)
+    def startRecord(self):
+        print("Start Recording")
+        self.statusRecord =True
 
+    def stopRecord(self):
+        print("Stop Recording")
+        self.statusRecord = False
+        out.release()
+        capture.release()
+        Clock.unschedule(self.update)
+
+    def greenScreen(self,frame):
+        img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
+        img = np.array(img)
+        frame = cv2.resize(frame, (720, 480))
+        img = cv2.resize(img, (720, 480))
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        u_green = np.array([104, 153, 70])
+        l_green = np.array([30, 30, 0])
+        mask = cv2.inRange(frame, l_green, u_green)
+        res = cv2.bitwise_and(frame, frame, mask = mask)
+        f = frame-res
+        f = np.where(f==0, img, f)
+        return f
 
     def update(self, dt):
-        return_value, frame = self.capture.read()
+        return_value, frame = capture.read()
         frame = cv2.flip(frame, 1, None)
+        frame = self.greenScreen(frame)
         if return_value:
+            if self.statusRecord == True:
+                out.write(frame)
             texture = self.texture
             w, h = frame.shape[1], frame.shape[0]
             scale_percent = 100
@@ -226,16 +252,15 @@ class Layers(Widgets):
         self.layer1 = None
         self.layer2 = None
         self.layer3 = None
-        self.temp1 = "temp1.jpg"
-        self.temp2 = "temp2.jpg"
-        self.temp3 = "temp3.jpg"
+        self.temp1 = "temp/temp1.jpg"
+        self.temp2 = "temp/temp2.jpg"
+        self.temp3 = "temp/temp3.jpg"
         self.layerUtama = 1
-    def start(self, values):
 
+    def start(self, values):
         with self.canvas:
             Color(1,1,1,1)
             self.rec = Rectangle(id = "test", source="", pos= (155, 200), size= (685, 500))
-
 
         if values == 1:
             if self.layer1 != None:
@@ -249,7 +274,6 @@ class Layers(Widgets):
 
     def changeBackground(self, source):
         self.rec.source = source
-
 
     def on_touch_down(self, touch):
         self.canvas.add(Color(rgb=(121 / 255.0, 120 / 255.0, 100 / 255.0)))
@@ -297,11 +321,8 @@ class MainScreen(Screen):
     def start(self):
         self.layerUtama = 1
         self.statusRecord = False
-        self.capture = cv2.VideoCapture(0)
-        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        self.out = cv2.VideoWriter('testing.avi', self.fourcc, 15, (1280, 720))
         self.ids.layers.start(None)
-        self.ids.qrcam.start(self.capture, self.out)
+        self.ids.qrcam.start()
 
     def record(self):
         self.statusRecord = True
@@ -313,22 +334,56 @@ class MainScreen(Screen):
     def spinner_clicked(self, values):
         self.ids.layers.changeLayer(values)
 
+    def Record(self, value):
+        if value == 1:
+            self.ids.record.text= "Stop"
+            self.ids.record.values = 2
+            self.ids.qrcam.startRecord()
+        else:
+            self.ids.record.text = "Start"
+            self.ids.record.values = 1
+            self.ids.qrcam.stopRecord()
+            self.start()
+
 
 class CheckScreen(Screen):
+    def __init__(self, **kwargs):
+        super(CheckScreen, self).__init__(**kwargs)
+        self.checkPentab = False
+        self.checkCamera = False
+
     def check(self):
-        # print("BEING CHECK")
-        # cap = cv2.VideoCapture(0)
-        # if cap.isOpened():
-        #     cap.release()
-        #     self.manager.get_screen("main").start()
-        #     self.manager.current = "main"
-        # else: print("Fales")
         self.manager.get_screen("main").start()
         self.manager.current = "main"
+
+
+    def detectCamera(self):
+        cap = cv2.VideoCapture(0)
+        if cap.isOpened():
+            self.checkCamera = True
+            self.ids.detectCamera.background_normal = 'assets/camerabordered.png'
+            self.ids.imgCheckCamera.source = 'assets/check.png'
+            self.finishCheck()
+        cap.release()
+
+    def detectPentab(self):
+        self.checkPentab = True
+        self.ids.imgCheckPentab.source = 'assets/check.png'
+        self.ids.detectPentab.background_normal = 'assets/pentabbordered.png'
+        self.finishCheck()
+
+    def finishCheck(self):
+        if self.checkCamera == True and self.checkPentab == True:
+            self.ids.nextScreen.disabled = False
 
 class Manager(ScreenManager):
     pass
 
+class FrontEnd2(FloatLayout):
+    pass
+
+class Widgets2(Widget):
+    pass
 class MyApp(App):
     def build(self):
         return Manager()
