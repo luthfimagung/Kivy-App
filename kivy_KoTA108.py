@@ -6,6 +6,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.config import Config
@@ -42,11 +43,12 @@ from OpenGL.GL import shaders
 from OpenGL.GL.shaders import compileProgram, compileShader
 import pyrr
 from TextureLoader import load_texture
-
-# Config.set('graphics', 'width', '1366')
-# Config.set('graphics', 'height', '768')
+# Config.set('graphics','resizable',True)
+# Config.set('graphics', 'width', '1920')
+# Config.set('graphics', 'height', '1080')
 # Window.clearcolor = (0.19, 0.19, 0.19, 1)
 Window.maximize()
+# Window.size = (1280,720)
 # print(Window.size)
 
 #Variabel Global
@@ -79,6 +81,8 @@ void main()
     out_color = texture(s_texture, v_texture);
 }
 """
+
+
 
 class Background():
 
@@ -178,115 +182,74 @@ class Background():
         glfw.terminate()
 
 
+class FrontEnd(FloatLayout):
+    pass
+
+class FloatLayout(FloatLayout):
+    pass
 class KivyCamera(Image):
 
-    def start(self, capture, out, statusRecord):
+    def start(self, capture, out):
         self.capture = capture
-        self.fps = 30
         self.out = out
-        self.statusRecord = statusRecord
-        Clock.schedule_interval(self.update,1.0/self.fps)
+        self.fps = 30
+        Clock.schedule_interval(self.update, 1.0/self.fps)
 
     def startRecord(self, statusRecord):
-        self.statusRecord = statusRecord
+        print(statusRecord)
 
-    def stop(self, statusRecord):
-        self.statusRecord = statusRecord
-
-    def record(self,frame):
-        self.out.write(frame)
-
-    def greenScreen(self,frame):
-        # img = cv2.imread("background/background.jpg")
-        # img = Image.new("RGB",(1920,1080),0)
-        img = ImageGrab.grab(bbox=((200,155,940,800)))
-        img = np.array(img)
-        # img = ImageGrab.grab(bbox = (155,200,840,700))
-        img = cv2.resize(img,(720,480))
-        hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-        frame = cv2.resize(frame,(720,480))
-        u_green = np.array([70, 255, 70])
-        l_green = np.array([0, 100, 0])
-        mask = cv2.inRange(frame,l_green,u_green)
-        res = cv2.bitwise_and(frame,frame,mask=mask)
-        f=frame - res
-        f=np.where(f==0,img,f)
-        return f
 
     def update(self, dt):
         return_value, frame = self.capture.read()
-        frame = cv2.flip(frame, 1)
-        frame = self.greenScreen(frame)
+        frame = cv2.flip(frame, 1, None)
         if return_value:
-            #record script
-            if self.statusRecord == True:
-                self.out.write(frame)
-
             texture = self.texture
             w, h = frame.shape[1], frame.shape[0]
-
             scale_percent = 100
-            width = int(w *scale_percent /100)
-            height = int(h * scale_percent /100)
+            width = int(w*scale_percent/100)
+            height = int(h*scale_percent/100)
             dim = (width, height)
 
-            #resize
             resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-
             if not texture or texture.width != w or texture.height != h:
                 self.texture = texture = Texture.create(size=(width, height))
                 texture.flip_vertical()
             texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
             self.canvas.ask_update()
 
-
-
-capture = None
-out = None
-audio = None
-
 class Widgets(Widget):
+    pass
+
+class Layers(Widgets):
     def __init__(self, **kwargs):
-        super(Widgets, self).__init__(**kwargs)
+        super(Layers, self).__init__(**kwargs)
+        self.layer1 = None
+        self.layer2 = None
+        self.layer3 = None
+        self.temp1 = "temp1.jpg"
+        self.temp2 = "temp2.jpg"
+        self.temp3 = "temp3.jpg"
+        self.layerUtama = 1
+    def start(self, values):
 
-        try:
-            os.mkdir("temp")
-        except FileExistsError:
-            pass
+        with self.canvas:
+            Color(1,1,1,1)
+            self.rec = Rectangle(id = "test", source="", pos= (155, 200), size= (685, 500))
 
-        try:
-            os.mkdir("VideoRecorder")
-        except FileExistsError:
-            pass
 
-        os.chdir("VideoRecorder")
+        if values == 1:
+            if self.layer1 != None:
+                self.changeBackground(self.layer1)
+        elif values == 2:
+            if self.layer2 != None:
+                self.changeBackground(self.layer2)
+        elif values == 3 :
+            if self.layer3 != None:
+                self.changeBackground(self.layer3)
 
-        defaultFile = "Video.mp4"
-        available = False
-        fileNum = 0
-        while available == False:
-            hasMatch = False
-            for item in os.listdir():
-                if item == defaultFile:
-                    hasMatch = True
-                    break
-            if not hasMatch:
-                available = True
-            else:
-                fileNum += 1
-                defaultFile = "Video" + str(fileNum) + ".mp4"
-        os.chdir("..")
+    def changeBackground(self, source):
+        self.rec.source = source
 
-        self.defaultFile = defaultFile
-
-        # some Variable
-        self.audio = audioRec.audioRecord()
-        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-        self.out = cv2.VideoWriter('temp/temp.mp4', fourcc, 15, (1280, 720))
-        self.capture = cv2.VideoCapture('background/test1.mp4')
-        self.statusRecord = False
-
-        self.ids.qrcam.start(self.capture, self.out,  self.statusRecord)
 
     def on_touch_down(self, touch):
         self.canvas.add(Color(rgb=(121 / 255.0, 120 / 255.0, 100 / 255.0)))
@@ -297,49 +260,260 @@ class Widgets(Widget):
         if (touch.x >=155.0 and touch.x <840.0 ) and (touch.y>=200.0 and touch.y<700.0):
             touch.ud['line'].points +=[touch.x, touch.y]
 
-    def startRecording(self):
+    def clearCanvas(self):
+        self.canvas.clear()
+        self.start(self.layerUtama)
+        self.changeBackground(None)
+
+    def changeLayer(self, values):
+        print(values)
+        if self.layerUtama == 1:
+            img = ImageGrab.grab(bbox=((200,155,940,800)))
+            img = img.save(self.temp1)
+            self.layer1 =self.temp1
+            if str(values) == "Layer 2":
+                self.layerUtama = 2
+            else : self.layerUtama = 3
+
+        elif self.layerUtama == 2:
+            img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
+            img = img.save(self.temp2)
+            self.layer2 = self.temp2
+            if str(values) == "Layer 1":
+                self.layerUtama = 1
+            else: self.layerUtama = 3
+
+        elif self.layerUtama == 3 :
+            img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
+            img = img.save(self.temp3)
+            self.layer3 = self.temp3
+            if str(values) == "Layer 1":
+                self.layerUtama = 1
+            else: self.layerUtama = 2
+        self.canvas.clear()
+        self.start(self.layerUtama)
+
+class MainScreen(Screen):
+    def start(self):
+        self.layerUtama = 1
+        self.statusRecord = False
+        self.capture = cv2.VideoCapture(0)
+        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        self.out = cv2.VideoWriter('testing.avi', self.fourcc, 15, (1280, 720))
+        self.ids.layers.start(None)
+        self.ids.qrcam.start(self.capture, self.out)
+
+    def record(self):
         self.statusRecord = True
-        self.audio.record("temp/temp.wav")
         self.ids.qrcam.startRecord(self.statusRecord)
 
-    def stopRecording(self):
-        if self.capture != None:
-            try:
-                self.audio.stop_recording()
-                while self.statusRecord != False:
-                    self.statusRecord = self.audio.getStatus()
-                    time.sleep(0.5)
-                    print(self.statusRecord)
-                    if self.statusRecord == False:
-                        self.capture.release()
-                        self.out.release()
+    def clearCanvas(self):
+        self.ids.layers.clearCanvas()
 
-                self.fileAudio = ffmpeg.input('temp/temp.wav')
-                self.fileVideo = ffmpeg.input('temp/temp.mp4')
-                self.finish = ffmpeg.output(self.fileAudio, self.fileVideo, 'VideoRecorder/'+self.defaultFile)
-                self.finish.run()
-                print("FINISH CONFIG")
-                self.init_qrtest()
-            except ffmpeg.Error as e:
-                print(e)
+    def spinner_clicked(self, values):
+        self.ids.layers.changeLayer(values)
 
-    def do_exit(self):
-        EventLoop.close()
 
-    def show_popup(self):
-        show = P()
-        popupWindow = Popup(title="Popup Window", content=show, size_hint=(None, None), size=(400, 400))
-        popupWindow.open()
+class CheckScreen(Screen):
+    def check(self):
+        # print("BEING CHECK")
+        # cap = cv2.VideoCapture(0)
+        # if cap.isOpened():
+        #     cap.release()
+        #     self.manager.get_screen("main").start()
+        #     self.manager.current = "main"
+        # else: print("Fales")
+        self.manager.get_screen("main").start()
+        self.manager.current = "main"
 
-class P(FloatLayout):
+class Manager(ScreenManager):
     pass
 
 class MyApp(App):
-
     def build(self):
-        homeWin = Widgets()
-        return homeWin
+        return Manager()
 
-if __name__ == "__main__":
+if __name__=="__main__":
     MyApp().run()
-    # Background().build()
+
+
+## FILE DULU
+# class KivyCamera(Image):
+#
+#     def start(self, capture, out, statusRecord):
+#         if capture == None:
+#             print("GAGAL")
+#         self.capture = capture
+#         self.fps = 30
+#         self.out = out
+#         self.statusRecord = statusRecord
+#         Clock.schedule_interval(self.update,1.0/self.fps)
+#
+#     def startRecord(self, statusRecord):
+#         self.statusRecord = statusRecord
+#
+#     def stop(self, statusRecord):
+#         self.statusRecord = statusRecord
+#
+#     def record(self,frame):
+#         self.out.write(frame)
+#
+#     def greenScreen(self,frame):
+#         img = cv2.imread("background/background.jpg")
+#         # img = ImageGrab.grab(bbox=((200,155,940,800)))
+#         # img = np.array(img)
+#         frame = cv2.resize(frame,(720,480))
+#         img = cv2.resize(img,(720,480))
+#         hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+#         u_green = np.array([70, 255, 70])
+#         l_green = np.array([0, 100, 0])
+#         mask = cv2.inRange(frame,l_green,u_green)
+#         res = cv2.bitwise_and(frame,frame,mask=mask)
+#         f=frame - res
+#         f=np.where(f==0,img,f)
+#         return f
+#
+#     def update(self, dt):
+#         return_value, frame = self.capture.read()
+#         frame = cv2.flip(frame, 1)
+#         # frame = self.greenScreen(frame)
+#         if return_value:
+#             #record script
+#             if self.statusRecord == True:
+#                 self.out.write(frame)
+#
+#             texture = self.texture
+#             w, h = frame.shape[1], frame.shape[0]
+#
+#             scale_percent = 100
+#             width = int(w *scale_percent /100)
+#             height = int(h * scale_percent /100)
+#             dim = (width, height)
+#             #resize
+#             resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+#             if not texture or texture.width != w or texture.height != h:
+#                 self.texture = texture = Texture.create(size=(width, height))
+#                 texture.flip_vertical()
+#             texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
+#             self.canvas.ask_update()
+#
+#
+#
+# capture = None
+# out = None
+# audio = None
+#
+# class Widgets(Widget):
+#     def __init__(self, **kwargs):
+#         super(Widgets, self).__init__(**kwargs)
+#         #
+#         # try:
+#         #     os.mkdir("temp")
+#         #
+#         # except FileExistsError:
+#         #     print("exist temp")
+#         #
+#         #
+#         # try:
+#         #     os.mkdir("VideoRecorder")
+#         #
+#         # except FileExistsError:
+#         #     print("exist video recorder")
+#         #
+#         # os.chdir("VideoRecorder")
+#         #
+#         # defaultFile = "Video.mp4"
+#         # available = False
+#         # fileNum = 0
+#         # while available == False:
+#         #     hasMatch = False
+#         #     for item in os.listdir():
+#         #         if item == defaultFile:
+#         #             hasMatch = True
+#         #             break
+#         #     if not hasMatch:
+#         #         available = True
+#         #     else:
+#         #         fileNum += 1
+#         #         defaultFile = "Video" + str(fileNum) + ".mp4"
+#         #         print(defaultFile)
+#
+#         os.chdir("..")
+#         # print(os.path.)
+#         # self.defaultFile = defaultFile
+#
+#         # some Variable
+#         self.audio = audioRec.audioRecord()
+#         fourcc = cv2.VideoWriter_fourcc(*'XVID')
+#         self.out = cv2.VideoWriter('temp/temp.avi', fourcc, 15, (1280, 720))
+#         self.capture = cv2.VideoCapture(0)
+#         self.statusRecord = False
+#         self.ids.qrcam.start(self.capture, self.out,  self.statusRecord)
+#
+#     def on_touch_down(self, touch):
+#         self.canvas.add(Color(rgb=(121 / 255.0, 120 / 255.0, 100 / 255.0)))
+#         touch.ud['line'] = Line(points=(touch.x, touch.y), width = 2)
+#         self.canvas.add(touch.ud['line'])
+#
+#     def on_touch_move(self, touch):
+#         if (touch.x >=155.0 and touch.x <840.0 ) and (touch.y>=200.0 and touch.y<700.0):
+#             touch.ud['line'].points +=[touch.x, touch.y]
+#
+#     def startRecording(self):
+#         self.statusRecord = True
+#         self.audio.record("temp/temp.wav")
+#         self.ids.qrcam.startRecord(self.statusRecord)
+#
+#     def stopRecording(self):
+#         if self.capture != None:
+#             try:
+#                 self.audio.stop_recording()
+#                 while self.statusRecord != False:
+#                     self.statusRecord = self.audio.getStatus()
+#                     time.sleep(0.5)
+#                     print(self.statusRecord)
+#                     if self.statusRecord == False:
+#                         self.out.release()
+#                         self.capture.release()
+#                         print("DONE RELEASE")
+#                 # path1 = os.path.abspath('temp/temp.wav')
+#                 # path2 = os.path.abspath('temp/temp.mp4')
+#                 # self.fileAudio = ffmpeg.input(path1)
+#                 # if self.fileAudio != None:
+#                 #     print("FILE AUDIO OKE")
+#                 # else: print("FILE KOSONG")
+#                 #
+#                 # self.fileVideo = ffmpeg.input(path2)
+#                 # if self.fileVideo != None:
+#                 #     print("FILE Video OKE")
+#                 # else:
+#                 #     print("FILE KOSONG Video")
+#                 #
+#                 # self.finish = ffmpeg.output(self.fileAudio, self.fileVideo, self.defaultFile)
+#                 # print("OUTPUT OKE")
+#                 # self.finish.run()
+#                 # print("FINISH CONFIG")
+#
+#             except ffmpeg.Error as e:
+#                 print(e)
+#
+#     def do_exit(self):
+#         EventLoop.close()
+#
+#     def show_popup(self):
+#         show = P()
+#         popupWindow = Popup(title="Popup Window", content=show, size_hint=(None, None), size=(400, 400))
+#         popupWindow.open()
+
+# class P(FloatLayout):
+#     pass
+#
+# class MyApp(App):
+#
+#     def build(self):
+#         homeWin = Widgets()
+#         return homeWin
+#
+# if __name__ == "__main__":
+#     MyApp().run()
+#     # Background().build()

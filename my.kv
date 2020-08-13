@@ -1,212 +1,242 @@
-<Button>:
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+#: import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+<Manager>:
+    id: manager
+    check_screen :check
+    main_screen: main
+    #check Screen
+    CheckScreen:
+        id:check
+        name:"check"
+        manager: manager
+
+    MainScreen:
+        id: main
+        name:"main"
+        manager: manager
+
+<MyButton@Button>:
     # font_size: 40
-    background_normal: ''
-    background_color: 1, 1, 1, 1
     size_hint: 0.44,0.44
-    on_press: self.background_color = (0.44, 0.44, 0.44, 0.17)
-    on_release: self.background_color = (1, 1, 1, 1)
-
-# <FloatLayout>:
-#     Button:
-#         pos_hint: {"x":0, "top":0.8}
-#
-#     Button:
-#         id: btn
+    background_color: 0.1, 0.5, 0.6, 1
 
 
-<Widgets>:
-    canvas:
-        Color:
-            rgba: 1, 1, 1, 2
+<MainScreen>:
+    widgets :widgets
+    qrcam: qrcam
 
-        # Main Display
-        Rectangle:
-            id : layer
-            pos: 155, 200
-            size: 685, 500
+    FrontEnd:
+        id: frontend
+        canvas:
+            Color:
+                rgba: 0.55, 0.55, 0.55, 1
+
+            Rectangle:
+                pos: 0, 0
+                size: 127, 764
+            # Tools Button Container (Bottom)
+            Rectangle:
+                pos: 127, 40
+                size: 739, 130
+
+            Rectangle:
+                pos: 0, 764
+                size: 1550, 40
+
+            Rectangle:
+                pos: 127, 724
+                size: 247, 40
+
+             # Tab 2 (Secondary Display)
+            Rectangle:
+                pos: 906, 724
+                size: 247, 40
+
+            # Tab 3 (Attachment)
+            Rectangle:
+                pos: 906, 285
+                size: 247, 40
+
+            ## Dark
+            Color:
+                rgba: 0.32, 0.32, 0.32, 1
+            # Tab 1 (Main Display)
+            Rectangle:
+                pos: 374, 724
+                size: 532, 40
+
+            # Tab 2 (Secondary Display)
+            Rectangle:
+                pos: 1153, 724
+                size: 600, 40
+
+            # Tab 3 (Attachment)
+            Rectangle:
+                pos: 1153, 285
+                size: 382, 39
+
+            # Middle (Display Divider)
+            Rectangle:
+                pos: 866, 0
+                size: 40, 724
+
+            # Bottom
+            Rectangle:
+                pos: 127, 0
+                size: 1423, 40
+
+            ## Border
+            Color:
+                rgba: 0.44, 0.44, 0.44, 1
+
+            # Left Container
+            Line:
+                width: 1
+                rectangle: 0, 0, 127, 764
+
+            # Top
+            Line:
+                width: 1
+                rectangle: self.x, 765, self.width, self.height
+
+            Color:
+                rgba: 0.23, 0.23, 0.23, 1
+
+            # Tab 1 (Main Display)
+            Line:
+                width: 1
+                rectangle: 128, 724, 247, 40
+
+            # Tab 2 (Secondary Display)
+            Line:
+                width: 1
+                rectangle: 907, 724, 247, 40
+
+            # Tab 3 (Attachment)
+            Line:
+                width: 1
+                rectangle: 907, 285, 247, 40
+    Layers:
+        id: layers
+
+    Widgets:
+        id: widgets
+        FloatLayout:
+            # Left Column
+            MyButton:
+                id: btn1
+                pos_hint: {"x":0.13, "top":7.5}
+            MyButton:
+                id: btn2
+                pos_hint: {"x":0.13, "top":6.97}
+                text: "Start"
+                on_press : root.record()
+
+            MyButton:
+                id: btn3
+                pos_hint: {"x":0.13, "top":6.44}
+                text:"Stop"
 
 
-        # Secondary Display
-        # Rectangle:
-        #     pos: 934, 350
-        #     size: 580, 350
+            MyButton:
+                id: btn4
+                pos_hint: {"x":0.13, "top":5.91}
+                text: "STOP"
 
-        Color:
-            rgba: 0.55, 0.55, 0.55, 1
 
-        ## Light
-        # Tools Button Container (Left)
-        Rectangle:
-            pos: 0, 0
-            size: 127, 764
+            MyButton:
+                id: btn5
+                pos_hint: {"x":0.13, "top":5.38}
 
-        # Tools Button Container (Bottom)
-        Rectangle:
-            pos: 127, 40
-            size: 739, 130
+            MyButton:
+                id: btn6
+                pos_hint: {"x":0.13, "top":4.85}
 
-        # Toolbar Container (Top)
-        Rectangle:
-            pos: 0, 764
-            size: 1550, 40
+            MyButton:
+                id: btn7
+                pos_hint: {"x":0.13, "top":4.32}
 
-        # Tab 1 (Main Display)
-        Rectangle:
-            pos: 127, 724
-            size: 247, 40
+            MyButton:
+                id: btn8
+                pos_hint: {"x":0.13, "top":3.79}
 
-        # Tab 2 (Secondary Display)
-        Rectangle:
-            pos: 906, 724
-            size: 247, 40
+            # Right Column
+            MyButton:
+                id: btn9
+                pos_hint: {"x":0.67, "top":7.5}
 
-        # Tab 3 (Attachment)
-        Rectangle:
-            pos: 906, 285
-            size: 247, 40
+            MyButton:
+                id: btn10
+                pos_hint: {"x": 0.67, "top": 6.97}
 
-        ## Dark
-        Color:
-            rgba: 0.32, 0.32, 0.32, 1
+            MyButton:
+                id: btn11
+                pos_hint: {"x": 0.67, "top": 6.44}
 
-        # Tab 1 (Main Display)
-        Rectangle:
-            pos: 374, 724
-            size: 532, 40
+            MyButton:
+                id: btn12
+                pos_hint: {"x": 0.67, "top": 5.91}
 
-        # Tab 2 (Secondary Display)
-        Rectangle:
-            pos: 1153, 724
-            size: 382, 40
+            MyButton:
+                id: btn13
+                pos_hint: {"x": 0.67, "top": 5.38}
 
-        # Tab 3 (Attachment)
-        Rectangle:
-            pos: 1153, 285
-            size: 382, 39
+            MyButton:
+                id: btn14
+                pos_hint: {"x": 0.67, "top": 4.85}
 
-        # Middle (Display Divider)
-        Rectangle:
-            pos: 866, 0
-            size: 40, 724
+            MyButton:
+                id: btn15
+                pos_hint: {"x": 0.67, "top": 4.32}
 
-        # Bottom
-        Rectangle:
-            pos: 127, 0
-            size: 1423, 40
+            MyButton:
+                id: btn16
+                pos_hint: {"x": 0.67, "top": 3.79}
+                text: "Clear"
+                on_press: root.clearCanvas()
 
-        ## Border
-        Color:
-            rgba: 0.44, 0.44, 0.44, 1
+            Spinner:
+                # Assigning id
+                id: spinner_id
 
-        # Left Container
-        Line:
-            width: 1
-            rectangle: 0, 0, 127, 764
+                # Callback
+                on_text: root.spinner_clicked(spinner_id.text)
+                background_normal: ''
+                background_color: 0.1, 0.5, 0.6, 1
+                # initially text on spinner
+                text: "Layer 1"
+                on_release:
+                    self.background_color= 0.1, 0.5, 0.6, 1
+                # total values on spinner
+                values: ["Layer 1", "Layer 2", "Layer 3"]
 
-        # Top
-        Line:
-            width: 1
-            rectangle: self.x, 765, self.width, self.height
+                # declaring size of the spinner
+                # and the position of it
+                size_hint: None, None
+                size: 200, 40
+                pos_hint:{'center_x':10.25, 'top': 3.26}
 
-        Color:
-            rgba: 0.23, 0.23, 0.23, 1
 
-        # Tab 1 (Main Display)
-        Line:
-            width: 1
-            rectangle: 128, 724, 247, 40
+        KivyCamera:
+            id: qrcam
+            pos: 958, 340
+            size: 532, 370
+            size_hint:(None,None)
 
-        # Tab 2 (Secondary Display)
-        Line:
-            width: 1
-            rectangle: 907, 724, 247, 40
 
-        # Tab 3 (Attachment)
-        Line:
-            width: 1
-            rectangle: 907, 285, 247, 40
 
-    FloatLayout:
-        # Left Column
-        Button:
-            id: btn1
-            pos_hint: {"x":0.13, "top":7.5}
-            on_press: root.show_popup()
 
-        Button:
-            id: btn2
-            pos_hint: {"x":0.13, "top":6.97}
-            text: "Start"
-            on_press: root.startRecording()
+<CheckScreen>:
 
-        Button:
-            id: btn3
-            pos_hint: {"x":0.13, "top":6.44}
-            text:"Stop"
-            on_press: root.stopRecording()
-
-        Button:
-            id: btn4
-            pos_hint: {"x":0.13, "top":5.91}
-            text: "STOP"
-            on_press : root.do_exit()
-
-        Button:
-            id: btn5
-            pos_hint: {"x":0.13, "top":5.38}
-
-        Button:
-            id: btn6
-            pos_hint: {"x":0.13, "top":4.85}
-
-        Button:
-            id: btn7
-            pos_hint: {"x":0.13, "top":4.32}
-
-        Button:
-            id: btn8
-            pos_hint: {"x":0.13, "top":3.79}
-
-        # Right Column
-        Button:
-            id: btn9
-            pos_hint: {"x":0.67, "top":7.5}
-
-        Button:
-            id: btn10
-            pos_hint: {"x": 0.67, "top": 6.97}
-
-        Button:
-            id: btn11
-            pos_hint: {"x": 0.67, "top": 6.44}
-            text: "quit"
-            on_press: root.doexit()
-
-        Button:
-            id: btn12
-            pos_hint: {"x": 0.67, "top": 5.91}
-
-        Button:
-            id: btn13
-            pos_hint: {"x": 0.67, "top": 5.38}
-
-        Button:
-            id: btn14
-            pos_hint: {"x": 0.67, "top": 4.85}
-
-        Button:
-            id: btn15
-            pos_hint: {"x": 0.67, "top": 4.32}
-
-        Button:
-            id: btn16
-            pos_hint: {"x": 0.67, "top": 3.79}
-
-    KivyCamera:
-        id: qrcam
-        pos: 958, 340
-        size: 532, 370
-        size_hint:(None,None)
+    Button:
+        color: 1,1,1,1
+        size_hint : None, None
+        post_hint : {'center_x':.5, 'top': 0.2}
+        size :100, 50
+        on_press: root.check()
+        text: "CHECK"
+        font_size: 20
 
     # BoxLayout:
     #     pos: 934, 350
