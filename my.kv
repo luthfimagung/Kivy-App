@@ -21,8 +21,6 @@
     size_hint: 0.44,0.44
     background_color: 0.1, 0.5, 0.6, 1
 
-<MyButton2@Button>:
-    background_color: 0,1,1,0
 
 <MainScreen>:
     widgets :widgets
@@ -121,7 +119,6 @@
                 rectangle: 907, 285, 247, 40
     Layers:
         id: layers
-
     Widgets:
         id: widgets
         FloatLayout:
@@ -208,6 +205,15 @@
                 on_press:
                     root.Record(self.values)
 
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                size: 600, 230
+                pos_hint:{'center_x':12.25, 'top': 2.9}
+                FileChooserListView:
+                    id:filechooser
+                    on_selection: root.selectFile(filechooser.selection)
+
             Spinner:
                     # Assigning id
                 id: spinner_id
@@ -226,7 +232,6 @@
                 size_hint: None, None
                 size: 200, 40
                 pos_hint:{'center_x':10.25, 'top': 3.26}
-
 
         KivyCamera:
             id: qrcam

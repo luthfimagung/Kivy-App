@@ -214,8 +214,8 @@ class KivyCamera(Image):
         frame = cv2.resize(frame, (720, 480))
         img = cv2.resize(img, (720, 480))
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        u_green = np.array([104, 153, 70])
-        l_green = np.array([30, 30, 0])
+        u_green = np.array([60, 60, 60])
+        l_green = np.array([0, 0, 0])
         mask = cv2.inRange(frame, l_green, u_green)
         res = cv2.bitwise_and(frame, frame, mask = mask)
         f = frame-res
@@ -286,21 +286,29 @@ class Layers(Widgets):
 
     def clearCanvas(self):
         self.canvas.clear()
+        if self.layerUtama == 1:
+            self.layer1 = None
+        if self.layerUtama == 2 :
+            self.layer2 = None
+        if self.layerUtama == 3 :
+            self.layer3 = None
         self.start(self.layerUtama)
-        self.changeBackground(None)
+        self.changeBackground('')
 
     def changeLayer(self, values):
         print(values)
+        img = None
         if self.layerUtama == 1:
-            img = ImageGrab.grab(bbox=((200,155,940,800)))
+            img = ImageGrab.grab(bbox=((200,155,1050,800)))
             img = img.save(self.temp1)
             self.layer1 =self.temp1
             if str(values) == "Layer 2":
                 self.layerUtama = 2
             else : self.layerUtama = 3
 
+
         elif self.layerUtama == 2:
-            img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
+            img = ImageGrab.grab(bbox=((200, 155, 1050, 800)))
             img = img.save(self.temp2)
             self.layer2 = self.temp2
             if str(values) == "Layer 1":
@@ -348,7 +356,8 @@ class MainScreen(Screen):
                 defaultFile = "Video"+str(fileNum)+".mp4"
 
         os.chdir("..")
-        print(os.path.abspath('temp.mp4'))
+        self.ids.filechooser.path = os.path.abspath('tempFile')
+        # print(os.path.abspath('temp.mp4'))
         #FILE NAME
         self.defaultFile = defaultFile
 
@@ -409,7 +418,8 @@ class MainScreen(Screen):
                 print(str(e) + " || ERROR")
 
             self.start()
-
+    def selectFile(self, filename):
+        self.ids.layers.changeBackground(filename[0])
 
 class CheckScreen(Screen):
     def __init__(self, **kwargs):
