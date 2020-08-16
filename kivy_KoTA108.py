@@ -2,7 +2,7 @@
 import kivy
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.relativelayout import RelativeLayout
@@ -260,14 +260,17 @@ class Layers(Widgets):
     def start(self, values):
         with self.canvas:
             Color(1,1,1,1)
-            self.rec = Rectangle(id = "test", source="", pos= (155, 200), size= (685, 500))
+            self.rec = Image(source = "", pos= (155, 200), size= (685, 500))
+
 
         if values == 1:
             if self.layer1 != None:
                 self.changeBackground(self.layer1)
+
         elif values == 2:
             if self.layer2 != None:
                 self.changeBackground(self.layer2)
+
         elif values == 3 :
             if self.layer3 != None:
                 self.changeBackground(self.layer3)
@@ -281,47 +284,48 @@ class Layers(Widgets):
         self.canvas.add(touch.ud['line'])
 
     def on_touch_move(self, touch):
-        if (touch.x >=155.0 and touch.x <840.0 ) and (touch.y>=200.0 and touch.y<700.0):
+        if (touch.x >155.0 and touch.x <840.0 ) and (touch.y>210.0 and touch.y<680.0):
             touch.ud['line'].points +=[touch.x, touch.y]
 
     def clearCanvas(self):
         self.canvas.clear()
-        if self.layerUtama == 1:
-            self.layer1 = None
-        if self.layerUtama == 2 :
-            self.layer2 = None
-        if self.layerUtama == 3 :
-            self.layer3 = None
         self.start(self.layerUtama)
         self.changeBackground('')
 
+
+
     def changeLayer(self, values):
-        print(values)
-        img = None
         if self.layerUtama == 1:
-            img = ImageGrab.grab(bbox=((200,155,1050,800)))
+            print("LAYER 1")
+            img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
             img = img.save(self.temp1)
-            self.layer1 =self.temp1
+            imgtemp = Image(source=self.temp1)
+            imgtemp.reload()
+            self.layer1 = self.temp1
             if str(values) == "Layer 2":
                 self.layerUtama = 2
             else : self.layerUtama = 3
-
-
         elif self.layerUtama == 2:
-            img = ImageGrab.grab(bbox=((200, 155, 1050, 800)))
+            print("LAYER 2")
+            img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
             img = img.save(self.temp2)
+            imgtemp = Image(source=self.temp2)
+            imgtemp.reload()
             self.layer2 = self.temp2
             if str(values) == "Layer 1":
                 self.layerUtama = 1
             else: self.layerUtama = 3
-
         elif self.layerUtama == 3 :
-            img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
+            print("LAYER 3")
+            img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
             img = img.save(self.temp3)
+            imgtemp = Image(source=self.temp3)
+            imgtemp.reload()
             self.layer3 = self.temp3
             if str(values) == "Layer 1":
                 self.layerUtama = 1
             else: self.layerUtama = 2
+        print(self.layerUtama)
         self.canvas.clear()
         self.start(self.layerUtama)
 
@@ -433,13 +437,13 @@ class CheckScreen(Screen):
 
 
     def detectCamera(self):
-        cap = cv2.VideoCapture(0)
-        if cap.isOpened():
-            self.checkCamera = True
-            self.ids.detectCamera.background_normal = 'assets/camerabordered.png'
-            self.ids.imgCheckCamera.source = 'assets/check.png'
-            self.finishCheck()
-        cap.release()
+        # cap = cv2.VideoCapture(0)
+        # if cap.isOpened():
+        #     self.ids.imgCheckCamera.source = 'assets/check.png'
+        # cap.release()
+        self.ids.detectCamera.background_normal = 'assets/camerabordered.png'
+        self.checkCamera = True
+        self.finishCheck()
 
     def detectPentab(self):
         self.checkPentab = True
