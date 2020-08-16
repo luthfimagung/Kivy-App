@@ -5,12 +5,16 @@
     id: manager
     check_screen :check
     main_screen: main
+    green_screen: green
     #check Screen
     CheckScreen:
         id:check
         name:"check"
         manager: manager
-
+    CheckGreenScreen:
+        id:green
+        name: "green"
+        manager: manager
     MainScreen:
         id: main
         name:"main"
@@ -21,11 +25,93 @@
     size_hint: 0.44,0.44
     background_color: 0.1, 0.5, 0.6, 1
 
+<MySlider@Slider>:
+    size_hint: None, None
+    width: '250dp'
+
+<CheckGreenScreen>:
+    widget2:widget2
+    qrcam : qrcam
+    Widget2:
+        id:widget2
+        BoxLayout:
+            orientation: "vertical"
+            padding: 50
+            size: 600,200
+            pos: 450, 100
+            canvas:
+                Color:
+                    rgba: 0.2,0,1,1
+                Rectangle:
+                    pos: 450, 150
+                    size: 600, 200
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:0.9, 0.1
+                cols:2
+                Label:
+                    id: labelRed
+                    size_hint: None, None
+                    pos_hint:{"x":0.1,"y":0.9}
+                    text: "Red = 60"
+                MySlider:
+                    id:sliderRed
+                    size_hint: 0.9, None
+                    pos_hint:{"x":0.6,"y":0.9}
+                    min:60
+                    max:255
+                    value: 60
+                    on_value:root.changeRed(self.value)
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:0.9,None
+                cols:2
+                Label:
+                    id: labelGreen
+                    size_hint: None, None
+                    pos_hint:{"x":0.1,"y":0.5}
+                    text: "Green = 255"
+                MySlider:
+                    size_hint: 0.9, None
+                    id: sliderGreen
+                    pos_hint:{"x":0.6,"y":0.5}
+                    min:60
+                    max:255
+                    value: 255
+                    on_value:root.changeGreen(self.value)
+
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint:0.9,0.8
+                cols:2
+                Label:
+                    id: labelBlue
+                    size_hint: None, None
+                    pos_hint:{"x":0.1,"y":0.1}
+                    text: "Blue = 60"
+                MySlider:
+                    size_hint: 0.9, None
+                    id: sliderBlue
+                    pos_hint:{"x":0.6,"y":0.1}
+                    min:60
+                    max:255
+                    value: 60
+                    on_value:root.changeBlue(self.value)
+
+        FloatLayout:
+            Button:
+                text: "Next Screen"
+                on_press: root.doneSetting()
+        KivyCamera:
+            id: qrcam
+            pos: 500, 400
+            size: 532, 370
+            size_hint:(None,None)
+
 
 <MainScreen>:
     widgets :widgets
     qrcam: qrcam
-
     FrontEnd:
         id: frontend
         canvas:

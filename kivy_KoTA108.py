@@ -188,9 +188,12 @@ class FrontEnd(FloatLayout):
 class FloatLayout(FloatLayout):
     pass
 class KivyCamera(Image):
-    def start(self, capture):
-
+    def start(self, capture, red, green, blue, statusCek):
+        self.greenValue = green
+        self.redValue = red
+        self.blueValue = blue
         self.capture = capture
+        self.statusCheck = statusCek
         self.statusRecord = False
         self.fps = 30
         Clock.schedule_interval(self.update, 1.0/self.fps)
@@ -207,15 +210,34 @@ class KivyCamera(Image):
         self.out.release()
         self.capture.release()
 
+    def stopCheck(self):
+        Clock.unschedule(self.update)
+        self.capture.release()
+
+    def changeRedValue(self, value):
+        self.redValue = value
+
+    def changeBlueValue(self, value):
+        self.blueValue = value
+
+    def changeGreenValue(self, value):
+        self.greenValue = value
+
+    def backgroundStatus(self):
+        if self.statusCheck == False:
+            img = cv2.imread("background/background.jpg")
+        else:
+            img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
+            img = np.array(img)
+
+        return img
     def greenScreen(self,frame):
-        # img = cv2.imread("background/background.jpg")
-        img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
-        img = np.array(img)
+        img =self.backgroundStatus()
         frame = cv2.resize(frame, (720, 480))
         img = cv2.resize(img, (720, 480))
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        u_green = np.array([60, 60, 60])
-        l_green = np.array([0, 0, 0])
+        u_green = np.array([self.redValue, self.greenValue, self.blueValue])
+        l_green = np.array([self.redValue - 59, self.greenValue - 59, self.blueValue - 59])
         mask = cv2.inRange(frame, l_green, u_green)
         res = cv2.bitwise_and(frame, frame, mask = mask)
         f = frame-res
@@ -261,16 +283,12 @@ class Layers(Widgets):
         with self.canvas:
             Color(1,1,1,1)
             self.rec = Image(source = "", pos= (155, 200), size= (685, 500))
-
-
         if values == 1:
             if self.layer1 != None:
                 self.changeBackground(self.layer1)
-
         elif values == 2:
             if self.layer2 != None:
                 self.changeBackground(self.layer2)
-
         elif values == 3 :
             if self.layer3 != None:
                 self.changeBackground(self.layer3)
@@ -292,8 +310,6 @@ class Layers(Widgets):
         self.start(self.layerUtama)
         self.changeBackground('')
 
-
-
     def changeLayer(self, values):
         if self.layerUtama == 1:
             print("LAYER 1")
@@ -304,7 +320,7 @@ class Layers(Widgets):
             self.layer1 = self.temp1
             if str(values) == "Layer 2":
                 self.layerUtama = 2
-            else : self.layerUtama = 3
+            else: self.layerUtama = 3
         elif self.layerUtama == 2:
             print("LAYER 2")
             img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
@@ -331,7 +347,7 @@ class Layers(Widgets):
 
 
 class MainScreen(Screen):
-    def start(self):
+    def start(self, red, green, blue):
         #MELAKUKAN PENGECEKAN UNTUK FILE
         try:
             os.mkdir("temp")
@@ -381,7 +397,7 @@ class MainScreen(Screen):
         self.ids.layers.start(None)
 
         #DISPLAY CAMERA
-        self.ids.qrcam.start(self.capture)
+        self.ids.qrcam.start(self.capture, red, green, blue, True)
 
     #MENGHAPUS SEMUA ISI LAYER
     def clearCanvas(self):
@@ -425,6 +441,42 @@ class MainScreen(Screen):
     def selectFile(self, filename):
         self.ids.layers.changeBackground(filename[0])
 
+
+class CheckGreenScreen(Screen):
+    def start(self):
+        self.redValue = 60
+        self.greenValue = 255
+        self.blueValue = 60
+        self.capture = cv2.VideoCapture(0)
+        self.ids.qrcam.start(self.capture, self.redValue, self.greenValue, self.blueValue, False)
+
+    def changeRed(self, value):
+        value = int(value)
+        self.ids.labelRed.text = "Red = " + str(value)
+        self.redValue = value
+        self.ids.qrcam.changeRedValue(value)
+
+    def changeGreen(self, value):
+        value = int(value)
+        self.ids.labelGreen.text = "Green = " + str(value)
+        self.greenValue = value
+        self.ids.qrcam.changeGreenValue(value)
+
+    def changeBlue(self, value):
+        value = int(value)
+        self.ids.labelBlue.text = "Blue = " + str(value)
+        self.blueValue = value
+        self.ids.qrcam.changeBlueValue(value)
+
+    def doneSetting(self):
+        self.ids.qrcam.stopCheck()
+        self.capture.release()
+        self.manager.get_screen("main").start(self.redValue, self.greenValue, self.blueValue)
+        self.manager.current= "main"
+
+class Widget2(Widget):
+    pass
+
 class CheckScreen(Screen):
     def __init__(self, **kwargs):
         super(CheckScreen, self).__init__(**kwargs)
@@ -432,18 +484,18 @@ class CheckScreen(Screen):
         self.checkCamera = False
 
     def check(self):
-        self.manager.get_screen("main").start()
-        self.manager.current = "main"
+        self.manager.get_screen("green").start()
+        self.manager.current = "green"
 
 
     def detectCamera(self):
-        # cap = cv2.VideoCapture(0)
-        # if cap.isOpened():
-        #     self.ids.imgCheckCamera.source = 'assets/check.png'
-        # cap.release()
-        self.ids.detectCamera.background_normal = 'assets/camerabordered.png'
-        self.checkCamera = True
-        self.finishCheck()
+        cap = cv2.VideoCapture(0)
+        if cap.isOpened():
+            self.checkCamera = True
+            self.ids.imgCheckCamera.source = 'assets/check.png'
+            self.ids.detectCamera.background_normal = 'assets/camerabordered.png'
+            self.finishCheck()
+            cap.release()
 
     def detectPentab(self):
         self.checkPentab = True
