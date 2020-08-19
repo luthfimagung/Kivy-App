@@ -3,7 +3,7 @@
 
 <Manager>:
     id: manager
-    check_screen :check
+    check_screen: check
     main_screen: main
     green_screen: green
     #check Screen
@@ -38,16 +38,30 @@
             orientation: "vertical"
             padding: 50
             size: 600,200
-            pos: 450, 100
+            pos: 166, 110
             canvas:
                 Color:
-                    rgba: 0.2,0,1,1
+                    rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
-                    pos: 450, 150
-                    size: 600, 200
+                    pos: 150, 150
+                    size: 1200, 250
+
+            BoxLayout:
+                orientation:"vertical"
+                size_hint: 0.9, None
+                cols:2
+                canvas:
+                    Color:
+                        rgba: 0.25, 0.25, 0.25, 1
+                    Rectangle:
+                        pos: 800, 170
+                        size: 510, 175
+                    Rectangle:
+                        pos: 190, 170
+                        size: 510, 175
             BoxLayout:
                 orientation:"horizontal"
-                size_hint:0.9, 0.1
+                size_hint: 0.9, 0.1
                 cols:2
                 Label:
                     id: labelRed
@@ -98,10 +112,27 @@
                     value: 60
                     on_value:root.changeBlue(self.value)
 
+            FloatLayout:
+                Label:
+                    id: labelFile
+                    text: "Select Background File..."
+                    font_size: 18
+                    pos: 649, 372
+                Label:
+                    id: labelFile
+                    text: "Adjust Background Color"
+                    font_size: 18
+                    pos: 40, 372
+
         FloatLayout:
             Button:
                 text: "Next Screen"
+                pos: 650, 65
+                size_hint: (None,None)
+                size: 200, 75
+                font_size: 18
                 on_press: root.doneSetting()
+
         KivyCamera:
             id: qrcam
             pos: 500, 400
