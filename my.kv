@@ -1,5 +1,7 @@
 #: import FadeTransition kivy.uix.screenmanager.FadeTransition
 #: import SlideTransition kivy.uix.screenmanager.SlideTransition
+#: import Layout3D kivy3dgui.layout3d
+#: import Animation kivy.animation.Animation
 
 <Manager>:
     id: manager
@@ -62,6 +64,7 @@
                     max:255
                     value: 60
                     on_value:root.changeRed(self.value)
+
             BoxLayout:
                 orientation:"horizontal"
                 size_hint:0.9,None
@@ -102,11 +105,123 @@
             Button:
                 text: "Next Screen"
                 on_press: root.doneSetting()
-        KivyCamera:
-            id: qrcam
-            pos: 500, 400
-            size: 532, 370
-            size_hint:(None,None)
+        Layout3D:
+            id: par
+            look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
+            canvas_size: (1366, 768)
+            size: 500,360
+            pos: 400,400
+            post_processing: False
+            shadow: False
+            canvas.before:
+                Color:
+                    rgb: 1, 0.2, 1,1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                    source: "./data/imgs/background.jpg"
+            Node:
+                id: Node1
+                name: 'Node1'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 1, 1)
+                eceive_shadows : False
+                translate: (0, -10, -60)
+                meshes: ("./data/objtest/PLANE2.obj", )
+                Button:
+                    disabled: True
+                    background_disabled_normal : ("./data/imgs/alas.png")
+
+            Node:
+                id: Node2
+                name: 'Node1'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 1, 1)
+                translate: (0, -10, -60)
+                receive_shadows : False
+                meshes: ("./data/obj/obj.obj", )
+                Button:
+                    disabled: True
+                    background_disabled_normal: ("./data/imgs/background1.png")
+
+            Node:
+                id: Node3
+                name: 'Node1'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 1, 1)
+                translate: (6, -10, -60)
+                receive_shadows : False
+                meshes: ("./data/objtest/papan.obj", )
+                FloatLayout:
+                    Button:
+                        disabled: True
+                        background_disabled_normal: ("./data/imgs/background.jpg")
+                    Image:
+                        size_hint: .9, .9
+                        pos_hint:{"x": 0.05, "y":0.05}
+                        allow_stretch: True
+                        source: "./data/imgs/modern2.png"
+                        canvas.before:
+                            PushMatrix
+                            Rotate:
+                                angle: 180
+                                axis: 0,0,1
+                                origin: self.center
+                        canvas.after:
+                            PopMatrix
+
+            Node:
+                id: Node5
+                name: 'Node1'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 1, 1)
+                translate: (0, -9, -60)
+                receive_shadows : False
+                meshes: ("./data/objtest/tatakanKamera.obj", )
+                FloatLayout:
+                    Button:
+                        disabled: True
+                        background_disabled_normal: ("./data/imgs/background1.png")
+                    KivyCamera:
+                        id: qrcam
+                        size_hint: .6, .6
+                        pos_hint:{"x": 0.2, "y":0.2}
+                        allow_stretch: True
+                        canvas.before:
+                            PushMatrix
+                            Rotate:
+                                angle: 180
+                                axis: 0,0,1
+                                origin: self.center
+                        canvas.after:
+                            PopMatrix
+
+            Node:
+                id: Node4
+                name: 'Node1'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 1, 1)
+                translate: (-2, -10, -60)
+                receive_shadows : False
+                meshes: ("./data/objtest/meja.obj", )
+                FloatLayout:
+                    Button:
+                        disabled: True
+                        background_disabled_normal: ("./data/imgs/background.jpg")
+
+                    Image:
+                        size_hint: 0.7, 0.7
+                        pos_hint:{"x": 0.15, "y":0.1}
+                        allow_stretch: True
+                        source: "./data/imgs/worldtex.png"
+                        canvas.before:
+                            PushMatrix
+                            Rotate:
+                                angle: 180
+                                axis: 0,0,1
+                                origin: self.center
+                        canvas.after:
+                            PopMatrix
 
 
 <MainScreen>:
@@ -291,6 +406,16 @@
                 on_press:
                     root.Record(self.values)
 
+            MyButton:
+                id: animasi1
+                size_hint: None, None
+                size: 150, 39
+                text: "Animasi 1"
+                pos_hint:{"x":6.5, "top": 1.63}
+
+                on_press:
+                    root.AnimationRoot()
+
             BoxLayout:
                 orientation: 'vertical'
                 size_hint: None, None
@@ -319,11 +444,126 @@
                 size: 200, 40
                 pos_hint:{'center_x':10.25, 'top': 3.26}
 
-        KivyCamera:
-            id: qrcam
-            pos: 958, 340
-            size: 532, 370
-            size_hint:(None,None)
+
+    Layout3D:
+        id: par
+        look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
+        canvas_size: (1366, 768)
+        size_hint: 0.405, 0.48
+        pos: 910, 330
+
+        post_processing: False
+        shadow: False
+        canvas.before:
+            Color:
+                rgb: 1, 0.2, 1,1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: "./data/imgs/background.jpg"
+        Node:
+            id: Node1
+            name: 'Node1'
+            rotate: (-90, 0, 1, 0)
+            scale: (0.5, 1, 1)
+            eceive_shadows : False
+            translate: (0, -10, -60)
+            meshes: ("./data/objtest/PLANE2.obj", )
+            Button:
+                disabled: True
+                background_disabled_normal : ("./data/imgs/alas.png")
+
+        Node:
+            id: Node2
+            name: 'Node1'
+            rotate: (-90, 0, 1, 0)
+            scale: (0.5, 1, 1)
+            translate: (0, -10, -60)
+            receive_shadows : False
+            meshes: ("./data/obj/obj.obj", )
+            Button:
+                disabled: True
+                background_disabled_normal: ("./data/imgs/background1.png")
+
+        Node:
+            id: Node3
+            name: 'Node1'
+            rotate: (-90, 0, 1, 0)
+            scale: (0.5, 1, 1)
+            translate: (6, -10, -60)
+            receive_shadows : False
+            meshes: ("./data/objtest/papan.obj", )
+            FloatLayout:
+                Button:
+                    disabled: True
+                    background_disabled_normal: ("./data/imgs/background.jpg")
+                LayersImage:
+                    id: layersImage
+                    size_hint: 1, 1
+                    pos_hint:{"x": 0, "y":0}
+                    allow_stretch: True
+                    canvas.before:
+                        PushMatrix
+                        Rotate:
+                            angle: 180
+                            axis: 0,0,1
+                            origin: self.center
+                    canvas.after:
+                        PopMatrix
+
+        Node:
+            id: Node5
+            name: 'Node1'
+            rotate: (-90, 0, 1, 0)
+            scale: (0.5, 1, 1)
+            translate: (0, -9, -60)
+            receive_shadows : False
+            meshes: ("./data/objtest/tatakanKamera.obj", )
+            FloatLayout:
+                Button:
+                    disabled: True
+                    background_disabled_normal: ("./data/imgs/background1.png")
+                KivyCamera:
+                    id: qrcam
+                    size_hint: .6, .6
+                    pos_hint:{"x": 0.2, "y":0.2}
+                    allow_stretch: True
+                    canvas.before:
+                        PushMatrix
+                        Rotate:
+                            angle: 180
+                            axis: 0,0,1
+                            origin: self.center
+                    canvas.after:
+                        PopMatrix
+
+        Node:
+            id: Node4
+            name: 'Node1'
+            rotate: (-90, 0, 1, 0)
+            scale: (0.5, 1, 1)
+            translate: (-2, -10, -60)
+            receive_shadows : False
+            meshes: ("./data/objtest/meja.obj", )
+            FloatLayout:
+                Button:
+                    disabled: True
+                    background_disabled_normal: ("./data/imgs/background.jpg")
+
+                Image:
+                    size_hint: 0.7, 0.7
+                    pos_hint:{"x": 0.15, "y":0.1}
+                    allow_stretch: True
+                    source: "./data/imgs/worldtex.png"
+                    canvas.before:
+                        PushMatrix
+                        Rotate:
+                            angle: 180
+                            axis: 0,0,1
+                            origin: self.center
+                    canvas.after:
+                        PopMatrix
+
 
 
 

@@ -10,6 +10,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.config import Config
+from kivy.animation import Animation
 from kivy.core.window import Window
 from kivy.graphics import Canvas
 from kivy.uix.image import Image
@@ -85,7 +86,6 @@ void main()
 
 
 class Background():
-
     def build(self):
         # glfw callback functions
         def window_resize(window, width, height):
@@ -187,6 +187,28 @@ class FrontEnd(FloatLayout):
 
 class FloatLayout(FloatLayout):
     pass
+
+class LayersImage(Image):
+    def start(self):
+        self.fps = 30
+        Clock.schedule_interval(self.update, 1.0/self.fps)
+    def update(self, dt):
+        img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
+        img = np.array(img)
+        texture = self.texture
+        w, h = img.shape[1], img.shape[0]
+        scale_percent = 100
+        width = int(w * scale_percent / 100)
+        height = int(h * scale_percent / 100)
+        dim = (width, height)
+
+        resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+        if not texture or texture.width != w or texture.height != h:
+            self.texture = texture = Texture.create(size=(width, height))
+            texture.flip_vertical()
+        texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
+        self.canvas.ask_update()
+
 class KivyCamera(Image):
     def start(self, capture, red, green, blue, statusCek):
         self.greenValue = green
@@ -196,6 +218,7 @@ class KivyCamera(Image):
         self.statusCheck = statusCek
         self.statusRecord = False
         self.fps = 30
+        self.img = cv2.imread("data/imgs/background1.png")
         Clock.schedule_interval(self.update, 1.0/self.fps)
 
     def startRecord(self):
@@ -223,18 +246,10 @@ class KivyCamera(Image):
     def changeGreenValue(self, value):
         self.greenValue = value
 
-    def backgroundStatus(self):
-        if self.statusCheck == False:
-            img = cv2.imread("background/background.jpg")
-        else:
-            img = ImageGrab.grab(bbox=((200, 155, 940, 800)))
-            img = np.array(img)
 
-        return img
     def greenScreen(self,frame):
-        img =self.backgroundStatus()
         frame = cv2.resize(frame, (720, 480))
-        img = cv2.resize(img, (720, 480))
+        img = cv2.resize(self.img, (720, 480))
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         u_green = np.array([self.redValue, self.greenValue, self.blueValue])
         l_green = np.array([self.redValue - 59, self.greenValue - 59, self.blueValue - 59])
@@ -395,7 +410,7 @@ class MainScreen(Screen):
 
         #DISPLAY LAYER
         self.ids.layers.start(None)
-
+        self.ids.layersImage.start()
         #DISPLAY CAMERA
         self.ids.qrcam.start(self.capture, red, green, blue, True)
 
@@ -438,6 +453,14 @@ class MainScreen(Screen):
                 print(str(e) + " || ERROR")
 
             self.start()
+    def AnimationRoot(self):
+        Animation(translate=(2, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node2)
+        Animation(translate=(0, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node4)
+        Animation(translate=(2, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node5)
+        Animation(translate=(8, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node3)
+        Animation(translate=(2, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node1)
+        Animation(look_at = [5, 15, 15, 0, 15, -20, 0, 1, 0], duration=4).start(self.ids.par)
+
     def selectFile(self, filename):
         self.ids.layers.changeBackground(filename[0])
 
