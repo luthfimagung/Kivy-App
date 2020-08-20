@@ -297,6 +297,7 @@ class Layers(Widgets):
     def start(self, values):
         with self.canvas:
             Color(1,1,1,1)
+            self.can = Rectangle(pos= (155, 200), size= (685, 500))
             self.rec = Image(source = "", pos= (155, 200), size= (685, 500))
         if values == 1:
             if self.layer1 != None:
