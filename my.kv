@@ -136,17 +136,13 @@
                 font_size: 18
                 on_press: root.doneSetting()
 
-        KivyCamera:
-            id: qrcam
-            pos: 500, 400
-            size: 532, 370
-            size_hint:(None,None)
+
         Layout3D:
             id: par
             look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
             canvas_size: (1366, 768)
             size: 500,360
-            pos: 400,400
+            pos: 500,400
             post_processing: False
             shadow: False
             canvas.before:
@@ -196,7 +192,7 @@
                         size_hint: .9, .9
                         pos_hint:{"x": 0.05, "y":0.05}
                         allow_stretch: True
-                        source: "./data/imgs/modern2.png"
+                        source: "./data/imgs/polban.png"
                         canvas.before:
                             PushMatrix
                             Rotate:
@@ -248,7 +244,7 @@
                         size_hint: 0.7, 0.7
                         pos_hint:{"x": 0.15, "y":0.1}
                         allow_stretch: True
-                        source: "./data/imgs/worldtex.png"
+                        source: "./data/imgs/polban.png"
                         canvas.before:
                             PushMatrix
                             Rotate:
@@ -445,7 +441,6 @@
                 size: 150, 39
                 text: "Animasi 1"
                 pos_hint:{"x":6.5, "top": 1.63}
-
                 on_press:
                     root.AnimationRoot()
 
@@ -478,13 +473,12 @@
                 pos_hint:{'center_x':10.25, 'top': 3.26}
 
 
-    Layout3D:
+    TestingPlish:
         id: par
         look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
         canvas_size: (1366, 768)
         size_hint: 0.405, 0.48
         pos: 910, 330
-
         post_processing: False
         shadow: False
         canvas.before:
@@ -587,7 +581,7 @@
                     size_hint: 0.7, 0.7
                     pos_hint:{"x": 0.15, "y":0.1}
                     allow_stretch: True
-                    source: "./data/imgs/worldtex.png"
+                    source: "./data/imgs/polban.png"
                     canvas.before:
                         PushMatrix
                         Rotate:

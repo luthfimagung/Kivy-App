@@ -22,7 +22,7 @@ from kivy.resources import resource_find
 from kivy.graphics.transformation import Matrix
 from kivy.graphics.opengl import *
 from kivy.graphics import *
-
+from kivy3dgui.layout3d import Layout3D
 #OpenCV
 import cv2
 import ffmpeg
@@ -192,9 +192,13 @@ class LayersImage(Image):
     def start(self):
         self.fps = 30
         Clock.schedule_interval(self.update, 1.0/self.fps)
+    def stop(self):
+        Clock.unschedule(self.update())
     def update(self, dt):
+
         img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
         img = np.array(img)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         texture = self.texture
         w, h = img.shape[1], img.shape[0]
         scale_percent = 100
@@ -210,30 +214,17 @@ class LayersImage(Image):
         self.canvas.ask_update()
 
 class KivyCamera(Image):
-    def start(self, capture, red, green, blue, statusCek):
+    def start(self, red, green, blue):
         self.greenValue = green
         self.redValue = red
         self.blueValue = blue
-        self.capture = capture
-        self.statusCheck = statusCek
+        self.capture = cv2.VideoCapture(0)
         self.statusRecord = False
         self.fps = 30
         self.img = cv2.imread("data/imgs/background1.png")
         Clock.schedule_interval(self.update, 1.0/self.fps)
 
-    def startRecord(self):
-        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-        self.out = cv2.VideoWriter('temp/temp.mp4', fourcc, 15.0, (720, 480))
-        self.statusRecord =True
-
-    def stopRecord(self):
-        Clock.unschedule(self.update)
-        print("Stop Recording")
-        self.statusRecord = False
-        self.out.release()
-        self.capture.release()
-
-    def stopCheck(self):
+    def stops(self):
         Clock.unschedule(self.update)
         self.capture.release()
 
@@ -246,10 +237,9 @@ class KivyCamera(Image):
     def changeGreenValue(self, value):
         self.greenValue = value
 
-
     def greenScreen(self,frame):
-        frame = cv2.resize(frame, (720, 480))
-        img = cv2.resize(self.img, (720, 480))
+        frame = cv2.resize(frame, (1280, 720))
+        img = cv2.resize(self.img, (1280, 720))
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         u_green = np.array([self.redValue, self.greenValue, self.blueValue])
         l_green = np.array([self.redValue - 59, self.greenValue - 59, self.blueValue - 59])
@@ -264,8 +254,6 @@ class KivyCamera(Image):
         frame = cv2.flip(frame, 1, None)
         frame = self.greenScreen(frame)
         if return_value:
-            if self.statusRecord == True:
-                self.out.write(frame)
             texture = self.texture
             w, h = frame.shape[1], frame.shape[0]
             scale_percent = 100
@@ -361,6 +349,32 @@ class Layers(Widgets):
         self.canvas.clear()
         self.start(self.layerUtama)
 
+class TestingPlish(Layout3D):
+    def start(self):
+        self.statusRecord = False
+        Clock.schedule_interval(self.update, 1.0/30)
+
+    def Recording(self):
+        fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+        self.out = cv2.VideoWriter('temp/temp.mp4', fourcc, 9.0, (1280, 720))
+        self.statusRecord = True
+
+    def stopRecording(self):
+        Clock.unschedule(self.update)
+        print("Stop Recording")
+        self.statusRecord = False
+        self.out.release()
+
+    def update(self, dt):
+        img = ImageGrab.grab(bbox=((1135, 135, 1918, 619)))
+        # img = self.export_as_image().
+        img = np.array(img)
+        # texture = Texture.create(size = self.size, colorfmt=)
+        # img = Image(texture)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = cv2.resize(img, (1280, 720))
+        if self.statusRecord == True:
+            self.out.write(img)
 
 class MainScreen(Screen):
     def start(self, red, green, blue):
@@ -392,6 +406,9 @@ class MainScreen(Screen):
                 defaultFile = "Video"+str(fileNum)+".mp4"
 
         os.chdir("..")
+        self.redValue = red
+        self.greenValue = green
+        self.blueValue = blue
         self.ids.filechooser.path = os.path.abspath('tempFile')
         # print(os.path.abspath('temp.mp4'))
         #FILE NAME
@@ -399,9 +416,6 @@ class MainScreen(Screen):
 
         #INISIASI FILE AUDIO
         self.audio = audioRec.audioRecord()
-
-        #INISIASI WEBCAM
-        self.capture = cv2.VideoCapture(0)
 
         #INISIASI LAYER
         self.layerUtama = 1
@@ -412,8 +426,9 @@ class MainScreen(Screen):
         #DISPLAY LAYER
         self.ids.layers.start(None)
         self.ids.layersImage.start()
+        self.ids.par.start()
         #DISPLAY CAMERA
-        self.ids.qrcam.start(self.capture, red, green, blue, True)
+        self.ids.qrcam.start( red, green, blue)
 
     #MENGHAPUS SEMUA ISI LAYER
     def clearCanvas(self):
@@ -423,6 +438,11 @@ class MainScreen(Screen):
     def spinner_clicked(self, values):
         self.ids.layers.changeLayer(values)
 
+    def cekCamera(self, value):
+        self.ids.par.start()
+        # img = ImageGrab.grab(bbox=((1135, 135, 1918, 619)))
+        # img = img.save("testing.jpg")
+
     #MEMULAI DAN MEMBERHENTIKAN
     def Record(self, value):
         if value == 1:
@@ -430,7 +450,7 @@ class MainScreen(Screen):
             self.statusRecord = True
             self.ids.record.values = 2
             self.audio.record("temp/temp.wav")
-            self.ids.qrcam.startRecord()
+            self.ids.par.Recording()
         else:
             self.ids.record.text = "Start"
             self.ids.record.values = 1
@@ -439,8 +459,8 @@ class MainScreen(Screen):
                 self.statusRecord = self.audio.getStatus()
                 time.sleep(0.5)
                 if self.statusRecord == False:
-                    self.ids.qrcam.stopRecord()
-                    self.capture.release()
+                    self.ids.par.stopRecording()
+                    self.ids.qrcam.stops()
             try:
                 #COMBINE FILE WAV AND MP4
                 # path1 = os.path.abspath('temp/temp.wav')
@@ -453,7 +473,7 @@ class MainScreen(Screen):
             except ffmpeg.Error as e:
                 print(str(e) + " || ERROR")
 
-            self.start()
+            self.start(self.redValue, self.greenValue, self.blueValue)
     def AnimationRoot(self):
         Animation(translate=(2, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node2)
         Animation(translate=(0, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node4)
@@ -471,8 +491,7 @@ class CheckGreenScreen(Screen):
         self.redValue = 60
         self.greenValue = 255
         self.blueValue = 60
-        self.capture = cv2.VideoCapture(0)
-        self.ids.qrcam.start(self.capture, self.redValue, self.greenValue, self.blueValue, False)
+        self.ids.qrcam.start( self.redValue, self.greenValue, self.blueValue)
 
     def changeRed(self, value):
         value = int(value)
@@ -493,8 +512,7 @@ class CheckGreenScreen(Screen):
         self.ids.qrcam.changeBlueValue(value)
 
     def doneSetting(self):
-        self.ids.qrcam.stopCheck()
-        self.capture.release()
+        self.ids.qrcam.stops()
         self.manager.get_screen("main").start(self.redValue, self.greenValue, self.blueValue)
         self.manager.current= "main"
 
@@ -520,7 +538,7 @@ class CheckScreen(Screen):
             self.ids.detectCamera.background_normal = 'assets/camerabordered.png'
             self.finishCheck()
             cap.release()
-
+    #
     def detectPentab(self):
         self.checkPentab = True
         self.ids.imgCheckPentab.source = 'assets/check.png'
