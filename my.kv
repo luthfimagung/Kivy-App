@@ -431,8 +431,11 @@
                 size: 150, 39
                 text: "Start"
                 pos_hint:{"x":9.5, "top": 7.63}
+                disabled: False
                 values: 1
                 on_press:
+                    self.text : "Converting File .........."
+                    self.disabled : True
                     root.Record(self.values)
 
             MyButton:

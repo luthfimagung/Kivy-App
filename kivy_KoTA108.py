@@ -1,6 +1,7 @@
 #Kivy
 import kivy
 from kivy.app import App
+from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.label import Label
@@ -20,6 +21,7 @@ from kivy.base import EventLoop
 from kivy.lang import Builder
 from kivy.resources import resource_find
 from kivy.graphics.transformation import Matrix
+from kivy.uix.videoplayer import VideoPlayer
 from kivy.graphics.opengl import *
 from kivy.graphics import *
 from kivy3dgui.layout3d import Layout3D
@@ -51,6 +53,7 @@ from TextureLoader import load_texture
 Window.maximize()
 # Window.size = (1280,720)
 # print(Window.size)
+
 
 #Variabel Global
 # statusRecord = None
@@ -191,9 +194,9 @@ class FloatLayout(FloatLayout):
 class LayersImage(Image):
     def start(self):
         self.fps = 30
-        Clock.schedule_interval(self.update, 1.0/self.fps)
+        self.event = Clock.schedule_interval(self.update, 1.0/self.fps)
     def stop(self):
-        Clock.unschedule(self.update())
+        Clock.unschedule(self.event)
     def update(self, dt):
 
         img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
@@ -222,10 +225,10 @@ class KivyCamera(Image):
         self.statusRecord = False
         self.fps = 30
         self.img = cv2.imread("data/imgs/background1.png")
-        Clock.schedule_interval(self.update, 1.0/self.fps)
+        self.event =  Clock.schedule_interval(self.update, 1.0/self.fps)
 
     def stops(self):
-        Clock.unschedule(self.update)
+        Clock.unschedule(self.event)
         self.capture.release()
 
     def changeRedValue(self, value):
@@ -352,18 +355,20 @@ class Layers(Widgets):
 class TestingPlish(Layout3D):
     def start(self):
         self.statusRecord = False
-        Clock.schedule_interval(self.update, 1.0/30)
+        self.texture = []
 
     def Recording(self):
+        self.event = Clock.schedule_interval(self.update, 1.0/30)
         fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
         self.out = cv2.VideoWriter('temp/temp.mp4', fourcc, 9.0, (1280, 720))
         self.statusRecord = True
 
     def stopRecording(self):
-        Clock.unschedule(self.update)
+        Clock.unschedule(self.event)
         print("Stop Recording")
-        self.statusRecord = False
         self.out.release()
+        self.statusRecord = False
+
 
     def update(self, dt):
         img = ImageGrab.grab(bbox=((1135, 135, 1918, 619)))
@@ -421,7 +426,8 @@ class MainScreen(Screen):
         self.layerUtama = 1
 
         #INISIASI STATUS
-        self.statusRecord = False
+        self.statusRecordAudio = False
+        self.statusVideo = False
 
         #DISPLAY LAYER
         self.ids.layers.start(None)
@@ -442,37 +448,86 @@ class MainScreen(Screen):
         self.ids.par.start()
         # img = ImageGrab.grab(bbox=((1135, 135, 1918, 619)))
         # img = img.save("testing.jpg")
+    def stopRecording(self):
+        self.audio.stop_recording()
+        while self.statusRecordAudio != False:
+            self.statusRecordAudio = self.audio.getStatus()
+            time.sleep(0.5)
+            if self.statusRecordAudio == False:
+                self.ids.par.stopRecording()
+                self.ids.qrcam.stops()
 
+
+        self.convertVideoAudio()
+
+    def convertVideoAudio(self):
+        try:
+            # COMBINE FILE WAV AND MP4
+            self.fileAudio = ffmpeg.input('temp/temp.wav')
+            self.fileVideo = ffmpeg.input('temp/temp.mp4')
+            self.finish = ffmpeg.output(self.fileAudio, self.fileVideo, "VideoRecorder/" + self.defaultFile)
+            self.finish.run()
+            print("DONE WITH FILE " + self.defaultFile)
+            self.statusVideo = True
+
+        except ffmpeg.Error as e:
+            print(str(e) + " || ERROR")
+
+    def displayVideo(self):
+        self.popupDisplay = BoxLayout(orientation = 'vertical')
+        video = VideoPlayer(source="VideoRecorder/" + self.defaultFile,
+                            state='play',
+                            options={'allow_stretch': True})
+        button = Button(
+            text = "Close",
+            on_press = lambda *args: self.popup.dismiss(),
+            size_hint = (None, 0.1)
+        )
+
+        self.popupDisplay.add_widget(video)
+        self.popupDisplay.add_widget(button)
+
+        self.popup = Popup(content=self.popupDisplay,
+                      title=self.defaultFile,
+                      title_align = 'center',
+                      separator_height = '4dp',
+                      title_color = [1,0.2,1,1],
+                      title_size = '20sp',
+                      size_hint=(0.9, 0.9),
+                      auto_dismiss = True)
+        self.popup.open()
     #MEMULAI DAN MEMBERHENTIKAN
     def Record(self, value):
         if value == 1:
             self.ids.record.text= "Stop"
-            self.statusRecord = True
+            self.statusRecordAudio = True
             self.ids.record.values = 2
             self.audio.record("temp/temp.wav")
             self.ids.par.Recording()
         else:
             self.ids.record.text = "Start"
             self.ids.record.values = 1
+            # self.stopRecording()
+
             self.audio.stop_recording()
-            while self.statusRecord != False:
-                self.statusRecord = self.audio.getStatus()
+            while self.statusRecordAudio != False :
+                self.statusRecordAudio = self.audio.getStatus()
                 time.sleep(0.5)
-                if self.statusRecord == False:
+                if self.statusRecordAudio == False:
                     self.ids.par.stopRecording()
                     self.ids.qrcam.stops()
             try:
                 #COMBINE FILE WAV AND MP4
-                # path1 = os.path.abspath('temp/temp.wav')
-                # path2 = os.path.abspath('temp/temp.mp4')
                 self.fileAudio = ffmpeg.input('temp/temp.wav')
                 self.fileVideo = ffmpeg.input('temp/temp.mp4')
                 self.finish = ffmpeg.output(self.fileAudio, self.fileVideo, "VideoRecorder/"+self.defaultFile)
                 self.finish.run()
-                print("DONE WITH FILE "+self.defaultFile)
+                # print("DONE WITH FILE "+self.defaultFile)
+
             except ffmpeg.Error as e:
                 print(str(e) + " || ERROR")
 
+            self.displayVideo()
             self.start(self.redValue, self.greenValue, self.blueValue)
     def AnimationRoot(self):
         Animation(translate=(2, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node2)
