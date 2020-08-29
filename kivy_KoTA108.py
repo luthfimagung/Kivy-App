@@ -22,6 +22,7 @@ from kivy.lang import Builder
 from kivy.resources import resource_find
 from kivy.graphics.transformation import Matrix
 from kivy.uix.videoplayer import VideoPlayer
+from kivy.uix.video import Video
 from kivy.graphics.opengl import *
 from kivy.graphics import *
 from kivy3dgui.layout3d import Layout3D
@@ -285,23 +286,37 @@ class Layers(Widgets):
         self.temp3 = "temp/temp3.jpg"
         self.layerUtama = 1
 
+    def startVideo(self):
+        self.rec.state = 'play'
+    def stopVideo(self):
+        self.rec.state = 'stop'
+    def pauseVideo(self):
+        self.rec.state = 'pause'
+
     def start(self, values):
         with self.canvas:
             Color(1,1,1,1)
             self.can = Rectangle(pos= (155, 200), size= (685, 500))
-            self.rec = Image(source = "", pos= (155, 200), size= (685, 500))
+            if self.layerUtama == 1:
+                self.rec = Image(source = "", pos= (155, 200), size= (685, 500))
+            elif self.layerUtama == 2:
+                self.rec = Video(source = "", pos= (155, 200), size= (685, 500))
+
         if values == 1:
             if self.layer1 != None:
                 self.changeBackground(self.layer1)
         elif values == 2:
             if self.layer2 != None:
                 self.changeBackground(self.layer2)
-        elif values == 3 :
-            if self.layer3 != None:
-                self.changeBackground(self.layer3)
+        # elif values == 3 :
+        #     if self.layer3 != None:
+        #         self.changeBackground(self.layer3)
 
     def changeBackground(self, source):
         self.rec.source = source
+        if self.layerUtama == 2:
+            self.temp2 = source
+            self.startVideo()
 
     def on_touch_down(self, touch):
         self.canvas.add(Color(rgb=(121 / 255.0, 120 / 255.0, 100 / 255.0)))
@@ -325,19 +340,24 @@ class Layers(Widgets):
             imgtemp = Image(source=self.temp1)
             imgtemp.reload()
             self.layer1 = self.temp1
-            if str(values) == "Layer 2":
+            if values == 2:
                 self.layerUtama = 2
-            else: self.layerUtama = 3
+
+            # else: self.layerUtama = 3
         elif self.layerUtama == 2:
             print("LAYER 2")
-            img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
-            img = img.save(self.temp2)
-            imgtemp = Image(source=self.temp2)
-            imgtemp.reload()
+            # img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
+            # img = img.save(self.temp2)
+            # imgtemp = Image(source=self.temp2)
+            # imgtemp.reload()
+            # self.layer2 = self.temp2
             self.layer2 = self.temp2
-            if str(values) == "Layer 1":
+            if values == 1 :
                 self.layerUtama = 1
-            else: self.layerUtama = 3
+            # if str(values) == "Layer 1":
+            #     self.layerUtama = 1
+            # else: self.layerUtama = 3
+
         elif self.layerUtama == 3 :
             print("LAYER 3")
             img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
@@ -414,7 +434,7 @@ class MainScreen(Screen):
         self.redValue = red
         self.greenValue = green
         self.blueValue = blue
-        self.ids.filechooser.path = os.path.abspath('tempFile')
+        self.ids.filechooser.path = os.path.abspath('tempFile/tempImage')
         # print(os.path.abspath('temp.mp4'))
         #FILE NAME
         self.defaultFile = defaultFile
@@ -429,6 +449,8 @@ class MainScreen(Screen):
         self.statusRecordAudio = False
         self.statusVideo = False
 
+        self.valueLayers = 1
+
         #DISPLAY LAYER
         self.ids.layers.start(None)
         self.ids.layersImage.start()
@@ -440,38 +462,29 @@ class MainScreen(Screen):
     def clearCanvas(self):
         self.ids.layers.clearCanvas()
 
+    def stopVideo(self):
+        self.ids.layers.stopVideo()
+
+    def startVideo(self):
+        self.ids.layers.startVideo()
+
+    def pauseVideo(self):
+        self.ids.layers.pauseVideo()
+
     #MEMILIH LAYER UTAMA
     def spinner_clicked(self, values):
-        self.ids.layers.changeLayer(values)
+        if values == "Layer 2":
+            self.ids.filechooser.path = os.path.abspath('tempFile/tempVideo')
+            self.valueLayers = 2
+        else :
+            self.valueLayers = 1
+            self.ids.filechooser.path = os.path.abspath('tempFile/tempImage')
+        self.ids.layers.changeLayer(self.valueLayers)
 
     def cekCamera(self, value):
         self.ids.par.start()
         # img = ImageGrab.grab(bbox=((1135, 135, 1918, 619)))
         # img = img.save("testing.jpg")
-    def stopRecording(self):
-        self.audio.stop_recording()
-        while self.statusRecordAudio != False:
-            self.statusRecordAudio = self.audio.getStatus()
-            time.sleep(0.5)
-            if self.statusRecordAudio == False:
-                self.ids.par.stopRecording()
-                self.ids.qrcam.stops()
-
-
-        self.convertVideoAudio()
-
-    def convertVideoAudio(self):
-        try:
-            # COMBINE FILE WAV AND MP4
-            self.fileAudio = ffmpeg.input('temp/temp.wav')
-            self.fileVideo = ffmpeg.input('temp/temp.mp4')
-            self.finish = ffmpeg.output(self.fileAudio, self.fileVideo, "VideoRecorder/" + self.defaultFile)
-            self.finish.run()
-            print("DONE WITH FILE " + self.defaultFile)
-            self.statusVideo = True
-
-        except ffmpeg.Error as e:
-            print(str(e) + " || ERROR")
 
     def displayVideo(self):
         self.popupDisplay = BoxLayout(orientation = 'vertical')
@@ -496,6 +509,7 @@ class MainScreen(Screen):
                       size_hint=(0.9, 0.9),
                       auto_dismiss = True)
         self.popup.open()
+
     #MEMULAI DAN MEMBERHENTIKAN
     def Record(self, value):
         if value == 1:
@@ -507,8 +521,6 @@ class MainScreen(Screen):
         else:
             self.ids.record.text = "Start"
             self.ids.record.values = 1
-            # self.stopRecording()
-
             self.audio.stop_recording()
             while self.statusRecordAudio != False :
                 self.statusRecordAudio = self.audio.getStatus()

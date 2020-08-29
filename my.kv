@@ -351,6 +351,8 @@
                 rectangle: 907, 285, 247, 40
     Layers:
         id: layers
+        size : 685, 500
+        pos : 155, 200
     Widgets:
         id: widgets
         FloatLayout:
@@ -361,18 +363,20 @@
             MyButton:
                 id: btn2
                 pos_hint: {"x":0.13, "top":6.97}
-                text: "Start"
-                on_press : root.record()
+                text: "Stop"
+                on_press : root.stopVideo()
 
             MyButton:
                 id: btn3
                 pos_hint: {"x":0.13, "top":6.44}
-                text:"Stop"
+                text:"Start"
+                on_press : root.startVideo()
 
             MyButton:
                 id: btn4
                 pos_hint: {"x":0.13, "top":5.91}
-                text: "STOP"
+                text: "Pause"
+                on_press: root.pauseVideo()
 
             MyButton:
                 id: btn5
@@ -431,11 +435,8 @@
                 size: 150, 39
                 text: "Start"
                 pos_hint:{"x":9.5, "top": 7.63}
-                disabled: False
                 values: 1
                 on_press:
-                    self.text : "Converting File .........."
-                    self.disabled : True
                     root.Record(self.values)
 
             MyButton:
@@ -468,7 +469,7 @@
                 on_release:
                     self.background_color= 0.1, 0.5, 0.6, 1
                     # total values on spinner
-                values: ["Layer 1", "Layer 2", "Layer 3"]
+                values: ["Layer 1", "Layer 2"]
                     # declaring size of the spinner
                     # and the position of it
                 size_hint: None, None
