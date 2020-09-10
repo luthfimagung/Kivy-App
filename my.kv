@@ -27,6 +27,10 @@
     size_hint: 0.44,0.44
     background_color: 0.1, 0.5, 0.6, 1
 
+<MyButton2@Button>:
+    size_hint: 0.5, 1
+    background_color: 0.1, 0.5, 0.6, 1
+
 <MySlider@Slider>:
     size_hint: None, None
     width: '250dp'
@@ -37,6 +41,7 @@
     Widget2:
         id:widget2
         BoxLayout:
+
             orientation: "vertical"
             padding: 50
             size: 600,200
@@ -47,7 +52,6 @@
                 Rectangle:
                     pos: 150, 150
                     size: 1200, 250
-
             BoxLayout:
                 orientation:"vertical"
                 size_hint: 0.9, None
@@ -61,6 +65,23 @@
                     Rectangle:
                         pos: 190, 170
                         size: 510, 175
+            BoxLayout:
+                orientation:"horizontal"
+                size_hint: 0.9, None
+                FloatLayout:
+                    MyButton2:
+                        id: btnStudio1
+                        pos: 820, 215
+                        disabled: True
+                        text: "Studio 1"
+                        on_press: root.deployStudio(1)
+                    MyButton2:
+                        id: btnStudio2
+                        pos: 1080, 215
+                        disabled: False
+                        text: "Studio 2"
+                        on_press: root.deployStudio(2)
+
             BoxLayout:
                 orientation:"horizontal"
                 size_hint: 0.9, 0.1
@@ -127,6 +148,8 @@
                     font_size: 18
                     pos: 40, 372
 
+
+
         FloatLayout:
             Button:
                 text: "Next Screen"
@@ -143,51 +166,44 @@
             canvas_size: (1366, 768)
             size: 500,360
             pos: 500,400
-            post_processing: False
             shadow: False
-            canvas.before:
-                Color:
-                    rgb: 1, 0.2, 1,1
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
-                    source: "./data/imgs/background.jpg"
             Node:
-                id: Node1
-                name: 'Node1'
+                id: backStudio
+                name: 'backStudio'
                 rotate: (-90, 0, 1, 0)
-                scale: (0.5, 1, 1)
-                eceive_shadows : False
-                translate: (0, -10, -60)
-                meshes: ("./data/objtest/PLANE2.obj", )
-                Button:
-                    disabled: True
-                    background_disabled_normal : ("./data/imgs/alas.png")
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
+                receive_shadows : False
 
             Node:
-                id: Node2
-                name: 'Node1'
+                id: floorStudio
+                name: 'floorStudio'
                 rotate: (-90, 0, 1, 0)
-                scale: (0.5, 1, 1)
-                translate: (0, -10, -60)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
                 receive_shadows : False
-                meshes: ("./data/obj/obj.obj", )
-                Button:
-                    disabled: True
-                    background_disabled_normal: ("./data/imgs/background1.png")
 
             Node:
-                id: Node3
-                name: 'Node1'
+                id: artefactStudio
+                name: 'artefactStudio'
                 rotate: (-90, 0, 1, 0)
-                scale: (0.5, 1, 1)
-                translate: (6, -10, -60)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
                 receive_shadows : False
-                meshes: ("./data/objtest/papan.obj", )
+
+            Node:
+                id: papanStudio
+                name: 'papanStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
+                receive_shadows : False
+
                 FloatLayout:
                     Button:
+                        id: papanButton
                         disabled: True
-                        background_disabled_normal: ("./data/imgs/background.jpg")
+                        background_disabled_normal : ("./data/imgs/papanStudio1.png")
                     Image:
                         size_hint: .9, .9
                         pos_hint:{"x": 0.05, "y":0.05}
@@ -203,43 +219,33 @@
                             PopMatrix
 
             Node:
-                id: Node5
-                name: 'Node1'
+                id: cameraStudio
+                name: 'cameraStudio'
                 rotate: (-90, 0, 1, 0)
-                scale: (0.5, 1, 1)
-                translate: (0, -9, -60)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
                 receive_shadows : False
-                meshes: ("./data/objtest/tatakanKamera.obj", )
+
                 FloatLayout:
                     Button:
+                        id: cameraButton
                         disabled: True
-                        background_disabled_normal: ("./data/imgs/background1.png")
-                    KivyCamera:
-                        id: qrcam
-                        size_hint: .6, .6
-                        pos_hint:{"x": 0.2, "y":0.2}
-                        allow_stretch: True
-                        canvas.before:
-                            PushMatrix
-                            Rotate:
-                                angle: 180
-                                axis: 0,0,1
-                                origin: self.center
-                        canvas.after:
-                            PopMatrix
+                        background_disabled_normal : ("./data/imgs/cameraStudio1.png")
+
 
             Node:
-                id: Node4
-                name: 'Node1'
+                id: mejaStudio
+                name: 'mejaStudio'
                 rotate: (-90, 0, 1, 0)
-                scale: (0.5, 1, 1)
-                translate: (-2, -10, -60)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
                 receive_shadows : False
-                meshes: ("./data/objtest/meja.obj", )
+
                 FloatLayout:
                     Button:
+                        id: mejaButton
                         disabled: True
-                        background_disabled_normal: ("./data/imgs/background.jpg")
+                        background_disabled_normal : ("./data/imgs/mejaStudio1.png")
                     Image:
                         size_hint: 0.7, 0.7
                         pos_hint:{"x": 0.15, "y":0.1}
@@ -253,7 +259,209 @@
                                 origin: self.center
                         canvas.after:
                             PopMatrix
+        Layout3D:
+            id: par
+            look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
+            canvas_size: (1366, 768)
+            size: 500,360
+            pos: 800,400
+            shadow: False
+            Node:
+                id: backStudio
+                name: 'backStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
+                receive_shadows : False
+                meshes : ("./data/objJadi/backStudio1.obj",)
+            Node:
+                id: floorStudio
+                name: 'floorStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
+                receive_shadows : False
+                meshes : ("./data/objJadi/floorStudio1.obj",)
+            Node:
+                id: artefactStudio
+                name: 'artefactStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
+                receive_shadows : False
+                meshes : ("./data/objJadi/artefactStudio1.obj",)
+            Node:
+                id: papanStudio
+                name: 'papanStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
+                receive_shadows : False
+                meshes : ("./data/objJadi/papanStudio1.obj",)
+                FloatLayout:
+                    Button:
+                        id: papanButton
+                        disabled: True
+                        background_disabled_normal : ("./data/imgs/papanStudio1.png")
+                    Image:
+                        size_hint: .9, .9
+                        pos_hint:{"x": 0.05, "y":0.05}
+                        allow_stretch: True
+                        source: "./data/imgs/polban.png"
+                        canvas.before:
+                            PushMatrix
+                            Rotate:
+                                angle: 180
+                                axis: 0,0,1
+                                origin: self.center
+                        canvas.after:
+                            PopMatrix
 
+            Node:
+                id: cameraStudio
+                name: 'cameraStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
+                receive_shadows : False
+                meshes : ("./data/objJadi/cameraStudio1.obj",)
+                FloatLayout:
+                    Button:
+                        id: cameraButton
+                        disabled: True
+                        background_disabled_normal : ("./data/imgs/cameraStudio1.png")
+
+
+            Node:
+                id: mejaStudio
+                name: 'mejaStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, -80)
+                receive_shadows : False
+                meshes : ("./data/objJadi/mejaStudio1.obj",)
+                FloatLayout:
+                    Button:
+                        id: mejaButton
+                        disabled: True
+                        background_disabled_normal : ("./data/imgs/mejaStudio1.png")
+                    Image:
+                        size_hint: 0.7, 0.7
+                        pos_hint:{"x": 0.15, "y":0.1}
+                        allow_stretch: True
+                        source: "./data/imgs/polban.png"
+                        canvas.before:
+                            PushMatrix
+                            Rotate:
+                                angle: 180
+                                axis: 0,0,1
+                                origin: self.center
+                        canvas.after:
+                            PopMatrix
+        Layout3D:
+            id: par
+            look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
+            canvas_size: (1366, 768)
+            size: 500,360
+            pos: 800,400
+            shadow: False
+            Node:
+                id: backStudio2
+                name: 'backStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, 100)
+                receive_shadows : False
+                meshes : ("./data/objJadi/backStudio2.obj",)
+            Node:
+                id: floorStudio2
+                name: 'floorStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, 100)
+                receive_shadows : False
+                meshes : ("./data/objJadi/floorStudio2.obj",)
+            Node:
+                id: artefactStudio2
+                name: 'artefactStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, 100)
+                receive_shadows : False
+                meshes : ("./data/objJadi/artefactStudio2.obj",)
+            Node:
+                id: papanStudio2
+                name: 'papanStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, 100)
+                receive_shadows : False
+                meshes : ("./data/objJadi/papanStudio2.obj",)
+                FloatLayout:
+                    Button:
+                        id: papanButton
+                        disabled: True
+                        background_disabled_normal : ("./data/imgs/papanStudio2.png")
+                    Image:
+                        size_hint: .9, .9
+                        pos_hint:{"x": 0.05, "y":0.05}
+                        allow_stretch: True
+                        source: "./data/imgs/polban.png"
+                        canvas.before:
+                            PushMatrix
+                            Rotate:
+                                angle: 180
+                                axis: 0,0,1
+                                origin: self.center
+                        canvas.after:
+                            PopMatrix
+
+            Node:
+                id: cameraStudio2
+                name: 'cameraStudio'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, 100)
+                receive_shadows : False
+                meshes : ("./data/objJadi/cameraStudio2.obj",)
+                FloatLayout:
+                    Button:
+                        id: cameraButton
+                        disabled: True
+                        background_disabled_normal : ("./data/imgs/cameraStudio2.png")
+
+
+            Node:
+                id: mejaStudio2
+                name: 'mejaStudio2'
+                rotate: (-90, 0, 1, 0)
+                scale: (0.5, 0.5, 0.5)
+                translate: (0, -10, 100)
+                receive_shadows : False
+                meshes : ("./data/objJadi/mejaStudio2.obj",)
+                FloatLayout:
+                    Button:
+                        id: mejaButton
+                        disabled: True
+                        background_disabled_normal : ("./data/imgs/mejaStudio2.png")
+                    Image:
+                        size_hint: 0.7, 0.7
+                        pos_hint:{"x": 0.15, "y":0.1}
+                        allow_stretch: True
+                        source: "./data/imgs/polban.png"
+                        canvas.before:
+                            PushMatrix
+                            Rotate:
+                                angle: 180
+                                axis: 0,0,1
+                                origin: self.center
+                        canvas.after:
+                            PopMatrix
+        KivyCamera:
+            id: qrcam
+            size: 300,360
+            pos: 300,360
+            allow_stretch: True
 
 <MainScreen>:
     widgets :widgets
@@ -447,6 +655,14 @@
                 pos_hint:{"x":6.5, "top": 1.63}
                 on_press:
                     root.AnimationRoot()
+            MyButton:
+                id: animasi2
+                size_hint: None, None
+                size: 150, 39
+                text: "Animasi 2"
+                pos_hint:{"x":6.5, "top": 1.20}
+                on_press:
+                    root.AnimationRoot2()
 
             BoxLayout:
                 orientation: 'vertical'
@@ -493,41 +709,41 @@
                 pos: self.pos
                 source: "./data/imgs/background.jpg"
         Node:
-            id: Node1
-            name: 'Node1'
+            id: backStudio
+            name: 'backStudio'
             rotate: (-90, 0, 1, 0)
-            scale: (0.5, 1, 1)
-            eceive_shadows : False
-            translate: (0, -10, -60)
-            meshes: ("./data/objtest/PLANE2.obj", )
-            Button:
-                disabled: True
-                background_disabled_normal : ("./data/imgs/alas.png")
+            scale: (0.5, 0.5, 0.5)
+            translate: (0, -10, -80)
+            receive_shadows : False
 
         Node:
-            id: Node2
-            name: 'Node1'
+            id: floorStudio
+            name: 'floorStudio'
             rotate: (-90, 0, 1, 0)
-            scale: (0.5, 1, 1)
-            translate: (0, -10, -60)
+            scale: (0.5, 0.5, 0.5)
+            translate: (0, -10, -80)
             receive_shadows : False
-            meshes: ("./data/obj/obj.obj", )
-            Button:
-                disabled: True
-                background_disabled_normal: ("./data/imgs/background1.png")
 
         Node:
-            id: Node3
-            name: 'Node1'
+            id: artefactStudio
+            name: 'artefactStudio'
             rotate: (-90, 0, 1, 0)
-            scale: (0.5, 1, 1)
-            translate: (6, -10, -60)
+            scale: (0.5, 0.5, 0.5)
+            translate: (0, -10, -80)
             receive_shadows : False
-            meshes: ("./data/objtest/papan.obj", )
+
+        Node:
+            id: papanStudio
+            name: 'papanStudio'
+            rotate: (-90, 0, 1, 0)
+            scale: (0.5, 0.5, 0.5)
+            translate: (0, -10, -80)
+            receive_shadows : False
             FloatLayout:
                 Button:
+                    id: papanButton
                     disabled: True
-                    background_disabled_normal: ("./data/imgs/background.jpg")
+
                 LayersImage:
                     id: layersImage
                     size_hint: 1, 1
@@ -543,17 +759,16 @@
                         PopMatrix
 
         Node:
-            id: Node5
-            name: 'Node1'
+            id: cameraStudio
+            name: 'cameraStudio'
             rotate: (-90, 0, 1, 0)
-            scale: (0.5, 1, 1)
-            translate: (0, -9, -60)
+            scale: (0.5, 0.5, 0.5)
+            translate: (0, -10, -80)
             receive_shadows : False
-            meshes: ("./data/objtest/tatakanKamera.obj", )
             FloatLayout:
                 Button:
-                    disabled: True
-                    background_disabled_normal: ("./data/imgs/background1.png")
+                    id: cameraButton
+                    disabled : True
                 KivyCamera:
                     id: qrcam
                     size_hint: .6, .6
@@ -569,17 +784,18 @@
                         PopMatrix
 
         Node:
-            id: Node4
-            name: 'Node1'
+            id: mejaStudio
+            name: 'mejaStudio'
             rotate: (-90, 0, 1, 0)
-            scale: (0.5, 1, 1)
-            translate: (-2, -10, -60)
+            scale: (0.5, 0.5, 0.5)
+            translate: (0, -10, -80)
             receive_shadows : False
-            meshes: ("./data/objtest/meja.obj", )
+
             FloatLayout:
                 Button:
+                    id: mejaButton
                     disabled: True
-                    background_disabled_normal: ("./data/imgs/background.jpg")
+                    background_disabled_normal: ("./data/imgs/mejaStudio1.png")
 
                 Image:
                     size_hint: 0.7, 0.7

@@ -225,7 +225,7 @@ class KivyCamera(Image):
         self.capture = cv2.VideoCapture(0)
         self.statusRecord = False
         self.fps = 30
-        self.img = cv2.imread("data/imgs/background1.png")
+        self.img = cv2.imread("data/imgs/cameraStudio1.png")
         self.event =  Clock.schedule_interval(self.update, 1.0/self.fps)
 
     def stops(self):
@@ -240,6 +240,12 @@ class KivyCamera(Image):
 
     def changeGreenValue(self, value):
         self.greenValue = value
+
+    def changeBackground(self, value):
+        if value == 1 :
+            self.img = cv2.imread("data/imgs/cameraStudio1.png")
+        elif value == 2:
+            self.img = cv2.imread("data/imgs/cameraStudio2.png")
 
     def greenScreen(self,frame):
         frame = cv2.resize(frame, (1280, 720))
@@ -267,7 +273,7 @@ class KivyCamera(Image):
 
             resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
             if not texture or texture.width != w or texture.height != h:
-                self.texture = texture = Texture.create(size=(width, height))
+                self.texture = texture = Texture.create(size=(width, height), colorfmt='bgr')
                 texture.flip_vertical()
             texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
             self.canvas.ask_update()
@@ -402,7 +408,7 @@ class TestingPlish(Layout3D):
             self.out.write(img)
 
 class MainScreen(Screen):
-    def start(self, red, green, blue):
+    def start(self, red, green, blue, studio):
         #MELAKUKAN PENGECEKAN UNTUK FILE
         try:
             os.mkdir("temp")
@@ -445,6 +451,10 @@ class MainScreen(Screen):
         #INISIASI LAYER
         self.layerUtama = 1
 
+        #STUDIO ACTIVE
+        self.studio = studio
+        self.deployStudio(self.studio)
+
         #INISIASI STATUS
         self.statusRecordAudio = False
         self.statusVideo = False
@@ -455,8 +465,35 @@ class MainScreen(Screen):
         self.ids.layers.start(None)
         self.ids.layersImage.start()
         self.ids.par.start()
+
         #DISPLAY CAMERA
         self.ids.qrcam.start( red, green, blue)
+        self.ids.qrcam.changeBackground(self.studio)
+
+    #DEPLOYSTUDIO
+    def deployStudio(self, value):
+        if value == 1 :
+            self.ids.backStudio.meshes = ("./data/objJadi/backStudio1.obj",)
+            self.ids.floorStudio.meshes = ("./data/objJadi/floorStudio1.obj",)
+            self.ids.artefactStudio.meshes = ("./data/objJadi/artefactStudio1.obj", )
+            self.ids.papanStudio.meshes = ("./data/objJadi/papanStudio1.obj", )
+            self.ids.papanButton.background_disabled_normal = ("./data/imgs/papanStudio1.png")
+            self.ids.cameraStudio.meshes = ("./data/objJadi/cameraStudio1.obj",)
+            self.ids.cameraButton.background_disabled_normal = ("./data/imgs/cameraStudio1.png")
+            self.ids.mejaStudio.meshes = ("./data/objJadi/mejaStudio1.obj",)
+            self.ids.mejaButton.background_disabled_normal = ("./data/imgs/mejaStudio1.png")
+
+        elif value == 2:
+            self.ids.backStudio.meshes = ("./data/objJadi/backStudio2.obj",)
+            self.ids.floorStudio.meshes = ("./data/objJadi/floorStudio2.obj",)
+            self.ids.artefactStudio.meshes = ("./data/objJadi/artefactStudio2.obj",)
+            self.ids.papanStudio.meshes = ("./data/objJadi/papanStudio2.obj",)
+            self.ids.papanButton.background_disabled_normal = ("./data/imgs/papanStudio2.png")
+            self.ids.cameraStudio.meshes = ("./data/objJadi/cameraStudio2.obj",)
+            self.ids.cameraButton.background_disabled_normal = ("./data/imgs/cameraStudio2.png")
+            self.ids.mejaStudio.meshes = ("./data/objJadi/mejaStudio2.obj",)
+            self.ids.mejaButton.background_disabled_normal = ("./data/imgs/mejaStudio2.png")
+
 
     #MENGHAPUS SEMUA ISI LAYER
     def clearCanvas(self):
@@ -540,25 +577,41 @@ class MainScreen(Screen):
                 print(str(e) + " || ERROR")
 
             self.displayVideo()
-            self.start(self.redValue, self.greenValue, self.blueValue)
+            self.start(self.redValue, self.greenValue, self.blueValue, self.studio)
+
     def AnimationRoot(self):
-        Animation(translate=(2, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node2)
-        Animation(translate=(0, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node4)
-        Animation(translate=(2, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node5)
-        Animation(translate=(8, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node3)
-        Animation(translate=(2, 8, -17), scale=(0.5, 1, 1), duration=8).start(self.ids.Node1)
-        Animation(look_at = [5, 15, 15, 0, 15, -20, 0, 1, 0], duration=4).start(self.ids.par)
+        Animation(translate=(0, 8, -27), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.artefactStudio)
+        Animation(translate=(0, 8, -27), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.mejaStudio)
+        Animation(translate=(0, 8, -27), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.papanStudio)
+        Animation(translate=(0, 8, -27), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.cameraStudio)
+        Animation(translate=(0, 8, -27), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.floorStudio)
+        Animation(translate=(0, 8, -27), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.backStudio)
+        Animation(look_at = [0, 15, 15, 0, 15, -20, 0, 1, 0], duration=4).start(self.ids.par)
+
+    def AnimationRoot2(self):
+        Animation(translate=(0, 8, -15), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.artefactStudio)
+        Animation(translate=(0, 8, -15), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.mejaStudio)
+        Animation(translate=(0, 8, -15), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.papanStudio)
+        Animation(translate=(0, 8, -15), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.cameraStudio)
+        Animation(translate=(0, 8, -15), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.floorStudio)
+        Animation(translate=(0, 8, -15), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.backStudio)
+        Animation(look_at=[0, 17, 15, 0, 15, -20, 0, 1, 0], duration=4).start(self.ids.par)
 
     def selectFile(self, filename):
         self.ids.layers.changeBackground(filename[0])
 
 
 class CheckGreenScreen(Screen):
-    def start(self):
+    def start(self, studio):
         self.redValue = 60
         self.greenValue = 255
         self.blueValue = 60
+        self.studio = 1
         self.ids.qrcam.start( self.redValue, self.greenValue, self.blueValue)
+
+    def deployStudio(self, studio):
+        self.changeStudio(studio)
+
 
     def changeRed(self, value):
         value = int(value)
@@ -580,8 +633,57 @@ class CheckGreenScreen(Screen):
 
     def doneSetting(self):
         self.ids.qrcam.stops()
-        self.manager.get_screen("main").start(self.redValue, self.greenValue, self.blueValue)
+        self.manager.get_screen("main").start(self.redValue, self.greenValue, self.blueValue, self.studio)
         self.manager.current= "main"
+
+    def changeStudio(self, value):
+        if value == 1:
+            self.ids.backStudio2.translate = (0,-10,100)
+            self.ids.floorStudio2.translate = (0, -10, 100)
+            self.ids.artefactStudio2.translate = (0, -10, 100)
+            self.ids.cameraStudio2.translate = (0, -10, 100)
+            self.ids.papanStudio2.translate = (0, -10, 100)
+            self.ids.mejaStudio2.translate = (0, -10, 100)
+
+            self.ids.backStudio.translate = (0, -10, -80)
+            self.ids.floorStudio.translate = (0, -10, -80)
+            self.ids.artefactStudio.translate = (0, -10,-80)
+            self.ids.cameraStudio.translate = (0, -10, -80)
+            self.ids.papanStudio.translate = (0, -10, -80)
+            self.ids.mejaStudio.translate = (0, -10, -80)
+            self.ids.qrcam.changeBackground(value)
+            self.ids.btnStudio1.disabled = True
+            self.ids.btnStudio2.disabled = False
+            self.studio = 1
+
+        elif value == 2:
+            self.ids.backStudio.translate = (0, -10, 100)
+            self.ids.floorStudio.translate = (0, -10, 100)
+            self.ids.artefactStudio.translate = (0, -10, 100)
+            self.ids.cameraStudio.translate = (0, -10, 100)
+            self.ids.papanStudio.translate = (0, -10, 100)
+            self.ids.mejaStudio.translate = (0, -10, 100)
+
+            self.ids.backStudio2.translate = (0, -10, -80)
+            self.ids.floorStudio2.translate = (0, -10, -80)
+            self.ids.artefactStudio2.translate = (0, -10,-80)
+            self.ids.cameraStudio2.translate = (0, -10, -80)
+            self.ids.papanStudio2.translate = (0, -10, -80)
+            self.ids.mejaStudio2.translate = (0, -10, -80)
+            self.ids.qrcam.changeBackground(value)
+            # self.ids.backStudio.meshes = ("./data/objJadi/backStudio2.obj",)
+            # self.ids.floorStudio.meshes = ("./data/objJadi/floorStudio2.obj",)
+            # self.ids.artefactStudio.meshes = ("./data/objJadi/artefactStudio2.obj",)
+            # self.ids.papanStudio.meshes = ("./data/objJadi/papanStudio2.obj",)
+            # self.ids.papanButton.background_disabled_normal = ("./data/imgs/papanStudio2.png")
+            # self.ids.cameraStudio.meshes = ("./data/objJadi/cameraStudio2.obj",)
+            # self.ids.cameraButton.background_disabled_normal = ("./data/imgs/cameraStudio2.png")
+            # self.ids.mejaStudio.meshes = ("./data/objJadi/mejaStudio2.obj",)
+            # self.ids.mejaButton.background_disabled_normal = ("./data/imgs/mejaStudio2.png")
+            self.ids.btnStudio1.disabled = False
+            self.ids.btnStudio2.disabled = True
+            self.studio = 2
+
 
 class Widget2(Widget):
     pass
@@ -593,7 +695,7 @@ class CheckScreen(Screen):
         self.checkCamera = False
 
     def check(self):
-        self.manager.get_screen("green").start()
+        self.manager.get_screen("green").start(1)
         self.manager.current = "green"
 
 
@@ -623,6 +725,8 @@ class FrontEnd2(FloatLayout):
     pass
 
 class Widgets2(Widget):
+    pass
+class TestingPlease(Layout3D):
     pass
 class MyApp(App):
     def build(self):

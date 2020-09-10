@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="fixup! FILE CHOOSER ADD IMG TO LAYERS, LAYERS BUGG, CANNOT CHANGE LAYERS SOURCE">
-      <change beforePath="$PROJECT_DIR$/.idea/Main Design.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Main Design.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/obj/3d-model.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/3d-model.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/obj/3d-model.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/3d-model.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/obj/drawer.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/drawer.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/obj/spherelow.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/spherelow.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/obj/spherelow.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/spherelow.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/obj/table.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/table.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kivy_KoTA108.py" beforeDir="false" afterPath="$PROJECT_DIR$/kivy_KoTA108.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my.kv" beforeDir="false" afterPath="$PROJECT_DIR$/my.kv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/temp.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/temp/temp.mp4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/temp.wav" beforeDir="false" afterPath="$PROJECT_DIR$/temp/temp.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/temp1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/temp/temp1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/temp2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/temp/temp2.jpg" afterDir="false" />
     </list>
     <list id="08c1041f-dd67-4dda-9546-98f373aab24f" name="Revert &quot;FILE CHOOSER ADD IMG TO LAYERS, LAYERS BUGG, CANNOT CHANGE LAYERS SOURCE&quot;" comment="Revert &quot;FILE CHOOSER ADD IMG TO LAYERS, LAYERS BUGG, CANNOT CHANGE LAYERS SOURCE&quot;&#10;&#10;This reverts commit ff18f7b0" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,8 +63,8 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TEST KIVY/3D rndering.py" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunManager" selected="Python.kivy_KoTA108">
     <configuration name="Screen" type="PythonConfigurationType" factoryName="Python">
@@ -285,7 +287,35 @@
       <option name="project" value="LOCAL" />
       <updated>1597600925091</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="FIXING RECORD FITUR">
+      <created>1598099165251</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1598099165251</updated>
+    </task>
+    <task id="LOCAL-00022" summary="PUSH DATA">
+      <created>1598106027371</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1598106027371</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Menambahkan POPUP VIDEO setelah selesai merekam. Selanjutnya akan menambahkan file tempVideo, tempGambar untuk keperluan layer, jadi layer akan menampilkan Attachment sesuai layernya.">
+      <created>1598715608285</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1598715608285</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Menambahkan fungsi untuk menampilkan video pada canvas, tetapi belum dapat mengambil durasi yang sesungguhnya dari video yang dimulai. baru dapat memulai, pause, dan stop.">
+      <created>1598721173896</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1598721173896</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -359,7 +389,11 @@
     <MESSAGE value="fixup! FILE CHOOSER ADD IMG TO LAYERS, LAYERS BUGG, CANNOT CHANGE LAYERS SOURCE" />
     <MESSAGE value="Menyelesaikan bug yang terjadi pada fungsi changelayers pada class Layers" />
     <MESSAGE value="Menambahkan Screen untuk merubah pengecekan background pada kamera dengan Slider." />
-    <option name="LAST_COMMIT_MESSAGE" value="Menambahkan Screen untuk merubah pengecekan background pada kamera dengan Slider." />
+    <MESSAGE value="FIXING RECORD FITUR" />
+    <MESSAGE value="PUSH DATA" />
+    <MESSAGE value="Menambahkan POPUP VIDEO setelah selesai merekam. Selanjutnya akan menambahkan file tempVideo, tempGambar untuk keperluan layer, jadi layer akan menampilkan Attachment sesuai layernya." />
+    <MESSAGE value="Menambahkan fungsi untuk menampilkan video pada canvas, tetapi belum dapat mengambil durasi yang sesungguhnya dari video yang dimulai. baru dapat memulai, pause, dan stop." />
+    <option name="LAST_COMMIT_MESSAGE" value="Menambahkan fungsi untuk menampilkan video pada canvas, tetapi belum dapat mengambil durasi yang sesungguhnya dari video yang dimulai. baru dapat memulai, pause, dan stop." />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -371,50 +405,50 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1596868408703" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1597600924438">
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1598721173378">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1597600924438" />
-    <state x="556" y="140" key="FileChooserDialogImpl" timestamp="1597754542851">
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1598721173378" />
+    <state x="556" y="140" key="FileChooserDialogImpl" timestamp="1599585241095">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="556" y="140" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1597754542851" />
+    <state x="556" y="140" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599585241095" />
     <state x="469" y="314" key="GitRewordDialog" timestamp="1597514269111">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="469" y="314" key="GitRewordDialog/0.0.1536.824@0.0.1536.824" timestamp="1597514269111" />
-    <state width="756" height="211" key="GridCell.Tab.0.bottom" timestamp="1598099115345">
+    <state width="756" height="211" key="GridCell.Tab.0.bottom" timestamp="1599231882695">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="756" height="211" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1598099115345" />
-    <state width="756" height="211" key="GridCell.Tab.0.center" timestamp="1598099115345">
+    <state width="756" height="211" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599231882695" />
+    <state width="756" height="211" key="GridCell.Tab.0.center" timestamp="1599231882695">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="756" height="211" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1598099115345" />
-    <state width="756" height="211" key="GridCell.Tab.0.left" timestamp="1598099115345">
+    <state width="756" height="211" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1599231882695" />
+    <state width="756" height="211" key="GridCell.Tab.0.left" timestamp="1599231882695">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="756" height="211" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1598099115345" />
-    <state width="756" height="211" key="GridCell.Tab.0.right" timestamp="1598099115345">
+    <state width="756" height="211" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1599231882695" />
+    <state width="756" height="211" key="GridCell.Tab.0.right" timestamp="1599231882695">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="756" height="211" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1598099115345" />
-    <state width="757" height="261" key="GridCell.Tab.1.bottom" timestamp="1597075086756">
+    <state width="756" height="211" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1599231882695" />
+    <state width="757" height="261" key="GridCell.Tab.1.bottom" timestamp="1599095947715">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="757" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1597075086756" />
-    <state width="757" height="261" key="GridCell.Tab.1.center" timestamp="1597075086756">
+    <state width="757" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599095947715" />
+    <state width="757" height="261" key="GridCell.Tab.1.center" timestamp="1599095947715">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="757" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1597075086756" />
-    <state width="757" height="261" key="GridCell.Tab.1.left" timestamp="1597075086756">
+    <state width="757" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1599095947715" />
+    <state width="757" height="261" key="GridCell.Tab.1.left" timestamp="1599095947715">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="757" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1597075086756" />
-    <state width="757" height="261" key="GridCell.Tab.1.right" timestamp="1597075086756">
+    <state width="757" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1599095947715" />
+    <state width="757" height="261" key="GridCell.Tab.1.right" timestamp="1599095947715">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="757" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1597075086756" />
+    <state width="757" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1599095947715" />
     <state x="481" y="128" key="MultipleFileMergeDialog" timestamp="1597514465743">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -423,26 +457,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="539" y="134" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1597514573605" />
-    <state x="321" y="50" key="SettingsEditor" timestamp="1597948253382">
+    <state x="321" y="50" key="SettingsEditor" timestamp="1599228335580">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="321" y="50" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1597948253382" />
+    <state x="321" y="50" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1599228335580" />
     <state x="222" y="307" key="VCS.ChangelistChooser" timestamp="1597514706359">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="222" y="307" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1597514706359" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1597600929084">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1598721178777">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1597600929084" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1598029689362">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1598721178777" />
+    <state x="173" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1599584679982">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1598029689362" />
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1597948277450">
+    <state x="173" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1599584679982" />
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1598715553110">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1597948277450" />
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1598715553110" />
     <state x="550" y="125" key="git4idea.branch.GitSmartOperationDialog" timestamp="1597514458274">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
