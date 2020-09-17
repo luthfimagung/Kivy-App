@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="">
+    <list default="true" id="4da70591-f24f-464b-9db5-cbb43741c8b9" name="Default Changelist" comment="fixup! FILE CHOOSER ADD IMG TO LAYERS, LAYERS BUGG, CANNOT CHANGE LAYERS SOURCE">
+      <change beforePath="$PROJECT_DIR$/.idea/Main Design.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Main Design.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/obj/3d-model.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/3d-model.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/obj/3d-model.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/3d-model.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/obj/drawer.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/drawer.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/obj/spherelow.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/spherelow.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/obj/spherelow.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/spherelow.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/obj/table.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/obj/table.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/Montserrat-SemiBold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/Montserrat-SemiBoldItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/camerabordered.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/camerabordered2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/campentab.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/check.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/cross.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/lasso.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/lasso2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/my.kv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/pentabbordered.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Detect Pentab and Camera Design/pentabbordered2.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/kivy_KoTA108.py" beforeDir="false" afterPath="$PROJECT_DIR$/kivy_KoTA108.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my.kv" beforeDir="false" afterPath="$PROJECT_DIR$/my.kv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/temp.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/temp/temp.mp4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/temp.wav" beforeDir="false" afterPath="$PROJECT_DIR$/temp/temp.wav" afterDir="false" />
     </list>
     <list id="08c1041f-dd67-4dda-9546-98f373aab24f" name="Revert &quot;FILE CHOOSER ADD IMG TO LAYERS, LAYERS BUGG, CANNOT CHANGE LAYERS SOURCE&quot;" comment="Revert &quot;FILE CHOOSER ADD IMG TO LAYERS, LAYERS BUGG, CANNOT CHANGE LAYERS SOURCE&quot;&#10;&#10;This reverts commit ff18f7b0" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,8 +69,9 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TEST KIVY/3D rndering.py" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ignore.virus.scanning.warn.message" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.kivy_KoTA108">
     <configuration name="Screen" type="PythonConfigurationType" factoryName="Python">
@@ -74,7 +81,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\ASUS\Kivy-App\Scripts\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\Luthfi M Agung\AppData\Local\Programs\Python\Python37\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -95,12 +102,12 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\ASUS\venv\Scripts\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Tugas Akhir" />
+      <option name="SDK_HOME" value="C:\Users\Luthfi M Agung\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Tugas Akhir/audio recording.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../audio recording.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -116,7 +123,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\ASUS\Kivy-App\Scripts\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\Luthfi M Agung\AppData\Local\Programs\Python\Python37\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -130,11 +137,38 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="load" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Main Design" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="C:/glfw" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:/glfw/load.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.Screen" />
       <item itemvalue="Python.audioo" />
       <item itemvalue="Python.kivy_KoTA108" />
+      <item itemvalue="Python.load" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.load" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -405,9 +439,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1596868408703" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1598721173378">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2603" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600363501071">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="2603" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600363501071" />
+    <state x="1920" y="0" key="CommitChangelistDialog2" timestamp="1600370548983">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1920" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600370548983" />
     <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1598721173378" />
     <state x="556" y="140" key="FileChooserDialogImpl" timestamp="1599585241095">
       <screen x="0" y="0" width="1536" height="824" />
@@ -417,21 +456,29 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="469" y="314" key="GitRewordDialog/0.0.1536.824@0.0.1536.824" timestamp="1597514269111" />
-    <state width="756" height="211" key="GridCell.Tab.0.bottom" timestamp="1599231882695">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1899" height="210" key="GridCell.Tab.0.bottom" timestamp="1600366080843">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="757" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1600076760359" />
+    <state width="1899" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600366080843" />
     <state width="756" height="211" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599231882695" />
-    <state width="756" height="211" key="GridCell.Tab.0.center" timestamp="1599231882695">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1899" height="210" key="GridCell.Tab.0.center" timestamp="1600366080843">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="757" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1600076760359" />
+    <state width="1899" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600366080843" />
     <state width="756" height="211" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1599231882695" />
-    <state width="756" height="211" key="GridCell.Tab.0.left" timestamp="1599231882695">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1899" height="210" key="GridCell.Tab.0.left" timestamp="1600366080842">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="757" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1600076760359" />
+    <state width="1899" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600366080842" />
     <state width="756" height="211" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1599231882695" />
-    <state width="756" height="211" key="GridCell.Tab.0.right" timestamp="1599231882695">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1899" height="210" key="GridCell.Tab.0.right" timestamp="1600366080843">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="757" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1600076760359" />
+    <state width="1899" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600366080843" />
     <state width="756" height="211" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1599231882695" />
     <state width="757" height="261" key="GridCell.Tab.1.bottom" timestamp="1599095947715">
       <screen x="0" y="0" width="1536" height="824" />
@@ -453,13 +500,16 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="481" y="128" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1597514465743" />
-    <state x="539" y="134" key="RollbackChangesDialog" timestamp="1597514573605">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2594" y="169" key="RollbackChangesDialog" timestamp="1600363885227">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="2594" y="169" key="RollbackChangesDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600363885227" />
     <state x="539" y="134" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1597514573605" />
-    <state x="321" y="50" key="SettingsEditor" timestamp="1599228335580">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2321" y="63" key="SettingsEditor" timestamp="1600369805029">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="321" y="50" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1600081403100" />
+    <state x="2321" y="63" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600369805029" />
     <state x="321" y="50" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1599228335580" />
     <state x="222" y="307" key="VCS.ChangelistChooser" timestamp="1597514706359">
       <screen x="0" y="0" width="1536" height="824" />
@@ -468,14 +518,18 @@
     <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1598721178777">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1598721178777" />
-    <state x="173" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1599584679982">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1597600929084" />
+    <state x="2501" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1600363753906">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="173" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1599584679982" />
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1598715553110">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1600081385570" />
+    <state x="2501" y="298" key="com.intellij.ide.util.TipDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600363753906" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1598029689362" />
+    <state x="2643" y="415" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600370510310">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1600066615838" />
+    <state x="2643" y="415" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600370510310" />
     <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1598715553110" />
     <state x="550" y="125" key="git4idea.branch.GitSmartOperationDialog" timestamp="1597514458274">
       <screen x="0" y="0" width="1536" height="824" />

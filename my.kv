@@ -1,883 +1,879 @@
-#: import FadeTransition kivy.uix.screenmanager.FadeTransition
-#: import SlideTransition kivy.uix.screenmanager.SlideTransition
-#: import Layout3D kivy3dgui.layout3d
-#: import Animation kivy.animation.Animation
-
-<Manager>:
-    id: manager
-    check_screen: check
-    main_screen: main
-    green_screen: green
-    #check Screen
-    CheckScreen:
-        id:check
-        name:"check"
-        manager: manager
-    CheckGreenScreen:
-        id:green
-        name: "green"
-        manager: manager
-    MainScreen:
-        id: main
-        name:"main"
-        manager: manager
-
-<MyButton@Button>:
-    # font_size: 40
-    size_hint: 0.44,0.44
-    background_color: 0.1, 0.5, 0.6, 1
-
-<MyButton2@Button>:
-    size_hint: 0.5, 1
-    background_color: 0.1, 0.5, 0.6, 1
-
-<MySlider@Slider>:
-    size_hint: None, None
-    width: '250dp'
-
-<CheckGreenScreen>:
-    widget2:widget2
-    qrcam : qrcam
-    Widget2:
-        id:widget2
-        BoxLayout:
-
-            orientation: "vertical"
-            padding: 50
-            size: 600,200
-            pos: 166, 110
-            canvas:
-                Color:
-                    rgba: 0.1, 0.1, 0.1, 1
-                Rectangle:
-                    pos: 150, 150
-                    size: 1200, 250
-            BoxLayout:
-                orientation:"vertical"
-                size_hint: 0.9, None
-                cols:2
-                canvas:
-                    Color:
-                        rgba: 0.25, 0.25, 0.25, 1
-                    Rectangle:
-                        pos: 800, 170
-                        size: 510, 175
-                    Rectangle:
-                        pos: 190, 170
-                        size: 510, 175
-            BoxLayout:
-                orientation:"horizontal"
-                size_hint: 0.9, None
-                FloatLayout:
-                    MyButton2:
-                        id: btnStudio1
-                        pos: 820, 215
-                        disabled: True
-                        text: "Studio 1"
-                        on_press: root.deployStudio(1)
-                    MyButton2:
-                        id: btnStudio2
-                        pos: 1080, 215
-                        disabled: False
-                        text: "Studio 2"
-                        on_press: root.deployStudio(2)
-
-            BoxLayout:
-                orientation:"horizontal"
-                size_hint: 0.9, 0.1
-                cols:2
-                Label:
-                    id: labelRed
-                    size_hint: None, None
-                    pos_hint:{"x":0.1,"y":0.9}
-                    text: "Red = 60"
-                MySlider:
-                    id:sliderRed
-                    size_hint: 0.9, None
-                    pos_hint:{"x":0.6,"y":0.9}
-                    min:60
-                    max:255
-                    value: 60
-                    on_value:root.changeRed(self.value)
-
-            BoxLayout:
-                orientation:"horizontal"
-                size_hint:0.9,None
-                cols:2
-                Label:
-                    id: labelGreen
-                    size_hint: None, None
-                    pos_hint:{"x":0.1,"y":0.5}
-                    text: "Green = 255"
-                MySlider:
-                    size_hint: 0.9, None
-                    id: sliderGreen
-                    pos_hint:{"x":0.6,"y":0.5}
-                    min:60
-                    max:255
-                    value: 255
-                    on_value:root.changeGreen(self.value)
-
-            BoxLayout:
-                orientation:"horizontal"
-                size_hint:0.9,0.8
-                cols:2
-                Label:
-                    id: labelBlue
-                    size_hint: None, None
-                    pos_hint:{"x":0.1,"y":0.1}
-                    text: "Blue = 60"
-                MySlider:
-                    size_hint: 0.9, None
-                    id: sliderBlue
-                    pos_hint:{"x":0.6,"y":0.1}
-                    min:60
-                    max:255
-                    value: 60
-                    on_value:root.changeBlue(self.value)
-
-            FloatLayout:
-                Label:
-                    id: labelFile
-                    text: "Select Background File..."
-                    font_size: 18
-                    pos: 649, 372
-                Label:
-                    id: labelFile
-                    text: "Adjust Background Color"
-                    font_size: 18
-                    pos: 40, 372
-
-
-
-        FloatLayout:
-            Button:
-                text: "Next Screen"
-                pos: 650, 65
-                size_hint: (None,None)
-                size: 200, 75
-                font_size: 18
-                on_press: root.doneSetting()
-
-
-        Layout3D:
-            id: par
-            look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
-            canvas_size: (1366, 768)
-            size: 500,360
-            pos: 500,400
-            shadow: False
-            Node:
-                id: backStudio
-                name: 'backStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-
-            Node:
-                id: floorStudio
-                name: 'floorStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-
-            Node:
-                id: artefactStudio
-                name: 'artefactStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-
-            Node:
-                id: papanStudio
-                name: 'papanStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-
-                FloatLayout:
-                    Button:
-                        id: papanButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/papanStudio1.png")
-                    Image:
-                        size_hint: .9, .9
-                        pos_hint:{"x": 0.05, "y":0.05}
-                        allow_stretch: True
-                        source: "./data/imgs/polban.png"
-                        canvas.before:
-                            PushMatrix
-                            Rotate:
-                                angle: 180
-                                axis: 0,0,1
-                                origin: self.center
-                        canvas.after:
-                            PopMatrix
-
-            Node:
-                id: cameraStudio
-                name: 'cameraStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-
-                FloatLayout:
-                    Button:
-                        id: cameraButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/cameraStudio1.png")
-
-
-            Node:
-                id: mejaStudio
-                name: 'mejaStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-
-                FloatLayout:
-                    Button:
-                        id: mejaButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/mejaStudio1.png")
-                    Image:
-                        size_hint: 0.7, 0.7
-                        pos_hint:{"x": 0.15, "y":0.1}
-                        allow_stretch: True
-                        source: "./data/imgs/polban.png"
-                        canvas.before:
-                            PushMatrix
-                            Rotate:
-                                angle: 180
-                                axis: 0,0,1
-                                origin: self.center
-                        canvas.after:
-                            PopMatrix
-        Layout3D:
-            id: par
-            look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
-            canvas_size: (1366, 768)
-            size: 500,360
-            pos: 800,400
-            shadow: False
-            Node:
-                id: backStudio
-                name: 'backStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-                meshes : ("./data/objJadi/backStudio1.obj",)
-            Node:
-                id: floorStudio
-                name: 'floorStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-                meshes : ("./data/objJadi/floorStudio1.obj",)
-            Node:
-                id: artefactStudio
-                name: 'artefactStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-                meshes : ("./data/objJadi/artefactStudio1.obj",)
-            Node:
-                id: papanStudio
-                name: 'papanStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-                meshes : ("./data/objJadi/papanStudio1.obj",)
-                FloatLayout:
-                    Button:
-                        id: papanButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/papanStudio1.png")
-                    Image:
-                        size_hint: .9, .9
-                        pos_hint:{"x": 0.05, "y":0.05}
-                        allow_stretch: True
-                        source: "./data/imgs/polban.png"
-                        canvas.before:
-                            PushMatrix
-                            Rotate:
-                                angle: 180
-                                axis: 0,0,1
-                                origin: self.center
-                        canvas.after:
-                            PopMatrix
-
-            Node:
-                id: cameraStudio
-                name: 'cameraStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-                meshes : ("./data/objJadi/cameraStudio1.obj",)
-                FloatLayout:
-                    Button:
-                        id: cameraButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/cameraStudio1.png")
-
-
-            Node:
-                id: mejaStudio
-                name: 'mejaStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, -80)
-                receive_shadows : False
-                meshes : ("./data/objJadi/mejaStudio1.obj",)
-                FloatLayout:
-                    Button:
-                        id: mejaButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/mejaStudio1.png")
-                    Image:
-                        size_hint: 0.7, 0.7
-                        pos_hint:{"x": 0.15, "y":0.1}
-                        allow_stretch: True
-                        source: "./data/imgs/polban.png"
-                        canvas.before:
-                            PushMatrix
-                            Rotate:
-                                angle: 180
-                                axis: 0,0,1
-                                origin: self.center
-                        canvas.after:
-                            PopMatrix
-        Layout3D:
-            id: par
-            look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
-            canvas_size: (1366, 768)
-            size: 500,360
-            pos: 800,400
-            shadow: False
-            Node:
-                id: backStudio2
-                name: 'backStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, 100)
-                receive_shadows : False
-                meshes : ("./data/objJadi/backStudio2.obj",)
-            Node:
-                id: floorStudio2
-                name: 'floorStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, 100)
-                receive_shadows : False
-                meshes : ("./data/objJadi/floorStudio2.obj",)
-            Node:
-                id: artefactStudio2
-                name: 'artefactStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, 100)
-                receive_shadows : False
-                meshes : ("./data/objJadi/artefactStudio2.obj",)
-            Node:
-                id: papanStudio2
-                name: 'papanStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, 100)
-                receive_shadows : False
-                meshes : ("./data/objJadi/papanStudio2.obj",)
-                FloatLayout:
-                    Button:
-                        id: papanButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/papanStudio2.png")
-                    Image:
-                        size_hint: .9, .9
-                        pos_hint:{"x": 0.05, "y":0.05}
-                        allow_stretch: True
-                        source: "./data/imgs/polban.png"
-                        canvas.before:
-                            PushMatrix
-                            Rotate:
-                                angle: 180
-                                axis: 0,0,1
-                                origin: self.center
-                        canvas.after:
-                            PopMatrix
-
-            Node:
-                id: cameraStudio2
-                name: 'cameraStudio'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, 100)
-                receive_shadows : False
-                meshes : ("./data/objJadi/cameraStudio2.obj",)
-                FloatLayout:
-                    Button:
-                        id: cameraButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/cameraStudio2.png")
-
-
-            Node:
-                id: mejaStudio2
-                name: 'mejaStudio2'
-                rotate: (-90, 0, 1, 0)
-                scale: (0.5, 0.5, 0.5)
-                translate: (0, -10, 100)
-                receive_shadows : False
-                meshes : ("./data/objJadi/mejaStudio2.obj",)
-                FloatLayout:
-                    Button:
-                        id: mejaButton
-                        disabled: True
-                        background_disabled_normal : ("./data/imgs/mejaStudio2.png")
-                    Image:
-                        size_hint: 0.7, 0.7
-                        pos_hint:{"x": 0.15, "y":0.1}
-                        allow_stretch: True
-                        source: "./data/imgs/polban.png"
-                        canvas.before:
-                            PushMatrix
-                            Rotate:
-                                angle: 180
-                                axis: 0,0,1
-                                origin: self.center
-                        canvas.after:
-                            PopMatrix
-        KivyCamera:
-            id: qrcam
-            size: 300,360
-            pos: 300,360
-            allow_stretch: True
-
-<MainScreen>:
-    widgets :widgets
-    qrcam: qrcam
-    FrontEnd:
-        id: frontend
-        canvas:
-            Color:
-                rgba: 0.55, 0.55, 0.55, 1
-
-            Rectangle:
-                pos: 0, 0
-                size: 127, 764
-            # Tools Button Container (Bottom)
-            Rectangle:
-                pos: 127, 40
-                size: 739, 130
-
-            Rectangle:
-                pos: 0, 764
-                size: 1550, 40
-
-            Rectangle:
-                pos: 127, 724
-                size: 247, 40
-
-             # Tab 2 (Secondary Display) Tombol Start
-            Rectangle:
-                pos: 906, 724
-                size: 247, 40
-
-            # Tab 3 (Attachment)
-            Rectangle:
-                pos: 906, 285
-                size: 247, 40
-
-            ## Dark
-            Color:
-                rgba: 0.32, 0.32, 0.32, 1
-            # Tab 1 (Main Display)
-            Rectangle:
-                pos: 374, 724
-                size: 532, 40
-
-            # Tab 2 (Secondary Display)
-            Rectangle:
-                pos: 1153, 724
-                size: 600, 40
-
-            # Tab 3 (Attachment)
-            Rectangle:
-                pos: 1153, 285
-                size: 382, 39
-
-            # Middle (Display Divider)
-            Rectangle:
-                pos: 866, 0
-                size: 40, 724
-
-            # Bottom
-            Rectangle:
-                pos: 127, 0
-                size: 1423, 40
-
-            ## Border
-            Color:
-                rgba: 0.44, 0.44, 0.44, 1
-
-            # Left Container
-            Line:
-                width: 1
-                rectangle: 0, 0, 127, 764
-
-            # Top
-            Line:
-                width: 1
-                rectangle: self.x, 765, self.width, self.height
-
-            Color:
-                rgba: 0.23, 0.23, 0.23, 1
-
-            # Tab 1 (Main Display)
-            Line:
-                width: 1
-                rectangle: 128, 724, 247, 40
-
-            # Tab 2 (Secondary Display)
-            Line:
-                width: 1
-                rectangle: 907, 724, 247, 40
-
-            # Tab 3 (Attachment)
-            Line:
-                width: 1
-                rectangle: 907, 285, 247, 40
-    Layers:
-        id: layers
-        size : 685, 500
-        pos : 155, 200
-    Widgets:
-        id: widgets
-        FloatLayout:
-            # Left Column
-            MyButton:
-                id: btn1
-                pos_hint: {"x":0.13, "top":7.5}
-            MyButton:
-                id: btn2
-                pos_hint: {"x":0.13, "top":6.97}
-                text: "Stop"
-                on_press : root.stopVideo()
-
-            MyButton:
-                id: btn3
-                pos_hint: {"x":0.13, "top":6.44}
-                text:"Start"
-                on_press : root.startVideo()
-
-            MyButton:
-                id: btn4
-                pos_hint: {"x":0.13, "top":5.91}
-                text: "Pause"
-                on_press: root.pauseVideo()
-
-            MyButton:
-                id: btn5
-                pos_hint: {"x":0.13, "top":5.38}
-
-            MyButton:
-                id: btn6
-                pos_hint: {"x":0.13, "top":4.85}
-
-            MyButton:
-                id: btn7
-                pos_hint: {"x":0.13, "top":4.32}
-
-            MyButton:
-                id: btn8
-                pos_hint: {"x":0.13, "top":3.79}
-
-            # Right Column
-            MyButton:
-                id: btn9
-                pos_hint: {"x":0.67, "top":7.5}
-
-            MyButton:
-                id: btn10
-                pos_hint: {"x": 0.67, "top": 6.97}
-
-            MyButton:
-                id: btn11
-                pos_hint: {"x": 0.67, "top": 6.44}
-
-            MyButton:
-                id: btn12
-                pos_hint: {"x": 0.67, "top": 5.91}
-
-            MyButton:
-                id: btn13
-                pos_hint: {"x": 0.67, "top": 5.38}
-
-            MyButton:
-                id: btn14
-                pos_hint: {"x": 0.67, "top": 4.85}
-
-            MyButton:
-                id: btn15
-                pos_hint: {"x": 0.67, "top": 4.32}
-
-            MyButton:
-                id: btn16
-                pos_hint: {"x": 0.67, "top": 3.79}
-                text: "Clear"
-                on_press: root.clearCanvas()
-
-            MyButton:
-                id: record
-                size_hint: None, None
-                size: 150, 39
-                text: "Start"
-                pos_hint:{"x":9.5, "top": 7.63}
-                values: 1
-                on_press:
-                    root.Record(self.values)
-
-            MyButton:
-                id: animasi1
-                size_hint: None, None
-                size: 150, 39
-                text: "Animasi 1"
-                pos_hint:{"x":6.5, "top": 1.63}
-                on_press:
-                    root.AnimationRoot()
-            MyButton:
-                id: animasi2
-                size_hint: None, None
-                size: 150, 39
-                text: "Animasi 2"
-                pos_hint:{"x":6.5, "top": 1.20}
-                on_press:
-                    root.AnimationRoot2()
-
-            BoxLayout:
-                orientation: 'vertical'
-                size_hint: None, None
-                size: 600, 230
-                pos_hint:{'center_x':12.25, 'top': 2.9}
-                FileChooserListView:
-                    id:filechooser
-                    on_selection: root.selectFile(filechooser.selection)
-
-            Spinner:
-                    # Assigning id
-                id: spinner_id
-                    # Callback
-                on_text: root.spinner_clicked(spinner_id.text)
-                background_normal: ''
-                background_color: 0.1, 0.5, 0.6, 1
-                    # initially text on spinner
-                text: "Layer 1"
-                on_release:
-                    self.background_color= 0.1, 0.5, 0.6, 1
-                    # total values on spinner
-                values: ["Layer 1", "Layer 2"]
-                    # declaring size of the spinner
-                    # and the position of it
-                size_hint: None, None
-                size: 200, 40
-                pos_hint:{'center_x':10.25, 'top': 3.26}
-
-
-    TestingPlish:
-        id: par
-        look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
-        canvas_size: (1366, 768)
-        size_hint: 0.405, 0.48
-        pos: 910, 330
-        post_processing: False
-        shadow: False
-        canvas.before:
-            Color:
-                rgb: 1, 0.2, 1,1
-            Rectangle:
-                size: self.size
-                pos: self.pos
-                source: "./data/imgs/background.jpg"
-        Node:
-            id: backStudio
-            name: 'backStudio'
-            rotate: (-90, 0, 1, 0)
-            scale: (0.5, 0.5, 0.5)
-            translate: (0, -10, -80)
-            receive_shadows : False
-
-        Node:
-            id: floorStudio
-            name: 'floorStudio'
-            rotate: (-90, 0, 1, 0)
-            scale: (0.5, 0.5, 0.5)
-            translate: (0, -10, -80)
-            receive_shadows : False
-
-        Node:
-            id: artefactStudio
-            name: 'artefactStudio'
-            rotate: (-90, 0, 1, 0)
-            scale: (0.5, 0.5, 0.5)
-            translate: (0, -10, -80)
-            receive_shadows : False
-
-        Node:
-            id: papanStudio
-            name: 'papanStudio'
-            rotate: (-90, 0, 1, 0)
-            scale: (0.5, 0.5, 0.5)
-            translate: (0, -10, -80)
-            receive_shadows : False
-            FloatLayout:
-                Button:
-                    id: papanButton
-                    disabled: True
-
-                LayersImage:
-                    id: layersImage
-                    size_hint: 1, 1
-                    pos_hint:{"x": 0, "y":0}
-                    allow_stretch: True
-                    canvas.before:
-                        PushMatrix
-                        Rotate:
-                            angle: 180
-                            axis: 0,0,1
-                            origin: self.center
-                    canvas.after:
-                        PopMatrix
-
-        Node:
-            id: cameraStudio
-            name: 'cameraStudio'
-            rotate: (-90, 0, 1, 0)
-            scale: (0.5, 0.5, 0.5)
-            translate: (0, -10, -80)
-            receive_shadows : False
-            FloatLayout:
-                Button:
-                    id: cameraButton
-                    disabled : True
-                KivyCamera:
-                    id: qrcam
-                    size_hint: .6, .6
-                    pos_hint:{"x": 0.2, "y":0.2}
-                    allow_stretch: True
-                    canvas.before:
-                        PushMatrix
-                        Rotate:
-                            angle: 180
-                            axis: 0,0,1
-                            origin: self.center
-                    canvas.after:
-                        PopMatrix
-
-        Node:
-            id: mejaStudio
-            name: 'mejaStudio'
-            rotate: (-90, 0, 1, 0)
-            scale: (0.5, 0.5, 0.5)
-            translate: (0, -10, -80)
-            receive_shadows : False
-
-            FloatLayout:
-                Button:
-                    id: mejaButton
-                    disabled: True
-                    background_disabled_normal: ("./data/imgs/mejaStudio1.png")
-
-                Image:
-                    size_hint: 0.7, 0.7
-                    pos_hint:{"x": 0.15, "y":0.1}
-                    allow_stretch: True
-                    source: "./data/imgs/polban.png"
-                    canvas.before:
-                        PushMatrix
-                        Rotate:
-                            angle: 180
-                            axis: 0,0,1
-                            origin: self.center
-                    canvas.after:
-                        PopMatrix
-
-
-
-
-
-<CheckScreen>:
-    FrontEnd2:
-        canvas:
-            Color:
-                rgba: 0.44, 0.44, 0.44, 1
-            Line:
-                width: 3
-                rectangle: 408, 280, 312, 50
-            Line:
-                width: 3
-                rectangle: 812, 280, 312, 50
-    Widgets2:
-        Button:
-            id: detectCamera
-            background_normal: 'assets/camerabordered2.png'
-            size_hint: .18, .28
-            pos_hint: {"x": 0.5, "y": 0.4}
-            pos: 405, 350
-            size: 317, 277
-            on_press:
-                root.detectCamera()
-        Button:
-            id: detectPentab
-            background_normal: 'assets/pentabbordered2.png'
-            size_hint: .18, .28
-            pos_hint: {"x": 0.5, "y": 0.4}
-            pos: 810, 350
-            size: 317, 277
-            on_press:
-                root.detectPentab()
-        Button:
-            id: nextScreen
-            disabled: True
-            size_hint: .18, .28
-            pos_hint: {"x": 0.5, "y": 0.4}
-            pos: 650, 150
-            size: 200,75
-            font_size: 25
-            text: "Next Screen"
-            on_press:
-                root.check()
-        Image:
-            id: imgCheckCamera
-            source: 'assets/cross.png'
-            size_hint: .18, .28
-            pos: 492, 348
-            size: 142, 60
-        Image:
-            id: imgCheckPentab
-            source: 'assets/cross.png'
-            size_hint: .18, .28
-            pos: 897, 348
-            size: 142, 60
-        Label:
-            text: 'Detect Camera'
-            italic: True
-            font_size: 28
-            pos: 514, 257
-        Label:
-            text: 'Detect Pentab'
-            italic: True
-            font_size: 28
-            pos: 919, 257
+# #: import FadeTransition kivy.uix.screenmanager.FadeTransition
+# #: import SlideTransition kivy.uix.screenmanager.SlideTransition
+# #: import Layout3D kivy3dgui.layout3d
+# #: import Animation kivy.animation.Animation
+#
+# <Manager>:
+#     id: manager
+#     check_screen: check
+#     main_screen: main
+#     green_screen: green
+#     #check Screen
+#     CheckScreen:
+#         id:check
+#         name:"check"
+#         manager: manager
+#     CheckGreenScreen:
+#         id:green
+#         name: "green"
+#         manager: manager
+#     MainScreen:
+#         id: main
+#         name:"main"
+#         manager: manager
+#
+# <MyButton@Button>:
+#     # font_size: 40
+#     size_hint: 0.44,0.44
+#     background_color: 0.1, 0.5, 0.6, 1
+#
+# <MyButton2@Button>:
+#     size_hint: 0.5, 1
+#     background_color: 0.1, 0.5, 0.6, 1
+#
+# <MySlider@Slider>:
+#     size_hint: None, None
+#     width: '250dp'
+#
+# <CheckGreenScreen>:
+#     widget2:widget2
+#     qrcam : qrcam
+#     Widget2:
+#         id:widget2
+#         BoxLayout:
+#
+#             orientation: "vertical"
+#             padding: 50
+#             size: 600,200
+#             pos: 166, 110
+#             canvas:
+#                 Color:
+#                     rgba: 0.1, 0.1, 0.1, 1
+#                 Rectangle:
+#                     pos: 150, 150
+#                     size: 1200, 250
+#             BoxLayout:
+#                 orientation:"vertical"
+#                 size_hint: 0.9, None
+#                 cols:2
+#                 canvas:
+#                     Color:
+#                         rgba: 0.25, 0.25, 0.25, 1
+#                     Rectangle:
+#                         pos: 800, 170
+#                         size: 510, 175
+#                     Rectangle:
+#                         pos: 190, 170
+#                         size: 510, 175
+#             BoxLayout:
+#                 orientation:"horizontal"
+#                 size_hint: 0.9, None
+#                 FloatLayout:
+#                     MyButton2:
+#                         id: btnStudio1
+#                         pos: 820, 215
+#                         disabled: True
+#                         text: "Studio 1"
+#                         on_press: root.deployStudio(1)
+#                     MyButton2:
+#                         id: btnStudio2
+#                         pos: 1080, 215
+#                         disabled: False
+#                         text: "Studio 2"
+#                         on_press: root.deployStudio(2)
+#
+#             BoxLayout:
+#                 orientation:"horizontal"
+#                 size_hint: 0.9, 0.1
+#                 cols:2
+#                 Label:
+#                     id: labelRed
+#                     size_hint: None, None
+#                     pos_hint:{"x":0.1,"y":0.9}
+#                     text: "Red = 60"
+#                 MySlider:
+#                     id:sliderRed
+#                     size_hint: 0.9, None
+#                     pos_hint:{"x":0.6,"y":0.9}
+#                     min:60
+#                     max:255
+#                     value: 60
+#                     on_value:root.changeRed(self.value)
+#
+#             BoxLayout:
+#                 orientation:"horizontal"
+#                 size_hint:0.9,None
+#                 cols:2
+#                 Label:
+#                     id: labelGreen
+#                     size_hint: None, None
+#                     pos_hint:{"x":0.1,"y":0.5}
+#                     text: "Green = 255"
+#                 MySlider:
+#                     size_hint: 0.9, None
+#                     id: sliderGreen
+#                     pos_hint:{"x":0.6,"y":0.5}
+#                     min:60
+#                     max:255
+#                     value: 255
+#                     on_value:root.changeGreen(self.value)
+#
+#             BoxLayout:
+#                 orientation:"horizontal"
+#                 size_hint:0.9,0.8
+#                 cols:2
+#                 Label:
+#                     id: labelBlue
+#                     size_hint: None, None
+#                     pos_hint:{"x":0.1,"y":0.1}
+#                     text: "Blue = 60"
+#                 MySlider:
+#                     size_hint: 0.9, None
+#                     id: sliderBlue
+#                     pos_hint:{"x":0.6,"y":0.1}
+#                     min:60
+#                     max:255
+#                     value: 60
+#                     on_value:root.changeBlue(self.value)
+#
+#             FloatLayout:
+#                 Label:
+#                     id: labelFile
+#                     text: "Select Background File..."
+#                     font_size: 18
+#                     pos: 649, 372
+#                 Label:
+#                     id: labelFile
+#                     text: "Adjust Background Color"
+#                     font_size: 18
+#                     pos: 40, 372
+#
+#
+#
+#         FloatLayout:
+#             Button:
+#                 text: "Next Screen"
+#                 pos: 650, 65
+#                 size_hint: (None,None)
+#                 size: 200, 75
+#                 font_size: 18
+#                 on_press: root.doneSetting()
+#
+#
+#         Layout3D:
+#             id: par
+#             look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
+#             canvas_size: (1366, 768)
+#             size: 500,360
+#             pos: 500,400
+#             shadow: False
+#             Node:
+#                 id: backStudio
+#                 name: 'backStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#
+#             Node:
+#                 id: floorStudio
+#                 name: 'floorStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#
+#             Node:
+#                 id: artefactStudio
+#                 name: 'artefactStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#
+#             Node:
+#                 id: papanStudio
+#                 name: 'papanStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#
+#                 FloatLayout:
+#                     Button:
+#                         id: papanButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/papanStudio1.png")
+#                     Image:
+#                         size_hint: .9, .9
+#                         pos_hint:{"x": 0.05, "y":0.05}
+#                         allow_stretch: True
+#                         source: "./data/imgs/polban.png"
+#                         canvas.before:
+#                             PushMatrix
+#                             Rotate:
+#                                 angle: 180
+#                                 axis: 0,0,1
+#                                 origin: self.center
+#                         canvas.after:
+#                             PopMatrix
+#
+#             Node:
+#                 id: cameraStudio
+#                 name: 'cameraStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#
+#                 FloatLayout:
+#                     Button:
+#                         id: cameraButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/cameraStudio1.png")
+#
+#
+#             Node:
+#                 id: mejaStudio
+#                 name: 'mejaStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#
+#                 FloatLayout:
+#                     Button:
+#                         id: mejaButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/mejaStudio1.png")
+#                     Image:
+#                         size_hint: 0.7, 0.7
+#                         pos_hint:{"x": 0.15, "y":0.1}
+#                         allow_stretch: True
+#                         source: "./data/imgs/polban.png"
+#                         canvas.before:
+#                             PushMatrix
+#                             Rotate:
+#                                 angle: 180
+#                                 axis: 0,0,1
+#                                 origin: self.center
+#                         canvas.after:
+#                             PopMatrix
+#         Layout3D:
+#             id: par
+#             look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
+#             canvas_size: (1366, 768)
+#             size: 500,360
+#             pos: 800,400
+#             shadow: False
+#             Node:
+#                 id: backStudio
+#                 name: 'backStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/backStudio1.obj",)
+#             Node:
+#                 id: floorStudio
+#                 name: 'floorStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/floorStudio1.obj",)
+#             Node:
+#                 id: artefactStudio
+#                 name: 'artefactStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/artefactStudio1.obj",)
+#             Node:
+#                 id: papanStudio
+#                 name: 'papanStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/papanStudio1.obj",)
+#                 FloatLayout:
+#                     Button:
+#                         id: papanButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/papanStudio1.png")
+#                     Image:
+#                         size_hint: .9, .9
+#                         pos_hint:{"x": 0.05, "y":0.05}
+#                         allow_stretch: True
+#                         source: "./data/imgs/polban.png"
+#                         canvas.before:
+#                             PushMatrix
+#                             Rotate:
+#                                 angle: 180
+#                                 axis: 0,0,1
+#                                 origin: self.center
+#                         canvas.after:
+#                             PopMatrix
+#
+#             Node:
+#                 id: cameraStudio
+#                 name: 'cameraStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/cameraStudio1.obj",)
+#                 FloatLayout:
+#                     Button:
+#                         id: cameraButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/cameraStudio1.png")
+#
+#
+#             Node:
+#                 id: mejaStudio
+#                 name: 'mejaStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, -80)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/mejaStudio1.obj",)
+#                 FloatLayout:
+#                     Button:
+#                         id: mejaButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/mejaStudio1.png")
+#                     Image:
+#                         size_hint: 0.7, 0.7
+#                         pos_hint:{"x": 0.15, "y":0.1}
+#                         allow_stretch: True
+#                         source: "./data/imgs/polban.png"
+#                         canvas.before:
+#                             PushMatrix
+#                             Rotate:
+#                                 angle: 180
+#                                 axis: 0,0,1
+#                                 origin: self.center
+#                         canvas.after:
+#                             PopMatrix
+#         Layout3D:
+#             id: par
+#             look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
+#             canvas_size: (1366, 768)
+#             size: 500,360
+#             pos: 800,400
+#             shadow: False
+#             Node:
+#                 id: backStudio2
+#                 name: 'backStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, 100)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/backStudio2.obj",)
+#             Node:
+#                 id: floorStudio2
+#                 name: 'floorStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, 100)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/floorStudio2.obj",)
+#             Node:
+#                 id: artefactStudio2
+#                 name: 'artefactStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, 100)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/artefactStudio2.obj",)
+#             Node:
+#                 id: papanStudio2
+#                 name: 'papanStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, 100)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/papanStudio2.obj",)
+#                 FloatLayout:
+#                     Button:
+#                         id: papanButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/papanStudio2.png")
+#                     Image:
+#                         size_hint: .9, .9
+#                         pos_hint:{"x": 0.05, "y":0.05}
+#                         allow_stretch: True
+#                         source: "./data/imgs/polban.png"
+#                         canvas.before:
+#                             PushMatrix
+#                             Rotate:
+#                                 angle: 180
+#                                 axis: 0,0,1
+#                                 origin: self.center
+#                         canvas.after:
+#                             PopMatrix
+#
+#             Node:
+#                 id: cameraStudio2
+#                 name: 'cameraStudio'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, 100)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/cameraStudio2.obj",)
+#                 FloatLayout:
+#                     Button:
+#                         id: cameraButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/cameraStudio2.png")
+#
+#
+#             Node:
+#                 id: mejaStudio2
+#                 name: 'mejaStudio2'
+#                 rotate: (-90, 0, 1, 0)
+#                 scale: (0.5, 0.5, 0.5)
+#                 translate: (0, -10, 100)
+#                 receive_shadows : False
+#                 meshes : ("./data/objJadi/mejaStudio2.obj",)
+#                 FloatLayout:
+#                     Button:
+#                         id: mejaButton
+#                         disabled: True
+#                         background_disabled_normal : ("./data/imgs/mejaStudio2.png")
+#                     Image:
+#                         size_hint: 0.7, 0.7
+#                         pos_hint:{"x": 0.15, "y":0.1}
+#                         allow_stretch: True
+#                         source: "./data/imgs/polban.png"
+#                         canvas.before:
+#                             PushMatrix
+#                             Rotate:
+#                                 angle: 180
+#                                 axis: 0,0,1
+#                                 origin: self.center
+#                         canvas.after:
+#                             PopMatrix
+#         KivyCamera:
+#             id: qrcam
+#             size: 300,360
+#             pos: 300,360
+#             allow_stretch: True
+#
+# <MainScreen>:
+#     widgets :widgets
+#     qrcam: qrcam
+#     FrontEnd:
+#         id: frontend
+#         canvas:
+#             Color:
+#                 rgba: 0.55, 0.55, 0.55, 1
+#
+#             Rectangle:
+#                 pos: 0, 0
+#                 size: 127, 764
+#             # Tools Button Container (Bottom)
+#             Rectangle:
+#                 pos: 127, 40
+#                 size: 739, 130
+#
+#             Rectangle:
+#                 pos: 0, 764
+#                 size: 1550, 40
+#
+#             Rectangle:
+#                 pos: 127, 724
+#                 size: 247, 40
+#
+#              # Tab 2 (Secondary Display) Tombol Start
+#             Rectangle:
+#                 pos: 906, 724
+#                 size: 247, 40
+#
+#             # Tab 3 (Attachment)
+#             Rectangle:
+#                 pos: 906, 285
+#                 size: 247, 40
+#
+#             ## Dark
+#             Color:
+#                 rgba: 0.32, 0.32, 0.32, 1
+#             # Tab 1 (Main Display)
+#             Rectangle:
+#                 pos: 374, 724
+#                 size: 532, 40
+#
+#             # Tab 2 (Secondary Display)
+#             Rectangle:
+#                 pos: 1153, 724
+#                 size: 600, 40
+#
+#             # Tab 3 (Attachment)
+#             Rectangle:
+#                 pos: 1153, 285
+#                 size: 382, 39
+#
+#             # Middle (Display Divider)
+#             Rectangle:
+#                 pos: 866, 0
+#                 size: 40, 724
+#
+#             # Bottom
+#             Rectangle:
+#                 pos: 127, 0
+#                 size: 1423, 40
+#
+#             ## Border
+#             Color:
+#                 rgba: 0.44, 0.44, 0.44, 1
+#
+#             # Left Container
+#             Line:
+#                 width: 1
+#                 rectangle: 0, 0, 127, 764
+#
+#             # Top
+#             Line:
+#                 width: 1
+#                 rectangle: self.x, 765, self.width, self.height
+#
+#             Color:
+#                 rgba: 0.23, 0.23, 0.23, 1
+#
+#             # Tab 1 (Main Display)
+#             Line:
+#                 width: 1
+#                 rectangle: 128, 724, 247, 40
+#
+#             # Tab 2 (Secondary Display)
+#             Line:
+#                 width: 1
+#                 rectangle: 907, 724, 247, 40
+#
+#             # Tab 3 (Attachment)
+#             Line:
+#                 width: 1
+#                 rectangle: 907, 285, 247, 40
+#     Layers:
+#         id: layers
+#         size : 685, 500
+#         pos : 155, 200
+#     Widgets:
+#         id: widgets
+#         FloatLayout:
+#             # Left Column
+#             MyButton:
+#                 id: btn1
+#                 pos_hint: {"x":0.13, "top":7.5}
+#             MyButton:
+#                 id: btn2
+#                 pos_hint: {"x":0.13, "top":6.97}
+#                 text: "Stop"
+#                 on_press : root.stopVideo()
+#
+#             MyButton:
+#                 id: btn3
+#                 pos_hint: {"x":0.13, "top":6.44}
+#                 text:"Start"
+#                 on_press : root.startVideo()
+#
+#             MyButton:
+#                 id: btn4
+#                 pos_hint: {"x":0.13, "top":5.91}
+#                 text: "Pause"
+#                 on_press: root.pauseVideo()
+#
+#             MyButton:
+#                 id: btn5
+#                 pos_hint: {"x":0.13, "top":5.38}
+#
+#             MyButton:
+#                 id: btn6
+#                 pos_hint: {"x":0.13, "top":4.85}
+#
+#             MyButton:
+#                 id: btn7
+#                 pos_hint: {"x":0.13, "top":4.32}
+#
+#             MyButton:
+#                 id: btn8
+#                 pos_hint: {"x":0.13, "top":3.79}
+#
+#             # Right Column
+#             MyButton:
+#                 id: btn9
+#                 pos_hint: {"x":0.67, "top":7.5}
+#
+#             MyButton:
+#                 id: btn10
+#                 pos_hint: {"x": 0.67, "top": 6.97}
+#
+#             MyButton:
+#                 id: btn11
+#                 pos_hint: {"x": 0.67, "top": 6.44}
+#
+#             MyButton:
+#                 id: btn12
+#                 pos_hint: {"x": 0.67, "top": 5.91}
+#
+#             MyButton:
+#                 id: btn13
+#                 pos_hint: {"x": 0.67, "top": 5.38}
+#
+#             MyButton:
+#                 id: btn14
+#                 pos_hint: {"x": 0.67, "top": 4.85}
+#
+#             MyButton:
+#                 id: btn15
+#                 pos_hint: {"x": 0.67, "top": 4.32}
+#
+#             MyButton:
+#                 id: btn16
+#                 pos_hint: {"x": 0.67, "top": 3.79}
+#                 text: "Clear"
+#                 on_press: root.clearCanvas()
+#
+#             MyButton:
+#                 id: record
+#                 size_hint: None, None
+#                 size: 150, 39
+#                 text: "Start"
+#                 pos_hint:{"x":9.5, "top": 7.63}
+#                 values: 1
+#                 on_press:
+#                     root.Record(self.values)
+#
+#             MyButton:
+#                 id: animasi1
+#                 size_hint: None, None
+#                 size: 150, 39
+#                 text: "Animasi 1"
+#                 pos_hint:{"x":6.5, "top": 1.63}
+#                 on_press:
+#                     root.AnimationRoot()
+#             MyButton:
+#                 id: animasi2
+#                 size_hint: None, None
+#                 size: 150, 39
+#                 text: "Animasi 2"
+#                 pos_hint:{"x":6.5, "top": 1.20}
+#                 on_press:
+#                     root.AnimationRoot2()
+#
+#             BoxLayout:
+#                 orientation: 'vertical'
+#                 size_hint: None, None
+#                 size: 600, 230
+#                 pos_hint:{'center_x':12.25, 'top': 2.9}
+#                 FileChooserListView:
+#                     id:filechooser
+#                     on_selection: root.selectFile(filechooser.selection)
+#
+#             Spinner:
+#                     # Assigning id
+#                 id: spinner_id
+#                     # Callback
+#                 on_text: root.spinner_clicked(spinner_id.text)
+#                 background_normal: ''
+#                 background_color: 0.1, 0.5, 0.6, 1
+#                     # initially text on spinner
+#                 text: "Layer 1"
+#                 on_release:
+#                     self.background_color= 0.1, 0.5, 0.6, 1
+#                     # total values on spinner
+#                 values: ["Layer 1", "Layer 2"]
+#                     # declaring size of the spinner
+#                     # and the position of it
+#                 size_hint: None, None
+#                 size: 200, 40
+#                 pos_hint:{'center_x':10.25, 'top': 3.26}
+#
+#
+#     TestingPlish:
+#         id: par
+#         look_at: [0, -1, 15, 0, 2, -20, 0, 1, 0]
+#         canvas_size: (1366, 768)
+#         size_hint: 0.405, 0.48
+#         pos: 910, 330
+#         post_processing: False
+#         shadow: False
+#         canvas.before:
+#             Color:
+#                 rgb: 1, 0.2, 1,1
+#             Rectangle:
+#                 size: self.size
+#                 pos: self.pos
+#                 source: "./data/imgs/background.jpg"
+#         Node:
+#             id: backStudio
+#             name: 'backStudio'
+#             rotate: (-90, 0, 1, 0)
+#             scale: (0.5, 0.5, 0.5)
+#             translate: (0, -10, -80)
+#             receive_shadows : False
+#
+#         Node:
+#             id: floorStudio
+#             name: 'floorStudio'
+#             rotate: (-90, 0, 1, 0)
+#             scale: (0.5, 0.5, 0.5)
+#             translate: (0, -10, -80)
+#             receive_shadows : False
+#
+#         Node:
+#             id: artefactStudio
+#             name: 'artefactStudio'
+#             rotate: (-90, 0, 1, 0)
+#             scale: (0.5, 0.5, 0.5)
+#             translate: (0, -10, -80)
+#             receive_shadows : False
+#
+#         Node:
+#             id: papanStudio
+#             name: 'papanStudio'
+#             rotate: (-90, 0, 1, 0)
+#             scale: (0.5, 0.5, 0.5)
+#             translate: (0, -10, -80)
+#             receive_shadows : False
+#             FloatLayout:
+#                 Button:
+#                     id: papanButton
+#                     disabled: True
+#
+#                 LayersImage:
+#                     id: layersImage
+#                     size_hint: 1, 1
+#                     pos_hint:{"x": 0, "y":0}
+#                     allow_stretch: True
+#                     canvas.before:
+#                         PushMatrix
+#                         Rotate:
+#                             angle: 180
+#                             axis: 0,0,1
+#                             origin: self.center
+#                     canvas.after:
+#                         PopMatrix
+#
+#         Node:
+#             id: cameraStudio
+#             name: 'cameraStudio'
+#             rotate: (-90, 0, 1, 0)
+#             scale: (0.5, 0.5, 0.5)
+#             translate: (0, -10, -80)
+#             receive_shadows : False
+#             FloatLayout:
+#                 Button:
+#                     id: cameraButton
+#                     disabled : True
+#                 KivyCamera:
+#                     id: qrcam
+#                     size_hint: .6, .6
+#                     pos_hint:{"x": 0.2, "y":0.2}
+#                     allow_stretch: True
+#                     canvas.before:
+#                         PushMatrix
+#                         Rotate:
+#                             angle: 180
+#                             axis: 0,0,1
+#                             origin: self.center
+#                     canvas.after:
+#                         PopMatrix
+#
+#         Node:
+#             id: mejaStudio
+#             name: 'mejaStudio'
+#             rotate: (-90, 0, 1, 0)
+#             scale: (0.5, 0.5, 0.5)
+#             translate: (0, -10, -80)
+#             receive_shadows : False
+#
+#             FloatLayout:
+#                 Button:
+#                     id: mejaButton
+#                     disabled: True
+#                     background_disabled_normal: ("./data/imgs/mejaStudio1.png")
+#
+#                 Image:
+#                     size_hint: 0.7, 0.7
+#                     pos_hint:{"x": 0.15, "y":0.1}
+#                     allow_stretch: True
+#                     source: "./data/imgs/polban.png"
+#                     canvas.before:
+#                         PushMatrix
+#                         Rotate:
+#                             angle: 180
+#                             axis: 0,0,1
+#                             origin: self.center
+#                     canvas.after:
+#                         PopMatrix
+#
+# <CheckScreen>:
+#     FrontEnd2:
+#         canvas:
+#             Color:
+#                 rgba: 0.44, 0.44, 0.44, 1
+#             Line:
+#                 width: 3
+#                 rectangle: 408, 280, 312, 50
+#             Line:
+#                 width: 3
+#                 rectangle: 812, 280, 312, 50
+#     Widgets2:
+#         Button:
+#             id: detectCamera
+#             background_normal: 'assets/camerabordered2.png'
+#             size_hint: .18, .28
+#             pos_hint: {"x": 0.5, "y": 0.4}
+#             pos: 405, 350
+#             size: 317, 277
+#             on_press:
+#                 root.detectCamera()
+#         Button:
+#             id: detectPentab
+#             background_normal: 'assets/pentabbordered2.png'
+#             size_hint: .18, .28
+#             pos_hint: {"x": 0.5, "y": 0.4}
+#             pos: 810, 350
+#             size: 317, 277
+#             on_press:
+#                 root.detectPentab()
+#         Button:
+#             id: nextScreen
+#             disabled: True
+#             size_hint: .18, .28
+#             pos_hint: {"x": 0.5, "y": 0.4}
+#             pos: 650, 150
+#             size: 200,75
+#             font_size: 25
+#             text: "Next Screen"
+#             on_press:
+#                 root.check()
+#         Image:
+#             id: imgCheckCamera
+#             source: 'assets/cross.png'
+#             size_hint: .18, .28
+#             pos: 492, 348
+#             size: 142, 60
+#         Image:
+#             id: imgCheckPentab
+#             source: 'assets/cross.png'
+#             size_hint: .18, .28
+#             pos: 897, 348
+#             size: 142, 60
+#         Label:
+#             text: 'Detect Camera'
+#             italic: True
+#             font_size: 28
+#             pos: 514, 257
+#         Label:
+#             text: 'Detect Pentab'
+#             italic: True
+#             font_size: 28
+#             pos: 919, 257
 
 
 
