@@ -3,29 +3,21 @@ import kivy
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
-from kivy.properties import ObjectProperty, StringProperty
-from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
-from kivy.config import Config
 from kivy.animation import Animation
 from kivy.core.window import Window
-from kivy.graphics import Canvas
 from kivy.uix.image import Image
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
-from kivy.base import EventLoop
-from kivy.lang import Builder
-from kivy.resources import resource_find
-from kivy.graphics.transformation import Matrix
 from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.video import Video
-from kivy.graphics.opengl import *
 from kivy.graphics import *
 from kivy3dgui.layout3d import Layout3D
+
+
 #OpenCV
 import cv2
 import ffmpeg
@@ -34,157 +26,10 @@ from PIL import ImageGrab
 #Python
 import numpy as np
 import time
-from threading import Thread
 import os
-
 import audioRecording as audioRec
-
-#OpenGL
-import glfw
-from objloader import ObjLoader
-from OpenGL.GL import *
-from OpenGL.GL import shaders
-from OpenGL.GL.shaders import compileProgram, compileShader
-import pyrr
-from TextureLoader import load_texture
-# Config.set('graphics','resizable',True)
-# Config.set('graphics', 'width', '1920')
-# Config.set('graphics', 'height', '1080')
-# Window.clearcolor = (0.19, 0.19, 0.19, 1)
+from testingPDFViewer import PDFDocumentWidget
 Window.maximize()
-# Window.size = (1280,720)
-# print(Window.size)
-
-
-#Variabel Global
-# statusRecord = None
-vertex_src = """
-# version 330
-layout(location = 0) in vec3 a_position;
-layout(location = 1) in vec2 a_texture;
-layout(location = 2) in vec3 a_normal;
-
-uniform mat4 model;
-uniform mat4 projection;
-uniform mat4 view;
-
-out vec2 v_texture;
-
-void main()
-{
-    gl_Position = projection * view * model * vec4(a_position, 1.0);
-    v_texture = a_texture;
-}
-"""
-fragment_src = """
-# version 330
-in vec2 v_texture;
-out vec4 out_color;
-uniform sampler2D s_texture;
-void main()
-{
-    out_color = texture(s_texture, v_texture);
-}
-"""
-
-
-
-class Background():
-    def build(self):
-        # glfw callback functions
-        def window_resize(window, width, height):
-            glViewport(0, 0, width, height)
-            projection = pyrr.matrix44.create_perspective_projection_matrix(45, width / height, 0.1, 100)
-
-        # initializing glfw library
-        if not glfw.init():
-            raise Exception("glfw can not be initialized!")
-
-        # creating the window
-        window = glfw.create_window(1280, 720, "My OpenGL window", None, None)
-
-        # check if window was created
-        if not window:
-            glfw.terminate()
-            raise Exception("glfw window can not be created!")
-
-        # set window's position
-        glfw.set_window_pos(window, 400, 200)
-
-        # set the callback function for window resize
-        glfw.set_window_size_callback(window, window_resize)
-
-        # make the context current
-        glfw.make_context_current(window)
-
-        # load here the 3d meshes
-        background_indices, background_buffer = ObjLoader.load_model("background1.obj")
-
-        shader = compileProgram(compileShader(vertex_src, GL_VERTEX_SHADER),
-                                compileShader(fragment_src, GL_FRAGMENT_SHADER))
-
-        # VAO and VBO
-        VAO = glGenVertexArrays(2)
-        VBO = glGenBuffers(2)
-
-        # Background VAO
-        glBindVertexArray(VAO[0])
-        # Background Vertex Buffer Object
-        glBindBuffer(GL_ARRAY_BUFFER, VBO[0])
-        glBufferData(GL_ARRAY_BUFFER, background_buffer.nbytes, background_buffer, GL_STATIC_DRAW)
-
-        # Background vertices
-        glEnableVertexAttribArray(0)
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, background_buffer.itemsize * 8, ctypes.c_void_p(0))
-        # Background textures
-        glEnableVertexAttribArray(1)
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, background_buffer.itemsize * 8, ctypes.c_void_p(12))
-        # Background normals
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, background_buffer.itemsize * 8, ctypes.c_void_p(20))
-        glEnableVertexAttribArray(2)
-
-        # textures = glGenTextures(2)
-        # load_texture("background/background.jpg", textures[0])
-
-        glUseProgram(shader)
-        glClearColor(0, 0.1, 0.1, 1)
-        glEnable(GL_DEPTH_TEST)
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-
-        projection = pyrr.matrix44.create_perspective_projection_matrix(45, 1280 / 720, 0.1, 100)
-        background_pos = pyrr.matrix44.create_from_translation(pyrr.Vector3([-4, 0, 0]))
-
-        # eye, target, up
-        view = pyrr.matrix44.create_look_at(pyrr.Vector3([0, 0, 8]), pyrr.Vector3([0, 0, 0]), pyrr.Vector3([0, 1, 0]))
-
-        model_loc = glGetUniformLocation(shader, "model")
-        proj_loc = glGetUniformLocation(shader, "projection")
-        view_loc = glGetUniformLocation(shader, "view")
-
-        glUniformMatrix4fv(proj_loc, 1, GL_FALSE, projection)
-        glUniformMatrix4fv(view_loc, 1, GL_FALSE, view)
-
-        # the main application loop
-        while not glfw.window_should_close(window):
-            glfw.poll_events()
-
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
-            rot_y = pyrr.Matrix44.from_y_rotation(0.8 * glfw.get_time())
-            model = pyrr.matrix44.multiply(rot_y, background_pos)
-
-            # draw the chibi character
-            glBindVertexArray(VAO[0])
-            glUniformMatrix4fv(model_loc, 1, GL_FALSE, model)
-            glDrawArrays(GL_TRIANGLES, 0, len(background_indices))
-            # glDrawElements(GL_TRIANGLES, len(chibi_indices), GL_UNSIGNED_INT, None)
-
-            glfw.swap_buffers(window)
-
-        # terminate glfw, free up allocated resources
-        glfw.terminate()
-
 
 class FrontEnd(FloatLayout):
     pass
@@ -196,26 +41,21 @@ class LayersImage(Image):
     def start(self):
         self.fps = 30
         self.event = Clock.schedule_interval(self.update, 1.0/self.fps)
+
     def stop(self):
         Clock.unschedule(self.event)
-    def update(self, dt):
 
+    def update(self, dt):
         img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
         img = np.array(img)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        texture = self.texture
-        w, h = img.shape[1], img.shape[0]
-        scale_percent = 100
-        width = int(w * scale_percent / 100)
-        height = int(h * scale_percent / 100)
-        dim = (width, height)
-
-        resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
-        if not texture or texture.width != w or texture.height != h:
-            self.texture = texture = Texture.create(size=(width, height))
-            texture.flip_vertical()
-        texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
-        self.canvas.ask_update()
+        buf1 = cv2.flip(img, 0)
+        buf = buf1.tobytes()
+        image_texture = Texture.create(
+            size=(img.shape[1], img.shape[0]), colorfmt='bgr')
+        image_texture.blit_buffer(buf, colorfmt='bgr')
+        # display image from the texture
+        self.texture = image_texture
 
 class KivyCamera(Image):
     def start(self, red, green, blue):
@@ -264,22 +104,54 @@ class KivyCamera(Image):
         frame = cv2.flip(frame, 1, None)
         frame = self.greenScreen(frame)
         if return_value:
-            texture = self.texture
-            w, h = frame.shape[1], frame.shape[0]
-            scale_percent = 100
-            width = int(w*scale_percent/100)
-            height = int(h*scale_percent/100)
-            dim = (width, height)
-
-            resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-            if not texture or texture.width != w or texture.height != h:
-                self.texture = texture = Texture.create(size=(width, height), colorfmt='bgr')
-                texture.flip_vertical()
-            texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
-            self.canvas.ask_update()
+            buf1 = cv2.flip(frame,0)
+            buf = buf1.tobytes()
+            image_texture = Texture.create(
+                size = (frame.shape[1], frame.shape[0]), colorfmt='bgr')
+            image_texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
+            self.texture = image_texture
+            # texture = self.texture
+            # w, h = frame.shape[1], frame.shape[0]
+            # scale_percent = 100
+            # width = int(w*scale_percent/100)
+            # height = int(h*scale_percent/100)
+            # dim = (width, height)
+            #
+            # resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+            # if not texture or texture.width != w or texture.height != h:
+            #     self.texture = texture = Texture.create(size=(width, height), colorfmt='bgr')
+            #     texture.flip_vertical()
+            # texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
+            # self.canvas.ask_update()
 
 class Widgets(Widget):
     pass
+
+class PDFViewer(PDFDocumentWidget):
+    def __init__(self, **kwargs):
+        super(PDFViewer, self).__init__(**kwargs)
+        self.temp = None
+        self.obj = None
+
+    def start(self):
+        if self.temp != None:
+            self.source = self.temp
+            self.cols = 1
+            self.pos = 155, 200
+            self.size_hint = None, None
+            self.size = 685, 500
+
+    def displayPDF(self, source):
+        self.temp = source
+        if self.obj != None:
+            self.canvas.remove(self.obj)
+        self.start()
+
+    def clearCanvas(self):
+        self.obj = InstructionGroup()
+        self.obj.add(Color(1, 1, 1, 1))
+        self.obj.add(Rectangle(pos=(155, 200), size=(685, 500)))
+        self.canvas.add(self.obj)
 
 class Layers(Widgets):
     def __init__(self, **kwargs):
@@ -294,8 +166,10 @@ class Layers(Widgets):
 
     def startVideo(self):
         self.rec.state = 'play'
+
     def stopVideo(self):
         self.rec.state = 'stop'
+
     def pauseVideo(self):
         self.rec.state = 'pause'
 
@@ -314,9 +188,6 @@ class Layers(Widgets):
         elif values == 2:
             if self.layer2 != None:
                 self.changeBackground(self.layer2)
-        # elif values == 3 :
-        #     if self.layer3 != None:
-        #         self.changeBackground(self.layer3)
 
     def changeBackground(self, source):
         self.rec.source = source
@@ -338,6 +209,10 @@ class Layers(Widgets):
         self.start(self.layerUtama)
         self.changeBackground('')
 
+    def Layer3(self):
+        self.canvas.clear()
+        self.layerUtama = 3
+
     def changeLayer(self, values):
         if self.layerUtama == 1:
             print("LAYER 1")
@@ -349,63 +224,51 @@ class Layers(Widgets):
             if values == 2:
                 self.layerUtama = 2
 
-            # else: self.layerUtama = 3
+
         elif self.layerUtama == 2:
             print("LAYER 2")
-            # img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
-            # img = img.save(self.temp2)
-            # imgtemp = Image(source=self.temp2)
-            # imgtemp.reload()
-            # self.layer2 = self.temp2
             self.layer2 = self.temp2
             if values == 1 :
                 self.layerUtama = 1
-            # if str(values) == "Layer 1":
-            #     self.layerUtama = 1
-            # else: self.layerUtama = 3
 
-        elif self.layerUtama == 3 :
-            print("LAYER 3")
-            img = ImageGrab.grab(bbox=((200, 155, 1050, 774)))
-            img = img.save(self.temp3)
-            imgtemp = Image(source=self.temp3)
-            imgtemp.reload()
-            self.layer3 = self.temp3
-            if str(values) == "Layer 1":
-                self.layerUtama = 1
-            else: self.layerUtama = 2
-        print(self.layerUtama)
+        elif values == 1:
+            self.layerUtama = 1
+        else:
+            self.layerUtama = 2
+
         self.canvas.clear()
         self.start(self.layerUtama)
 
-class TestingPlish(Layout3D):
-    def start(self):
-        self.statusRecord = False
-        self.texture = []
 
-    def Recording(self):
-        self.event = Clock.schedule_interval(self.update, 1.0/30)
+class TestingPlish(Layout3D):
+    pass
+
+
+class VideoRecording:
+    def __init__(self):
+        self.statusRecord = False
+        self.process = None
+        self.error = False
+        self.finish = False
+
+    def record(self):
         fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-        self.out = cv2.VideoWriter('temp/temp.mp4', fourcc, 9.0, (1280, 720))
+        self.out = cv2.VideoWriter('temp/temp.mp4', fourcc, 10.0, (858, 480))
         self.statusRecord = True
+        self.process = Clock.schedule_interval(self.update, 1.0/30)
+
+    def update(self,dt):
+        img = ImageGrab.grab(bbox=((1135, 135, 1918, 619)))
+        img = np.array(img)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = cv2.resize(img, (858, 480))
+        if self.statusRecord:
+            self.out.write(img)
 
     def stopRecording(self):
-        Clock.unschedule(self.event)
         print("Stop Recording")
-        self.out.release()
         self.statusRecord = False
-
-
-    def update(self, dt):
-        img = ImageGrab.grab(bbox=((1135, 135, 1918, 619)))
-        # img = self.export_as_image().
-        img = np.array(img)
-        # texture = Texture.create(size = self.size, colorfmt=)
-        # img = Image(texture)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img = cv2.resize(img, (1280, 720))
-        if self.statusRecord == True:
-            self.out.write(img)
+        self.out.release()
 
 class MainScreen(Screen):
     def start(self, red, green, blue, studio):
@@ -464,11 +327,12 @@ class MainScreen(Screen):
         #DISPLAY LAYER
         self.ids.layers.start(None)
         self.ids.layersImage.start()
-        self.ids.par.start()
+        # self.ids.par.start()
 
         #DISPLAY CAMERA
         self.ids.qrcam.start( red, green, blue)
         self.ids.qrcam.changeBackground(self.studio)
+        self.video = VideoRecording()
 
     #DEPLOYSTUDIO
     def deployStudio(self, value):
@@ -497,7 +361,11 @@ class MainScreen(Screen):
 
     #MENGHAPUS SEMUA ISI LAYER
     def clearCanvas(self):
-        self.ids.layers.clearCanvas()
+        if self.valueLayers == 3:
+            self.ids.pdf.clearCanvas()
+            self.ids.pdf.col = 1, 1, 1, 1
+        else:
+            self.ids.layers.clearCanvas()
 
     def stopVideo(self):
         self.ids.layers.stopVideo()
@@ -513,15 +381,31 @@ class MainScreen(Screen):
         if values == "Layer 2":
             self.ids.filechooser.path = os.path.abspath('tempFile/tempVideo')
             self.valueLayers = 2
-        else :
+            self.ids.btn3.disabled = False
+            self.ids.btn4.disabled = False
+            self.ids.btn2.disabled = False
+            self.ids.layers.changeLayer(self.valueLayers)
+
+        elif values == "Layer 1":
+
             self.valueLayers = 1
+            self.ids.btn3.disabled = True
+            self.ids.btn4.disabled = True
+            self.ids.btn2.disabled = True
             self.ids.filechooser.path = os.path.abspath('tempFile/tempImage')
-        self.ids.layers.changeLayer(self.valueLayers)
+            self.ids.layers.changeLayer(self.valueLayers)
+
+        else:
+            self.valueLayers = 3
+            self.ids.btn3.disabled = True
+            self.ids.btn4.disabled = True
+            self.ids.btn2.disabled = True
+            self.ids.filechooser.path = os.path.abspath('tempFile/tempPDF')
+            self.ids.layers.Layer3()
+            self.ids.pdf.start()
 
     def cekCamera(self, value):
         self.ids.par.start()
-        # img = ImageGrab.grab(bbox=((1135, 135, 1918, 619)))
-        # img = img.save("testing.jpg")
 
     def displayVideo(self):
         self.popupDisplay = BoxLayout(orientation = 'vertical')
@@ -554,16 +438,16 @@ class MainScreen(Screen):
             self.statusRecordAudio = True
             self.ids.record.values = 2
             self.audio.record("temp/temp.wav")
-            self.ids.par.Recording()
+            self.video.record()
         else:
             self.ids.record.text = "Start"
             self.ids.record.values = 1
             self.audio.stop_recording()
             while self.statusRecordAudio != False :
                 self.statusRecordAudio = self.audio.getStatus()
-                time.sleep(0.5)
+                time.sleep(1)
                 if self.statusRecordAudio == False:
-                    self.ids.par.stopRecording()
+                    self.video.stopRecording()
                     self.ids.qrcam.stops()
             try:
                 #COMBINE FILE WAV AND MP4
@@ -577,7 +461,17 @@ class MainScreen(Screen):
                 print(str(e) + " || ERROR")
 
             self.displayVideo()
+            self.AnimationDefault()
             self.start(self.redValue, self.greenValue, self.blueValue, self.studio)
+
+    def AnimationDefault(self):
+        self.ids.backStudio.translate = (0, -10, -80)
+        self.ids.floorStudio.translate = (0, -10, -80)
+        self.ids.artefactStudio.translate = (0, -10, -80)
+        self.ids.cameraStudio.translate = (0, -10, -80)
+        self.ids.papanStudio.translate = (0, -10, -80)
+        self.ids.mejaStudio.translate = (0, -10, -80)
+        self.ids.par.look_at = [0, -1, 15, 0, 2, -20, 0, 1, 0]
 
     def AnimationRoot(self):
         Animation(translate=(0, 8, -27), scale=(0.5, 0.5, 0.5), duration=8).start(self.ids.artefactStudio)
@@ -598,7 +492,11 @@ class MainScreen(Screen):
         Animation(look_at=[0, 17, 15, 0, 15, -20, 0, 1, 0], duration=4).start(self.ids.par)
 
     def selectFile(self, filename):
-        self.ids.layers.changeBackground(filename[0])
+        if self.valueLayers == 3:
+            self.ids.pdf.displayPDF(filename[0])
+            self.ids.pdf.col= 0, 0, 0, 0
+        else:
+            self.ids.layers.changeBackground(filename[0])
 
 
 class CheckGreenScreen(Screen):
@@ -611,7 +509,6 @@ class CheckGreenScreen(Screen):
 
     def deployStudio(self, studio):
         self.changeStudio(studio)
-
 
     def changeRed(self, value):
         value = int(value)
@@ -671,15 +568,6 @@ class CheckGreenScreen(Screen):
             self.ids.papanStudio2.translate = (0, -10, -80)
             self.ids.mejaStudio2.translate = (0, -10, -80)
             self.ids.qrcam.changeBackground(value)
-            # self.ids.backStudio.meshes = ("./data/objJadi/backStudio2.obj",)
-            # self.ids.floorStudio.meshes = ("./data/objJadi/floorStudio2.obj",)
-            # self.ids.artefactStudio.meshes = ("./data/objJadi/artefactStudio2.obj",)
-            # self.ids.papanStudio.meshes = ("./data/objJadi/papanStudio2.obj",)
-            # self.ids.papanButton.background_disabled_normal = ("./data/imgs/papanStudio2.png")
-            # self.ids.cameraStudio.meshes = ("./data/objJadi/cameraStudio2.obj",)
-            # self.ids.cameraButton.background_disabled_normal = ("./data/imgs/cameraStudio2.png")
-            # self.ids.mejaStudio.meshes = ("./data/objJadi/mejaStudio2.obj",)
-            # self.ids.mejaButton.background_disabled_normal = ("./data/imgs/mejaStudio2.png")
             self.ids.btnStudio1.disabled = False
             self.ids.btnStudio2.disabled = True
             self.studio = 2
@@ -687,6 +575,7 @@ class CheckGreenScreen(Screen):
 
 class Widget2(Widget):
     pass
+
 
 class CheckScreen(Screen):
     def __init__(self, **kwargs):
@@ -698,7 +587,6 @@ class CheckScreen(Screen):
         self.manager.get_screen("green").start(1)
         self.manager.current = "green"
 
-
     def detectCamera(self):
         cap = cv2.VideoCapture(0)
         if cap.isOpened():
@@ -707,7 +595,7 @@ class CheckScreen(Screen):
             self.ids.detectCamera.background_normal = 'assets/camerabordered.png'
             self.finishCheck()
             cap.release()
-    #
+
     def detectPentab(self):
         self.checkPentab = True
         self.ids.imgCheckPentab.source = 'assets/check.png'
@@ -718,201 +606,29 @@ class CheckScreen(Screen):
         if self.checkCamera == True and self.checkPentab == True:
             self.ids.nextScreen.disabled = False
 
+
 class Manager(ScreenManager):
     pass
+
 
 class FrontEnd2(FloatLayout):
     pass
 
+
 class Widgets2(Widget):
     pass
+
+
 class TestingPlease(Layout3D):
     pass
+
+
 class MyApp(App):
     def build(self):
         return Manager()
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     MyApp().run()
 
 
-## FILE DULU
-# class KivyCamera(Image):
-#
-#     def start(self, capture, out, statusRecord):
-#         if capture == None:
-#             print("GAGAL")
-#         self.capture = capture
-#         self.fps = 30
-#         self.out = out
-#         self.statusRecord = statusRecord
-#         Clock.schedule_interval(self.update,1.0/self.fps)
-#
-#     def startRecord(self, statusRecord):
-#         self.statusRecord = statusRecord
-#
-#     def stop(self, statusRecord):
-#         self.statusRecord = statusRecord
-#
-#     def record(self,frame):
-#         self.out.write(frame)
-#
-#     def greenScreen(self,frame):
-#         img = cv2.imread("background/background.jpg")
-#         # img = ImageGrab.grab(bbox=((200,155,940,800)))
-#         # img = np.array(img)
-#         frame = cv2.resize(frame,(720,480))
-#         img = cv2.resize(img,(720,480))
-#         hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-#         u_green = np.array([70, 255, 70])
-#         l_green = np.array([0, 100, 0])
-#         mask = cv2.inRange(frame,l_green,u_green)
-#         res = cv2.bitwise_and(frame,frame,mask=mask)
-#         f=frame - res
-#         f=np.where(f==0,img,f)
-#         return f
-#
-#     def update(self, dt):
-#         return_value, frame = self.capture.read()
-#         frame = cv2.flip(frame, 1)
-#         # frame = self.greenScreen(frame)
-#         if return_value:
-#             #record script
-#             if self.statusRecord == True:
-#                 self.out.write(frame)
-#
-#             texture = self.texture
-#             w, h = frame.shape[1], frame.shape[0]
-#
-#             scale_percent = 100
-#             width = int(w *scale_percent /100)
-#             height = int(h * scale_percent /100)
-#             dim = (width, height)
-#             #resize
-#             resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-#             if not texture or texture.width != w or texture.height != h:
-#                 self.texture = texture = Texture.create(size=(width, height))
-#                 texture.flip_vertical()
-#             texture.blit_buffer(resized.tobytes(), colorfmt='bgr')
-#             self.canvas.ask_update()
-#
-#
-#
-# capture = None
-# out = None
-# audio = None
-#
-# class Widgets(Widget):
-#     def __init__(self, **kwargs):
-#         super(Widgets, self).__init__(**kwargs)
-#         #
-#         # try:
-#         #     os.mkdir("temp")
-#         #
-#         # except FileExistsError:
-#         #     print("exist temp")
-#         #
-#         #
-#         # try:
-#         #     os.mkdir("VideoRecorder")
-#         #
-#         # except FileExistsError:
-#         #     print("exist video recorder")
-#         #
-#         # os.chdir("VideoRecorder")
-#         #
-#         # defaultFile = "Video.mp4"
-#         # available = False
-#         # fileNum = 0
-#         # while available == False:
-#         #     hasMatch = False
-#         #     for item in os.listdir():
-#         #         if item == defaultFile:
-#         #             hasMatch = True
-#         #             break
-#         #     if not hasMatch:
-#         #         available = True
-#         #     else:
-#         #         fileNum += 1
-#         #         defaultFile = "Video" + str(fileNum) + ".mp4"
-#         #         print(defaultFile)
-#
-#         os.chdir("..")
-#         # print(os.path.)
-#         # self.defaultFile = defaultFile
-#
-#         # some Variable
-#         self.audio = audioRec.audioRecord()
-#         fourcc = cv2.VideoWriter_fourcc(*'XVID')
-#         self.out = cv2.VideoWriter('temp/temp.avi', fourcc, 15, (1280, 720))
-#         self.capture = cv2.VideoCapture(0)
-#         self.statusRecord = False
-#         self.ids.qrcam.start(self.capture, self.out,  self.statusRecord)
-#
-#     def on_touch_down(self, touch):
-#         self.canvas.add(Color(rgb=(121 / 255.0, 120 / 255.0, 100 / 255.0)))
-#         touch.ud['line'] = Line(points=(touch.x, touch.y), width = 2)
-#         self.canvas.add(touch.ud['line'])
-#
-#     def on_touch_move(self, touch):
-#         if (touch.x >=155.0 and touch.x <840.0 ) and (touch.y>=200.0 and touch.y<700.0):
-#             touch.ud['line'].points +=[touch.x, touch.y]
-#
-#     def startRecording(self):
-#         self.statusRecord = True
-#         self.audio.record("temp/temp.wav")
-#         self.ids.qrcam.startRecord(self.statusRecord)
-#
-#     def stopRecording(self):
-#         if self.capture != None:
-#             try:
-#                 self.audio.stop_recording()
-#                 while self.statusRecord != False:
-#                     self.statusRecord = self.audio.getStatus()
-#                     time.sleep(0.5)
-#                     print(self.statusRecord)
-#                     if self.statusRecord == False:
-#                         self.out.release()
-#                         self.capture.release()
-#                         print("DONE RELEASE")
-#                 # path1 = os.path.abspath('temp/temp.wav')
-#                 # path2 = os.path.abspath('temp/temp.mp4')
-#                 # self.fileAudio = ffmpeg.input(path1)
-#                 # if self.fileAudio != None:
-#                 #     print("FILE AUDIO OKE")
-#                 # else: print("FILE KOSONG")
-#                 #
-#                 # self.fileVideo = ffmpeg.input(path2)
-#                 # if self.fileVideo != None:
-#                 #     print("FILE Video OKE")
-#                 # else:
-#                 #     print("FILE KOSONG Video")
-#                 #
-#                 # self.finish = ffmpeg.output(self.fileAudio, self.fileVideo, self.defaultFile)
-#                 # print("OUTPUT OKE")
-#                 # self.finish.run()
-#                 # print("FINISH CONFIG")
-#
-#             except ffmpeg.Error as e:
-#                 print(e)
-#
-#     def do_exit(self):
-#         EventLoop.close()
-#
-#     def show_popup(self):
-#         show = P()
-#         popupWindow = Popup(title="Popup Window", content=show, size_hint=(None, None), size=(400, 400))
-#         popupWindow.open()
-
-# class P(FloatLayout):
-#     pass
-#
-# class MyApp(App):
-#
-#     def build(self):
-#         homeWin = Widgets()
-#         return homeWin
-#
-# if __name__ == "__main__":
-#     MyApp().run()
-#     # Background().build()
