@@ -1,0 +1,15 @@
+docutils
+pygments
+pypiwin32
+kivy_deps.sdl2==0.1.*
+kivy_deps.glew==0.1.*
+kivy_deps.gstreamer==0.1.*
+kivy==1.11.1
+opencv_python==4.2.0.32
+numpy==1.19.1
+pdfminer==20191125
+ffmpeg-python==0.1.18
+wheel==0.34.2
+setuptools==49.2.1
+pillow==7.2.0
+PyAudio-0.2.11-cp37-cp37m-win_amd64.whl
