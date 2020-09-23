@@ -15,6 +15,7 @@ from kivy.clock import Clock
 from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.video import Video
 from kivy.graphics import *
+from kivy.config import Config
 from kivy3dgui.layout3d import Layout3D
 
 
@@ -29,7 +30,11 @@ import time
 import os
 import audioRecording as audioRec
 from testingPDFViewer import PDFDocumentWidget
+
+
 Window.maximize()
+
+
 
 class FrontEnd(FloatLayout):
     pass
@@ -625,6 +630,7 @@ class TestingPlease(Layout3D):
 
 class MyApp(App):
     def build(self):
+        self.title = 'ClassCreator'
         return Manager()
 
 
