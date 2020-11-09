@@ -16,6 +16,7 @@ from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.video import Video
 from kivy.graphics import *
 from kivy3dgui.layout3d import Layout3D
+from kivy.lang.builder import Builder
 
 #OpenCV
 import cv2
@@ -28,7 +29,7 @@ import time
 import os
 
 import win32timezone
-from TextureLoader import load_texture
+import ffpyplayer
 
 import audioRecording as audioRec
 from testingPDFViewer import PDFDocumentWidget
@@ -73,6 +74,7 @@ Builder.load_string('''
 #: import SlideTransition kivy.uix.screenmanager.SlideTransition
 #: import Layout3D kivy3dgui.layout3d
 #: import Animation kivy.animation.Animation
+
 
 <Manager>:
     id: manager
@@ -628,10 +630,18 @@ Builder.load_string('''
             Line:
                 width: 1
                 rectangle: 907, 285, 247, 40
+    PDFViewer:
+        id: pdf
+        col: 1, 1, 1, 1
+        canvas.before:
+            Color:
+                rgb: self.col
+            Rectangle:
+                pos: 155, 200
+                size: 685, 500
     Layers:
         id: layers
-        size : 685, 500
-        pos : 155, 200
+
     Widgets:
         id: widgets
         FloatLayout:
@@ -643,18 +653,21 @@ Builder.load_string('''
                 id: btn2
                 pos_hint: {"x":0.13, "top":6.97}
                 text: "Stop"
+                disabled: True
                 on_press : root.stopVideo()
 
             MyButton:
                 id: btn3
                 pos_hint: {"x":0.13, "top":6.44}
                 text:"Start"
+                disabled: True
                 on_press : root.startVideo()
 
             MyButton:
                 id: btn4
                 pos_hint: {"x":0.13, "top":5.91}
                 text: "Pause"
+                disabled: True
                 on_press: root.pauseVideo()
 
             MyButton:
@@ -756,7 +769,7 @@ Builder.load_string('''
                 on_release:
                     self.background_color= 0.1, 0.5, 0.6, 1
                     # total values on spinner
-                values: ["Layer 1", "Layer 2"]
+                values: ["Layer 1", "Layer 2", "Layer 3"]
                     # declaring size of the spinner
                     # and the position of it
                 size_hint: None, None
@@ -881,6 +894,7 @@ Builder.load_string('''
                             origin: self.center
                     canvas.after:
                         PopMatrix
+
 
 <CheckScreen>:
     FrontEnd2:
@@ -1344,7 +1358,7 @@ class MainScreen(Screen):
         # self.ids.par.start()
 
         #DISPLAY CAMERA
-        self.ids.qrcam.start( red, green, blue)
+        self.ids.qrcam.start(red, green, blue)
         self.ids.qrcam.changeBackground(self.studio)
         self.video = VideoRecording()
 
@@ -1423,7 +1437,7 @@ class MainScreen(Screen):
 
     def displayVideo(self):
         self.popupDisplay = BoxLayout(orientation = 'vertical')
-        video = VideoPlayer(source="VideoRecorder/" + self.defaultFile,
+        video = VideoPlayer(source="VideoRecorder/"+self.defaultFile,
                             state='play',
                             options={'allow_stretch': True})
         button = Button(
@@ -1641,28 +1655,26 @@ class MyApp(App):
     def build(self):
         return Manager()
 
+# def resourcePath():
+#     '''Returns path containing content - either locally or in pyinstaller tmp file'''
+#     if hasattr(sys, '_MEIPASS'):
+#         return os.path.join(sys._MEIPASS)
+#     return os.path.join(os.path.abspath("."))
 
-if __name__ == "__main__":
-def resourcePath():
-    '''Returns path containing content - either locally or in pyinstaller tmp file'''
-    if hasattr(sys, '_MEIPASS'):
-        return os.path.join(sys._MEIPASS)
-    return os.path.join(os.path.abspath("."))
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
 
-print(resourcePath())
+    return os.path.join(base_path, relative_path)
 
-# def resource_path(relative_path):
-#     """ Get absolute path to resource, works for dev and for PyInstaller """
-#     try:
-#         # PyInstaller creates a temp folder and stores path in _MEIPASS
-#         base_path = sys._MEIPASS
-#     except Exception:
-#         base_path = os.path.abspath(".")
-#
-#     return os.path.join(base_path, relative_path)
+# print(resource_path())
 
 if __name__=="__main__":
-    kivy.resources.resource_add_path(resourcePath())
+    # kivy.resources.resource_add_path(resource_path(relative_path))
     MyApp().run()
 
 
