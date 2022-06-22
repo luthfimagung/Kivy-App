@@ -6,7 +6,7 @@ kivy_deps.glew==0.1.*
 kivy_deps.gstreamer==0.1.*
 kivy==1.11.1
 opencv_python==4.2.0.32
-numpy==1.19.1
+numpy==1.22.0
 pdfminer==20191125
 ffmpeg-python==0.1.18
 wheel==0.34.2
